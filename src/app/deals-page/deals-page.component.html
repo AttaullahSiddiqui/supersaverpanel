@@ -1,0 +1,62 @@
+<br>
+<div class="animated fadeIn addUserForm">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Create Deal Page</strong>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Title*</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Short Description</label>
+                            <div class="col-md-9">
+                                <app-ngx-editor [placeholder]="'Enter text here...'" minHeight="160px"
+                                    [spellcheck]="true">
+                                </app-ngx-editor>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Long Description</label>
+                            <div class="col-md-9">
+                                <app-ngx-editor [placeholder]="'Enter text here...'" minHeight="160px"
+                                    [spellcheck]="true">
+                                </app-ngx-editor>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Meta Title</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Meta Description</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-3">
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            <button type="button" class="btn btn-dark">Create Page</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+<br>
+<div class="animated fadeIn addUserForm">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Create Store</strong>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Offer Box</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Offer Details</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Tracking Link</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="date-input">Expiry Date</label>
+                            <div class="col-md-9">
+                                <input class="form-control" id="date-input" type="date" name="date-input"
+                                    placeholder="date">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Code</label>
+                            <div class="col-md-9">
+                                <input class="form-check-input" (change)="handleCodeInput()" type="radio"
+                                    name="inlineRadioOptions" id="inlineRadio1" value="true">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Active</label>
+                            <div class="col-md-9">
+                                <input class="form-check-input" (change)="handleCodeInput()" type="radio"
+                                    name="inlineRadioOptions" id="inlineRadio2" value="false">
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="radioInput">
+                            <label class="col-md-3 col-form-label" for="text-input">Enter Code</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="userType">
+                                Choose Store
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control form-control-lg" data-placeholder="Choose" id="userType">
+                                    <option value="1"> Admin </option>
+                                    <option value="2"> User </option>
+                                    <option value="3"> User </option>
+                                    <option value="4"> User </option>
+                                    <option value="5"> User </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label class="col-md-2 control-label">Featured for Home</label>
+                            <div class="col-md-10">
+                                <label class="switch switch-success">
+                                    <input type="checkbox" class="switch-input">
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group m-3">
+                            <label class="col-md-2 control-label">Trending</label>
+                            <div class="col-md-10">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" class="switch-input">
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group m-3">
+                            <label class="col-md-2 control-label">New Arrival</label>
+                            <div class="col-md-10">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" class="switch-input">
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group m-3">
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            <button type="button" class="btn btn-dark">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

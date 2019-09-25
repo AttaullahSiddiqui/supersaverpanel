@@ -1,0 +1,6 @@
+.addUserForm input, .card-header , button, select{
+    font-size: 1.2em !important;
+}
+.input-group-prepend, .addUserForm input{
+    margin: 5px auto;
+}

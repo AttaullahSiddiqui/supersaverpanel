@@ -1,0 +1,218 @@
+<br>
+<div class="animated fadeIn addUserForm">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Create Store</strong>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Store Name</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="select2">Select Large</label>
+                            <div class="col-md-9">
+                                <select id="select2" name="select2" class="form-control form-control-lg">
+                                    <option value="1">Promo codes & Coupons</option>
+                                    <option value="2">Coupons & Promo codes</option>
+                                    <option value="3">Voucher & Discount codes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-3 col-form-label" for="select2">Choose Categories</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        &nbsp;&nbsp;&nbsp; <button class="btn btn-outline-secondary" type="button">
+                                            <i class="fa fa-close"></i>
+                                            Button</button>
+                                        &nbsp;&nbsp;&nbsp; <button class="btn btn-outline-secondary" type="button">
+                                            <i class="fa fa-close"></i>
+                                            Button</button>
+                                        &nbsp;&nbsp;&nbsp; <button class="btn btn-outline-secondary" type="button">
+                                            <i class="fa fa-close"></i>
+                                            Button</button>
+                                    </div>
+                                    <input (click)="showList=!showList" type="text" class="form-control" placeholder=""
+                                        aria-label="" aria-describedby="basic-addon1">
+                                </div>
+                                <!-- <input type="text dropdown-toggle" data-toggle="dropdown" id="text-input"
+                                    name="text-input" class="form-control" placeholder="..."> -->
+
+                                <ul class="list-group" [hidden]="!showList">
+                                    <li class="list-group-item">Cras justo odio</li>
+                                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item">Morbi leo risus</li>
+                                    <li class="list-group-item">Porta ac consectetur ac</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br>
+
+                        <!-- <app-ngx-editor [spellcheck]="true" [(ngModel)]="htmlContent"></app-ngx-editor> -->
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Image</label>
+                            <div class="input-group col-md-8">
+                                <div class="custom-file">
+                                    <input type="file" name="userImg" [(ngModel)]="htmlContent"
+                                        class="custom-file-input" accept="image/x-png,image/gif,image/jpeg"
+                                        aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="inputGroupFile01">{{htmlContent}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Image Alt</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Direct URL</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Short Description</label>
+                            <div class="col-md-9">
+                                <app-ngx-editor [placeholder]="'Enter text here...'" minHeight="160px"
+                                    [spellcheck]="true">
+                                </app-ngx-editor>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Long Description</label>
+                            <div class="col-md-9">
+                                <app-ngx-editor [placeholder]="'Enter text here...'" minHeight="160px"
+                                    [spellcheck]="true">
+                                </app-ngx-editor>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Tracking URL</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Meta Title</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Meta Description</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input"><b>Meta Keywords</b>(comma
+                                separated)</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="alert alert-dark" role="alert">
+                            Useful Links
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Facebook</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Pinterest</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Wikipedia</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Twitter</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Google Plus</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Android App Link</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">IOS App Link</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="text-input" class="form-control"
+                                    placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group m-3">
+                            <label class="col-md-2 control-label">Top Store</label>
+                            <div class="col-md-10">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" class="switch-input" checked>
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group m-3">
+                            <label class="col-md-2 control-label">Editor's Choice</label>
+                            <div class="col-md-10">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" class="switch-input" checked>
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-3">
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            <button type="button" class="btn btn-dark">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
