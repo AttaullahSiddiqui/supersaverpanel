@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgxEditorModule } from 'ngx-editor';
 import { SortablejsModule } from 'ngx-sortablejs';
@@ -38,12 +39,17 @@ import { MenuComponent } from './menu/menu.component';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 
+import { DataService } from './data.service';
+
+
+
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AngularFontAwesomeModule,
     NgxEditorModule,
+    HttpClientModule,
     SortablejsModule.forRoot({ animation: 200 }),
     AppRoutingModule,
     AppAsideModule,
