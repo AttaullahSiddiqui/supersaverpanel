@@ -1,84 +1,43 @@
-// const express = require('express');
-// const bodyParser = require("body-parser");
-// const path = require('path');
-// // const Joi = require('joi');
-
-// const db = require("./server/routes/api.js");
-// const collection = "todo";
-// const app = express();
-
-// // schema used for data validation for our todo document
-// // const schema = Joi.object().keys({
-// //     todo: Joi.string().required()
-// // });
-
-// app.use(express.static(path.join(__dirname, 'dist')));
-
-// // parses json data sent to us by the user 
-// app.use(bodyParser.json());
-
-// // serve static html file to user
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'dist/index.html'));
-// });
-
-// // read
-// app.get('/getTodos', (req, res) => {
-
-//     db.getDB().collection(collection).find({}).toArray((err, documents) => {
-//         if (err)
-//             console.log(err);
-//         else {
-//             res.json(documents);
-//         }
-//     });
-
-//     // res.send("Hello world");
-// });
-
-
-// app.use((err, req, res, next) => {
-//     res.status(err.status).json({
-//         error: {
-//             message: err.message
-//         }
-//     });
-// })
-
-
-// db.connect((err) => {
-//     if (err) {
-//         console.log('unable to connect to database');
-//         process.exit(1);
-//     }
-//     else {
-//         app.listen(process.env.PORT || 3000, () => {
-//             console.log('connected to database, app listening on port 3000');
-//         });
-//     }
-// });
-
-
-
-
 const express = require('express');
+let mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
-const app = express();
+let cors = require('cors')
+
+let CONFIG = require('./server/app.config');
+
 
 // API file for interacting with MongoDB
-const api = require('./server/routes/api');
+const appRoutes = require('./server/routes/app.routes');
 
+const app = express();
+
+app.use(cors());
 // Parsers
-app.use(bodyParser.json());
+app.use(bodyParser.json(), function (err, req, res, next) {
+    if (err) {
+        return res.status(500).json({ error: err });
+    }
+    next();
+});
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// API location
-app.use('/api', api);
+// APIs location
+app.use('/api', appRoutes);
+
+mongoose.connect(CONFIG.local['url'], { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connection.on('error', (err) => {
+    console.log(`Connection Error on ${mode} ${err}`);
+    process.exit(-1);
+});
+mongoose.connection.on('connected', () => {
+    console.log(`MongoDB connected on development mode`);
+});
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {
@@ -91,4 +50,41 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-server.listen(port, () => console.log(`Running on localhost:${port}`));
+// server.listen(port, () => console.log(`Running on localhost:${port}`));
+server.listen(port);
+
+server.on('error', onError);
+server.on('listening', onListening);
+
+function onError() {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    var bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}
+
+function onListening() {
+    let addr = server.address();
+    console.log(`Address : ${addr}`)
+    let bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+    console.log(`listening on por %o in ${app.settings.env} settings env`, addr)
+}
