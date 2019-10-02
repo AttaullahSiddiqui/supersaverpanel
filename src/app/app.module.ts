@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgxEditorModule } from 'ngx-editor';
@@ -49,6 +51,8 @@ import { DataService } from './data.service';
     BrowserAnimationsModule,
     AngularFontAwesomeModule,
     NgxEditorModule,
+    CommonModule,
+    FormsModule,
     HttpClientModule,
     SortablejsModule.forRoot({ animation: 200 }),
     AppRoutingModule,

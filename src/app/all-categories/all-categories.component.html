@@ -78,6 +78,12 @@
 
 
 <div class="animated fadeIn">
+    <div class="alert alert-danger alert-dismissible fade show col-8" *ngIf="responseError" role="alert">
+        {{responseError}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="row">
         <div class="col">
             <div class="card">
@@ -124,104 +130,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary text-white" data-toggle="modal"
-                                        data-target="#deleteModal">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary text-white" data-toggle="modal"
-                                        data-target="#deleteModal">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary text-white" data-toggle="modal"
-                                        data-target="#deleteModal">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary text-white" data-toggle="modal"
-                                        data-target="#deleteModal">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary text-white" data-toggle="modal"
-                                        data-target="#deleteModal">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary text-white" data-toggle="modal"
-                                        data-target="#deleteModal">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
+                            <!-- <tr *ngFor="let category of catArray"> -->
+                            <tr *ngFor="let category of catArray | keyvalue">
+                                <td>{{category.key}}</td>
+                                <td>{{category.value.name}}</td>
+                                <td>{{category.value.slug}}</td>
+                                <!-- <td>
+                                    <span [hidden]="{{category.value.featuredForHome}}"
+                                        class="badge badge-success">Featured</span>
+                                    <span [hidden]="{{category.value.featuredForHome}}"
+                                        class="badge badge-dark">Disabled</span>
+                                </td> -->
+                                <td>true</td>
                                 <td>
                                     <button type="button" class="btn btn-primary text-white" data-toggle="modal"
                                         data-target="#deleteModal">Delete</button>

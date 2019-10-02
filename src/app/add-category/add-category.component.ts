@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-add-category',
@@ -6,10 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-category.component.scss']
 })
 export class AddCategoryComponent implements OnInit {
+  catData = {};
+  responseError = "";
+  responseSuccess = "";
 
-  constructor() { }
+  constructor(private _dataService: DataService) { }
 
   ngOnInit() {
   }
-
+  createCategory(catInfo) {
+    if (!catInfo.catFeatured) {
+      catInfo.catFeatured = false
+    }
+    this._dataService.addCategory(catInfo).subscribe(res => {
+      if (res.data) {
+        this.responseSuccess = res.message;
+        this.catData = {};
+      } else {
+        this.responseError = res.message
+      }
+    })
+  }
 }

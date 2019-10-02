@@ -18,19 +18,22 @@ module.exports = {
 };
 
 function authUser(req, res) {
-    res.send("Hahahha from login");
+    console.log("Hahahha from login");
+    console.log(req.body);
 
-    User.findOne({ userName: req.body.userName }, function (err, user) {
-        if (err || !result) {
-            console.log("Error : -------->", err);
-            return res.respondError("Unexpected Error", -1);
+    User.findOne({ userName: req.body.userName }, function (err, fetchedUser) {
+        if (err) {
+            res.json(resHandler.respondError(error[0], error[1] || -1));
+        } else if (!fetchedUser) {
+            res.json(resHandler.respondError("Wrong Username or Password", -3));
         }
-        if (!user) return fn(new Error('cannot find user'));
-        hash(pass, user.salt, function (err, hash) {
-            if (err) return fn(err);
-            if (hash == user.hash) return fn(null, user);
-            fn(new Error('invalid password'));
-        })
+        else {
+            if (req.body.userPass == fetchedUser.userPass) {
+                res.json(resHandler.respondSuccess(fetchedUser, "Login successfull, Welcome", 2));
+            } else {
+                res.json(resHandler.respondError("Wrong password", -3));
+            }
+        }
     })
 }
 
@@ -50,7 +53,21 @@ function registerUser(req, res) {
 }
 
 function createCategory(req, res) {
-    res.send("Hahahha from createCategory")
+    console.log(req.body)
+    var newCategory = new Category({
+        name: req.body.catName,
+        slug: req.body.catSlug,
+        metaTitle: req.body.catMetaTitle,
+        metaDescription: req.body.catMetaDescription,
+        metaKeywords: req.body.catMetaKeywords,
+        featuredForHome: req.body.catFeatured,
+    });
+    newCategory.save().then(function (result) {
+        res.json(resHandler.respondSuccess(result, "Category created successfully", 2));
+    }, function (err) {
+        var error = errHandler.handle(err);
+        res.json(resHandler.respondError(error[0], (error[1] || -1)));
+    })
 }
 
 function addStore(req, res) {

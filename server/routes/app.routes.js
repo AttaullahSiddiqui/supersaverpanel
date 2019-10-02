@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
 let apiCtrl = require('../api/api.ctrl');
+let fetchCtrl = require('../api/fetch.ctrl');
 
 router.post('/login', apiCtrl.authUser);
 router.post('/register', apiCtrl.registerUser);
 router.post('/createCategory', apiCtrl.createCategory);
 router.post('/addStore', apiCtrl.addStore);
 router.post('/addCoupon', apiCtrl.addCoupon);
+
+
+
+router.get('/fetchCategories', fetchCtrl.fetchCategories);
 
 // router.get('/users', (req, res) => {
 //     console.log("Started")

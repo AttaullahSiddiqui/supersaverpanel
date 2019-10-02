@@ -2,11 +2,11 @@ let mongoose = require('mongoose');
 
 let categorySchema = mongoose.Schema({
     name: { type: String, unique: true },
-    slug: String,
-    metaTitle: String,
-    metaDescription: String,
-    metaKeywords: String,
-    featuredForHome: Boolean,
+    slug: { type: String, required: true },
+    metaTitle: { type: String, required: true },
+    metaDescription: { type: String, required: true },
+    metaKeywords: { type: String, required: true },
+    featuredForHome: { type: Boolean, required: true },
     CreatedAt: { type: String, default: Date.now() }
 });
 
