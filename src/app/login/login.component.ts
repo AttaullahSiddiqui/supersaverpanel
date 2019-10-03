@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   }
 
   authUser(userInfo) {
-    this._dataService.loginUser(userInfo).subscribe(res => {
+    this._dataService.postAPI("/api/login", userInfo).subscribe(res => {
       if (res.data) {
         this.router.navigateByUrl('/dashboard')
       } else {

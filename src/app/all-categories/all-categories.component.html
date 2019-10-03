@@ -25,50 +25,57 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div>
-                    <span style="font-size:1.35em">Edit Category: Fitness</span>
+                    <span style="font-size:1.35em">Edit Category: {{editObject.name}}</span>
                 </div>
                 <button type="button" class="close" id="editbtn" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
 
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="company">Name</label>
-                    <input type="text" class="form-control" id="company" value="Fitness">
-                </div>
-                <div class="form-group">
-                    <label for="company">Slug</label>
-                    <input type="text" class="form-control" id="company" value="Fitness">
-                </div>
-                <div class="form-group">
-                    <label for="company">Meta Title</label>
-                    <input type="text" class="form-control" id="company" value="Fitness">
-                </div>
-                <div class="form-group">
-                    <label for="company">Meta Description</label>
-                    <input class="form-control" id="date-input" type="date" name="date-input"
-                        value="It provides Exercise equipment for dumbbell exercises and a great adjustable dumbbell workout using weightlifting equipment, fitness equipment">
-                </div>
-                <div class="form-group">
-                    <label for="company">Meta Keywords</label>
-                    <input type="text" class="form-control" id="company" value="Boston">
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Featured for Home</label>
-                    <div class="col-md-10">
-                        <label class="switch switch-success">
-                            <input type="checkbox" class="switch-input" checked>
-                            <span class="switch-slider"></span>
-                        </label>
+            <form #editCatForm="ngForm" novalidate (ngSubmit)='saveEditedCoupon()'>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="company">Name</label>
+                        <input type="text" name="name" required [(ngModel)]="editObject.name" class="form-control">
                     </div>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label for="company">Slug</label>
+                        <input type="text" name="slug" required [(ngModel)]="editObject.slug" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Meta Title</label>
+                        <input type="text" name="MetaTitle" required [(ngModel)]="editObject.metaTitle"
+                            class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Meta Description</label>
+                        <input class="form-control" name="MetaDescription" required type="text"
+                            [(ngModel)]="editObject.metaDescription">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Meta Keywords</label>
+                        <input type="text" name="MetaKeywords" required class="form-control"
+                            [(ngModel)]="editObject.metaKeywords">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Featured for Home</label>
+                        <div class="col-md-10">
+                            <label class="switch switch-success">
+                                <input name="featuredForHome" [(ngModel)]="editObject.featuredForHome" type="checkbox"
+                                    value="true" class="switch-input">
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                    </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" (click)="saveEditedCoupon()">Save Changes</button>
-            </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" [disabled]="!editCatForm.form.valid">Save
+                        Changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -78,9 +85,15 @@
 
 
 <div class="animated fadeIn">
+    <div class="alert alert-success alert-dismissible fade show col-8" *ngIf="responseSuccess" role="alert">
+        {{responseSuccess}}
+        <button type="button" class="close" (click)="closeSuccess()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="alert alert-danger alert-dismissible fade show col-8" *ngIf="responseError" role="alert">
         {{responseError}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <button type="button" class="close" (click)="closeError()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -91,8 +104,8 @@
                 <div class="row">
 
                     <div class="col-sm-6">
-                        <h2 class="p-4">Total Categories on your Website &nbsp; <span
-                                class="badge badge-pill badge-dark text-white">36</span> </h2>
+                        <h3 class="p-4">Total Categories on your Website &nbsp; <span
+                                class="badge badge-pill badge-dark text-white">{{catArray.length}}</span> </h3>
                     </div>
 
                     <div class="col-sm-1"></div>
@@ -135,18 +148,24 @@
                                 <td>{{category.key}}</td>
                                 <td>{{category.value.name}}</td>
                                 <td>{{category.value.slug}}</td>
-                                <!-- <td>
-                                    <span [hidden]="{{category.value.featuredForHome}}"
-                                        class="badge badge-success">Featured</span>
-                                    <span [hidden]="{{category.value.featuredForHome}}"
-                                        class="badge badge-dark">Disabled</span>
-                                </td> -->
+                                <td>
+                                    <span *ngIf="category.value.featuredForHome"
+                                        class="badge badge-success largeBadge">Featured</span>
+
+                                    <span *ngIf="!category.value.featuredForHome"
+                                        class="badge badge-dark largeBadge">Disabled</span>
+                                </td>
                                 <td>true</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary text-white" data-toggle="modal"
-                                        data-target="#deleteModal">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
+                                    <!-- <button type="button" class="btn btn-primary text-white" data-toggle="modal"
+                                        data-target="#deleteModal">Delete</button> -->
+                                    <button type="button" class="btn btn-primary text-white"
+                                        (click)="showDltModal(category.value)">Delete</button>
+                                    &nbsp; &nbsp;<button type="button" data-toggle="modal"
+                                        (click)="showEditModal(category.key,category.value)"
                                         class="btn btn-dark text-white">Edit</button>
+                                    <!-- &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
+                                        class="btn btn-dark text-white">Edit</button> -->
                                 </td>
                             </tr>
                         </tbody>

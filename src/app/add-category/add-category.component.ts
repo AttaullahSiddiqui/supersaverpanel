@@ -19,7 +19,7 @@ export class AddCategoryComponent implements OnInit {
     if (!catInfo.catFeatured) {
       catInfo.catFeatured = false
     }
-    this._dataService.addCategory(catInfo).subscribe(res => {
+    this._dataService.postAPI("/api/createCategory", catInfo).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
         this.catData = {};

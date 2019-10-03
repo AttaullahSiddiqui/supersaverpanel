@@ -12,16 +12,21 @@ declare var $: any;
 })
 export class AllCategoriesComponent implements OnInit {
   responseError = "";
-  catArray = []
+  responseSuccess = "";
+  catArray = [];
+  deleteObject = "";
+  editObject = "";
+  editKey = "";
+  dltIndex: any;
+
   @ViewChild('editModal', { static: false }) public editModal: ModalDirective;
   @ViewChild('deleteModal', { static: false }) public deleteModal: ModalDirective;
 
 
   constructor(private _dataService: DataService) {
-    this._dataService.fetchCategory().subscribe(res => {
+    this._dataService.fetchAPI("/api/fetchCategories").subscribe(res => {
       if (res.data) {
-        console.log(res.data);
-        console.log(res.data['0'].name);
+        console.log(res.data)
         this.catArray = res.data
       } else {
         this.responseError = res.message
@@ -32,18 +37,52 @@ export class AllCategoriesComponent implements OnInit {
   ngOnInit() {
   }
 
+  showDltModal(key) {
+    // this.deleteObject = categoryNode;
+    // this.editObject = { ...categoryNode };
+    var index = this.catArray.indexOf(key);
+    console.log(index);
+    this.dltIndex = index;
+    $('#deleteModal').modal('show');
+  }
+  showEditModal(key, categoryNode) {
+    this.editObject = { ...categoryNode };
+    this.editKey = key;
+    $('#editModal').modal('show');
+  }
+
 
   deleteCoupon() {
-    // $('#deleteModal').modal('hide');
-    // $("#deleteModal .close").click();
-    // $("#closebtn").click();
-    // $('#closebtn').trigger('click');
+    console.log(this.catArray[this.dltIndex]._id)
+    this._dataService.postAPI("/api/deleteCategory", { _id: this.catArray[this.dltIndex]._id }).subscribe(res => {
+      if (res.data) {
+        this.responseSuccess = res.message;
+        this.catArray.splice(this.dltIndex, 1)
+      } else {
+        console.log(res.message);
+        this.responseError = res.message
+      }
+    })
     document.getElementById('closebtn').click();
   }
 
   saveEditedCoupon() {
-    // $('#editModal').modal('hide')
+    this._dataService.postAPI("/api/editCategory", this.editObject).subscribe(res => {
+      if (res.data) {
+        this.responseSuccess = res.message;
+        this.catArray[this.editKey] = res.data;
+      } else {
+        console.log(res.message);
+        this.responseError = res.message
+      }
+    })
     document.getElementById('editbtn').click();
+  }
+  closeSuccess() {
+    this.responseSuccess = ""
+  }
+  closeError() {
+    this.responseError = ""
   }
 
 }

@@ -16,25 +16,44 @@ export class DataService {
 
   }
 
-  getUsers() {
-    return this._http.get("/api/users")
+  fetchAPI(url) {
+    return this._http.get(url)
+      .pipe(map(res => JSON.parse(JSON.stringify(res))));
+  }
+  postAPI(url, reqData) {
+    console.log(reqData)
+    return this._http.post(url, reqData)
+      .pipe(map(res => JSON.parse(JSON.stringify(res))));
+  }
+  putAPI(url, reqData) {
+    return this._http.post(url, reqData)
+      .pipe(map(res => JSON.parse(JSON.stringify(res))));
+  }
+  deleteAPI(url, reqData) {
+    return this._http.delete(url, reqData)
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
 
-  loginUser(userData) {
-    return this._http.post("/api/login", userData)
-      .pipe(map(res => JSON.parse(JSON.stringify(res))));
-  }
+  // getUsers() {
+  //   return this._http.get("/api/users")
+  //     .pipe(map(res => JSON.parse(JSON.stringify(res))));
+  // }
 
-  addCategory(catData) {
-    return this._http.post("/api/createCategory", catData)
-      .pipe(map(res => JSON.parse(JSON.stringify(res))));
-  }
-  fetchCategory() {
-    console.log("Wokrrrr")
-    return this._http.get("/api/fetchCategories")
-      .pipe(map(res => JSON.parse(JSON.stringify(res))));
-  }
+  // loginUser(userData) {
+  //   return this._http.post("/api/login", userData)
+  //     .pipe(map(res => JSON.parse(JSON.stringify(res))));
+  // }
+
+  // addCategory(catData) {
+  //   return this._http.post("/api/createCategory", catData)
+  //     .pipe(map(res => JSON.parse(JSON.stringify(res))));
+  // }
+  // fetchCategory() {
+  //   return this._http.get("/api/fetchCategories")
+  //     .pipe(map(res => JSON.parse(JSON.stringify(res))));
+  // }
+
+
   // addUser() {
   //   console.log("Add User working");
   //   var userData = {

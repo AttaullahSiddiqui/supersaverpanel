@@ -14,7 +14,6 @@ module.exports = {
 };
 
 function fetchCategories(req, res) {
-    console.log("Hello from fetch ctrl");
 
     Category.find({}, function (err, categories) {
         if (err) {
@@ -26,6 +25,11 @@ function fetchCategories(req, res) {
             res.json(resHandler.respondSuccess(categories, "Categories fetched successfully", 2));
         }
     });
+}
+function editCategory(req, res) {
+    console.log("jjjjjj");
+    console.log(req.body);
+    res.send("hahhahha")
 }
 
 function registerUser(req, res) {
@@ -42,16 +46,3 @@ function registerUser(req, res) {
         res.json(resHandler.respondError(error[0], (error[1] || -1)));
     })
 }
-
-const sendError = (err, res) => {
-    response.status = 501;
-    response.message = typeof err == 'object' ? err.message : err;
-    res.status(501).json(response);
-};
-
-// Response handling
-let response = {
-    status: 200,
-    data: [],
-    message: null
-};

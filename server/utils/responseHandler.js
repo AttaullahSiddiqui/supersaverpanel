@@ -19,7 +19,6 @@ module.exports = {
 }
 
 function respondError(error, code) {
-    console.log(httpCodeMap[code] || 500)
     return {
         status: httpCodeMap[code] || 500,
         message: error
@@ -27,7 +26,6 @@ function respondError(error, code) {
 }
 
 function respondSuccess(dataa, successMsg, code) {
-    console.log(httpCodeMap[code] || 200)
     return {
         status: httpCodeMap[code] || 200,
         data: dataa,
