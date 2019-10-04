@@ -18,17 +18,27 @@ export class AllCategoriesComponent implements OnInit {
   editObject = "";
   editKey = "";
   dltIndex: any;
+  skipNo = 0;
 
   @ViewChild('editModal', { static: false }) public editModal: ModalDirective;
   @ViewChild('deleteModal', { static: false }) public deleteModal: ModalDirective;
 
 
   constructor(private _dataService: DataService) {
-    this._dataService.fetchAPI("/api/fetchCategories").subscribe(res => {
+    this.getCategoriesFunc();
+  }
+  getCategoriesFunc() {
+    this._dataService.fetchAPIWithLimit("/api/fetchCategories", this.skipNo, 5).subscribe(res => {
       if (res.data) {
         console.log(res.data)
-        this.catArray = res.data
+        this.catArray = [];
+        this.catArray = res.data;
+        this.responseError = "";
       } else {
+        if (this.skipNo) {
+          this.skipNo -= 5;
+        }
+        this.responseSuccess = ""
         this.responseError = res.message
       }
     })
@@ -46,6 +56,8 @@ export class AllCategoriesComponent implements OnInit {
     $('#deleteModal').modal('show');
   }
   showEditModal(key, categoryNode) {
+    // $(this).find('form')[0].reset();
+    this.editObject = "";
     this.editObject = { ...categoryNode };
     this.editKey = key;
     $('#editModal').modal('show');
@@ -59,7 +71,6 @@ export class AllCategoriesComponent implements OnInit {
         this.responseSuccess = res.message;
         this.catArray.splice(this.dltIndex, 1)
       } else {
-        console.log(res.message);
         this.responseError = res.message
       }
     })
@@ -71,6 +82,7 @@ export class AllCategoriesComponent implements OnInit {
       if (res.data) {
         this.responseSuccess = res.message;
         this.catArray[this.editKey] = res.data;
+        this.editObject = ""
       } else {
         console.log(res.message);
         this.responseError = res.message
@@ -84,5 +96,21 @@ export class AllCategoriesComponent implements OnInit {
   closeError() {
     this.responseError = ""
   }
-
+  nextFunc() {
+    if (!this.catArray) {
+      this.responseError = "Can't load more categories at the moment";
+      return;
+    }
+    this.skipNo += 5;
+    this.getCategoriesFunc()
+  }
+  prevFunc() {
+    if (this.skipNo >= 5) {
+      this.skipNo -= 5;
+      this.getCategoriesFunc()
+    } else {
+      this.responseError = "No more previous data exist";
+      return;
+    }
+  }
 }

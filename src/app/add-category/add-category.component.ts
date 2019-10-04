@@ -28,4 +28,10 @@ export class AddCategoryComponent implements OnInit {
       }
     })
   }
+  closeSuccess() {
+    this.responseSuccess = ""
+  }
+  closeError() {
+    this.responseError = ""
+  }
 }

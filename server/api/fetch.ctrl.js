@@ -14,17 +14,33 @@ module.exports = {
 };
 
 function fetchCategories(req, res) {
+    Category.
+        find({}).
+        skip(Number(req.query.skipNo)).
+        limit(Number(req.query.limitNo)).
+        exec(function (err, categories) {
+            if (err) {
+                res.json(resHandler.respondError(err[0], err[1] || -1));
+            }
+            else {
+                if (categories.length) {
+                    res.json(resHandler.respondSuccess(categories, "Categories fetched successfully", 2));
+                } else {
+                    res.json(resHandler.respondError("Can't load more categories", -3));
+                }
+            }
+        });
 
-    Category.find({}, function (err, categories) {
-        if (err) {
-            res.json(resHandler.respondError(error[0], error[1] || -1));
-        } else if (!categories) {
-            res.json(resHandler.respondError("No categories at the moment", -3));
-        }
-        else {
-            res.json(resHandler.respondSuccess(categories, "Categories fetched successfully", 2));
-        }
-    });
+    // Category.find({}, function (err, categories) {
+    //     if (err) {
+    //         res.json(resHandler.respondError(error[0], error[1] || -1));
+    //     } else if (!categories) {
+    //         res.json(resHandler.respondError("No categories at the moment", -3));
+    //     }
+    //     else {
+    //         res.json(resHandler.respondSuccess(categories, "Categories fetched successfully", 2));
+    //     }
+    // });
 }
 function editCategory(req, res) {
     console.log("jjjjjj");
@@ -45,4 +61,7 @@ function registerUser(req, res) {
         var error = errHandler.handle(err);
         res.json(resHandler.respondError(error[0], (error[1] || -1)));
     })
+}
+function callback() {
+
 }

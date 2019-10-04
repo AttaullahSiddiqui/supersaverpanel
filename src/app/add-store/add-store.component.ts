@@ -1,4 +1,5 @@
 import { Component, OnInit, NgModule } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-add-store',
@@ -7,13 +8,30 @@ import { Component, OnInit, NgModule } from '@angular/core';
 })
 export class AddStoreComponent implements OnInit {
   public showList: boolean;
-  constructor() {
+  public storeInfo = {};
+  responseSuccess = "";
+  responseError = "";
+  constructor(private _dataService: DataService) {
 
   }
 
   ngOnInit() {
     this.showList = false;
   }
-
-
+  addStore() {
+    this._dataService.postAPI("/api/addStore", this.storeInfo).subscribe(res => {
+      if (res.data) {
+        this.responseSuccess = res.message;
+        this.storeInfo = {};
+      } else {
+        this.responseError = res.message
+      }
+    })
+  }
+  closeSuccess() {
+    this.responseSuccess = ""
+  }
+  closeError() {
+    this.responseError = ""
+  }
 }

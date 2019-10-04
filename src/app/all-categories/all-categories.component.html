@@ -71,8 +71,10 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" [disabled]="!editCatForm.form.valid">Save
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                        (click)="editCatForm.reset()">Close</button>
+                    <button type="submit" class="btn btn-success"
+                        [disabled]="!editCatForm.form.valid || !editCatForm.dirty">Save
                         Changes</button>
                 </div>
             </form>
@@ -144,8 +146,8 @@
                         </thead>
                         <tbody>
                             <!-- <tr *ngFor="let category of catArray"> -->
-                            <tr *ngFor="let category of catArray | keyvalue">
-                                <td>{{category.key}}</td>
+                            <tr *ngFor="let category of catArray | keyvalue;index as i">
+                                <td>{{i+this.skipNo+1}}</td>
                                 <td>{{category.value.name}}</td>
                                 <td>{{category.value.slug}}</td>
                                 <td>
@@ -171,8 +173,8 @@
                         </tbody>
                     </table>
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <li class="page-item"><a class="page-link" (click)="prevFunc()">Prev</a></li>
+                        <li class="page-item"><a class="page-link" (click)="nextFunc()">Next</a></li>
                     </ul>
                 </div>
             </div>

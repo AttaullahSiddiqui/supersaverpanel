@@ -6,6 +6,7 @@ const ObjectID = require('mongodb').ObjectID;
 
 let User = require('../Models/user.model');
 let Category = require('../Models/categories.model');
+let Store = require('../Models/stores.model');
 let errHandler = require('../utils/errorHandler');
 let resHandler = require('../utils/responseHandler');
 
@@ -53,7 +54,6 @@ function registerUser(req, res) {
 }
 
 function createCategory(req, res) {
-    console.log(req.body)
     var newCategory = new Category({
         name: req.body.catName,
         slug: req.body.catSlug,
@@ -71,7 +71,35 @@ function createCategory(req, res) {
 }
 
 function addStore(req, res) {
-    res.send("Hahahha from addStore")
+    var newStore = new Store({
+        name: req.body.name,
+        heading: req.body.heading,
+        categoryRef: req.body.categoryRef,
+        shortDes: req.body.shortDes,
+        longDes: req.body.longDes,
+        img: req.body.img,
+        imgAlt: req.body.imgAlt,
+        directUrl: req.body.directUrl,
+        trackUrl: req.body.trackUrl,
+        metaTitle: req.body.metaTitle,
+        metaDes: req.body.metaDes,
+        metaKeywords: req.body.metaKeywords,
+        fb: req.body.fb,
+        pin: req.body.pin,
+        wik: req.body.wik,
+        twit: req.body.twit,
+        gplus: req.body.gplus,
+        android: req.body.android,
+        ios: req.body.ios,
+        topStore: req.body.topStore,
+        editorChoice: req.body.editorChoice
+    });
+    newStore.save().then(function (result) {
+        res.json(resHandler.respondSuccess(result, "Store added successfully", 2));
+    }, function (err) {
+        var error = errHandler.handle(err);
+        res.json(resHandler.respondError(error[0], (error[1] || -1)));
+    })
 }
 
 function addCoupon(req, res) {
