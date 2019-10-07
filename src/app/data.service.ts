@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 // import { Observable, of } from 'rxjs';
+import { finalize } from "rxjs/operators";
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from "rxjs/operators";
-import { filter } from 'minimatch';
+import { AngularFireStorage } from '@angular/fire/storage';
+// import { filter } from 'minimatch';
 // import 'rxjs/add/operator/catch'
 
 @Injectable({
@@ -12,7 +14,7 @@ export class DataService {
 
   result: any;
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private storage: AngularFireStorage) {
 
   }
 
@@ -21,7 +23,6 @@ export class DataService {
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
   postAPI(url, reqData) {
-    console.log(reqData)
     return this._http.post(url, reqData)
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
@@ -40,6 +41,18 @@ export class DataService {
     }
     return this._http.get(url, { params: params })
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
+  }
+
+  storeImage(filePath, selectedImage) {
+    const fileRef = this.storage.ref(filePath);
+    return this.storage.upload(filePath, selectedImage).snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe((url) => {
+          console.log("Baba", url);
+          return url;
+        })
+      })
+    );
   }
 
   // getUsers() {

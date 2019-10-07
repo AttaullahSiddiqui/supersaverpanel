@@ -20,20 +20,5 @@ router.post('/editCategory', putCtrl.editCategory);
 
 router.post('/deleteCategory', dltCtrl.deleteCategory);
 
-// router.get('/users', (req, res) => {
-//     console.log("Started")
-//     connection((db) => {
-//         db.collection('users')
-//             .find()
-//             .toArray()
-//             .then((users) => {
-//                 response.data = users;
-//                 res.json(response);
-//             })
-//             .catch((err) => {
-//                 sendError(err, res);
-//             });
-//     });
-// });
 
 module.exports = router;

@@ -51,12 +51,10 @@ export class AllCategoriesComponent implements OnInit {
     // this.deleteObject = categoryNode;
     // this.editObject = { ...categoryNode };
     var index = this.catArray.indexOf(key);
-    console.log(index);
     this.dltIndex = index;
     $('#deleteModal').modal('show');
   }
   showEditModal(key, categoryNode) {
-    // $(this).find('form')[0].reset();
     this.editObject = "";
     this.editObject = { ...categoryNode };
     this.editKey = key;
@@ -65,7 +63,6 @@ export class AllCategoriesComponent implements OnInit {
 
 
   deleteCoupon() {
-    console.log(this.catArray[this.dltIndex]._id)
     this._dataService.postAPI("/api/deleteCategory", { _id: this.catArray[this.dltIndex]._id }).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;

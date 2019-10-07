@@ -19,9 +19,9 @@
                     <strong>Create Store</strong>
                 </div>
                 <div class="card-body">
-                    <form #addStoreForm="ngForm" novalidate (ngSubmit)='addStore(storeInfo)'>
+                    <form #addStoreForm="ngForm" [hidden]="!categories" novalidate (ngSubmit)='addStore(storeInfo)'>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Store Name</label>
+                            <label class="col-md-3 col-form-label" for="name">Store Name</label>
                             <div class="col-md-9">
                                 <input type="text" name="name" [(ngModel)]="storeInfo.name" class="form-control"
                                     required placeholder="...">
@@ -29,19 +29,29 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="select2">Heading*</label>
+                            <label class="col-md-3 col-form-label" for="heading">Heading*</label>
                             <div class="col-md-9">
                                 <select name="heading" required [(ngModel)]="storeInfo.heading" class="form-control">
-                                    <option value="1">Promo codes & Coupons</option>
-                                    <option value="2">Coupons & Promo codes</option>
-                                    <option value="3">Voucher & Discount codes</option>
+                                    <option value="Promo codes & Coupons">Promo codes & Coupons</option>
+                                    <option value="Coupons & Promo codes">Coupons & Promo codes</option>
+                                    <option value="Voucher & Discount codes">Voucher & Discount codes</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <label class="col-md-3 col-form-label" for="select2">Choose Categories</label>
-                            <div class="col-md-8">
-                                <div class="input-group">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="categoryRef">Choose Categories</label>
+                            <div class="col-md-9">
+                                <ng-select [items]="categories" name="categoryRef" [multiple]="true"
+                                    [closeOnSelect]="false" [searchable]="false" bindLabel="name"
+                                    placeholder="Select Category" [(ngModel)]="storeInfo.categoryRef">
+                                </ng-select>
+                                <!-- <select class="selectpicker" multiple name="categoryRef"
+                                    [(ngModel)]="storeInfo.categoryRef" required class="form-control">
+                                    <option value="1">Promo codes & Coupons</option>
+                                    <option value="2">Coupons & Promo codes</option>
+                                    <option value="3">Voucher & Discount codes</option>
+                                </select> -->
+                                <!-- <div class="input-group">
                                     <div class="input-group-prepend">
                                         &nbsp;&nbsp;&nbsp; <button class="btn btn-outline-secondary" type="button">
                                             <i class="fa fa-close"></i>
@@ -56,8 +66,6 @@
                                     <input (click)="showList=!showList" type="text" class="form-control"
                                         name="categoryRef" [(ngModel)]="storeInfo.categoryRef" required>
                                 </div>
-                                <!-- <input type="text dropdown-toggle" data-toggle="dropdown" id="text-input"
-                                    name="text-input" class="form-control" required placeholder="..."> -->
 
                                 <ul class="list-group" [hidden]="!showList">
                                     <li class="list-group-item">Cras justo odio</li>
@@ -65,11 +73,11 @@
                                     <li class="list-group-item">Morbi leo risus</li>
                                     <li class="list-group-item">Porta ac consectetur ac</li>
                                     <li class="list-group-item">Vestibulum at eros</li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Short Description</label>
+                            <label class="col-md-3 col-form-label" for="shortDes">Short Description</label>
                             <div class="col-md-9">
                                 <app-ngx-editor [placeholder]="'Enter text here...'" required name="shortDes"
                                     [(ngModel)]="storeInfo.shortDes" minHeight="160px" [spellcheck]="true">
@@ -78,7 +86,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Long Description</label>
+                            <label class="col-md-3 col-form-label" for="longDes">Long Description</label>
                             <div class="col-md-9">
                                 <app-ngx-editor [placeholder]="'Enter text here...'" required name="longDes"
                                     [(ngModel)]="storeInfo.longDes" minHeight="160px" [spellcheck]="true">
@@ -90,11 +98,18 @@
                         <!-- <app-ngx-editor [spellcheck]="true" [(ngModel)]="htmlContent"></app-ngx-editor> -->
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Image</label>
+                            <label class="col-md-3 col-form-label" for="imge">Image</label>
+                            <div class="input-group col-md-8">
+                                <img src="{{imgSrc}}" width=200 height=200 />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="imge">Image</label>
                             <div class="input-group col-md-8">
                                 <div class="custom-file">
-                                    <input type="file" name="imge" required [(ngModel)]="storeInfo.img"
-                                        class="custom-file-input" accept="image/x-png,image/gif,image/jpeg"
+                                    <input type="file" name="imge" (change)="showPreview($event)" required [(ngModel)]="
+                                        storeInfo.img" class="custom-file-input"
+                                        accept="image/x-png,image/gif,image/jpeg"
                                         aria-describedby="inputGroupFileAddon01">
                                     <label class="custom-file-label"
                                         for="inputGroupFile01">{{htmlContent}}{{storeInfo.img}}</label>
@@ -102,14 +117,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Image Alt</label>
+                            <label class="col-md-3 col-form-label" for="imgAlt">Image Alt</label>
                             <div class="col-md-9">
                                 <input type="text" name="imgAlt" [(ngModel)]="storeInfo.imgAlt" class="form-control"
                                     required placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Direct URL</label>
+                            <label class="col-md-3 col-form-label" for="directUrl">Direct URL</label>
                             <div class="col-md-9">
                                 <input type="text" name="directUrl" [(ngModel)]="storeInfo.directUrl"
                                     class="form-control" required placeholder="...">
@@ -118,28 +133,28 @@
 
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Tracking URL</label>
+                            <label class="col-md-3 col-form-label" for="trackUrl">Tracking URL</label>
                             <div class="col-md-9">
                                 <input type="text" name="trackUrl" [(ngModel)]="storeInfo.trackUrl" class="form-control"
                                     required placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Meta Title</label>
+                            <label class="col-md-3 col-form-label" for="metaTitle">Meta Title</label>
                             <div class="col-md-9">
                                 <input type="text" name="metaTitle" [(ngModel)]="storeInfo.metaTitle"
                                     class="form-control" required placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Meta Description</label>
+                            <label class="col-md-3 col-form-label" for="metaDes">Meta Description</label>
                             <div class="col-md-9">
                                 <input type="text" name="metaDes" [(ngModel)]="storeInfo.metaDes" class="form-control"
                                     required placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input"><b>Meta Keywords</b>(comma
+                            <label class="col-md-3 col-form-label" for="metaKeywords"><b>Meta Keywords</b>(comma
                                 separated)</label>
                             <div class="col-md-9">
                                 <input type="text" name="metaKeywords" [(ngModel)]="storeInfo.metaKeywords"
@@ -150,49 +165,49 @@
                             Useful Links
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Facebook</label>
+                            <label class="col-md-3 col-form-label" for="fb">Facebook</label>
                             <div class="col-md-9">
                                 <input type="text" name="fb" [(ngModel)]="storeInfo.fb" class="form-control" required
                                     placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Pinterest</label>
+                            <label class="col-md-3 col-form-label" for="pin">Pinterest</label>
                             <div class="col-md-9">
                                 <input type="text" name="pin" [(ngModel)]="storeInfo.pin" class="form-control" required
                                     placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Wikipedia</label>
+                            <label class="col-md-3 col-form-label" for="wik">Wikipedia</label>
                             <div class="col-md-9">
                                 <input type="text" name="wik" [(ngModel)]="storeInfo.wik" class="form-control" required
                                     placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Twitter</label>
+                            <label class="col-md-3 col-form-label" for="twit">Twitter</label>
                             <div class="col-md-9">
                                 <input type="text" name="twit" [(ngModel)]="storeInfo.twit" class="form-control"
                                     required placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Google Plus</label>
+                            <label class="col-md-3 col-form-label" for="gplus">Google Plus</label>
                             <div class="col-md-9">
                                 <input type="text" name="gplus" [(ngModel)]="storeInfo.gplus" class="form-control"
                                     required placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Android App Link</label>
+                            <label class="col-md-3 col-form-label" for="android">Android App Link</label>
                             <div class="col-md-9">
                                 <input type="text" name="android" [(ngModel)]="storeInfo.android" class="form-control"
                                     required placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">IOS App Link</label>
+                            <label class="col-md-3 col-form-label" for="ios">IOS App Link</label>
                             <div class="col-md-9">
                                 <input type="text" name="ios" [(ngModel)]="storeInfo.ios" class="form-control" required
                                     placeholder="...">
@@ -203,7 +218,7 @@
                             <div class="col-md-10">
                                 <label class="switch switch-primary">
                                     <input type="checkbox" value=true name="topStore" [(ngModel)]="storeInfo.topStore"
-                                        class="switch-input" checked>
+                                        class="switch-input">
                                     <span class="switch-slider"></span>
                                 </label>
                             </div>
@@ -213,7 +228,7 @@
                             <div class="col-md-10">
                                 <label class="switch switch-primary">
                                     <input type="checkbox" value=true name="editorChoice"
-                                        [(ngModel)]="storeInfo.editorChoice" class="switch-input" checked>
+                                        [(ngModel)]="storeInfo.editorChoice" class="switch-input">
                                     <span class="switch-slider"></span>
                                 </label>
                             </div>
@@ -224,7 +239,7 @@
                             &nbsp;
                             &nbsp;
                             <button type="submit" class="btn btn-dark"
-                                [disabled]="!addStoreForm.form.valid">Save</button>
+                                [disabled]="!addStoreForm.form.valid || !storeInfo.categoryRef">Save</button>
                         </div>
                     </form>
                 </div>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxEditorModule } from 'ngx-editor';
@@ -32,6 +33,7 @@ import { AllDealsComponent } from '../all-deals/all-deals.component';
     imports: [
         CommonModule,
         RouterModule.forChild(MenuRoutes),
+        NgSelectModule,
         FormsModule,
         HttpClientModule,
         NgxEditorModule,
