@@ -3,15 +3,16 @@ import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-// import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { AngularFireModule } from '@angular/fire';
+
+
+// import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { NgxEditorModule } from 'ngx-editor';
+// import { NgxEditorModule } from 'ngx-editor';
 import { SortablejsModule } from 'ngx-sortablejs';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -46,7 +47,7 @@ import { MenuComponent } from './menu/menu.component';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 
-import { DataService } from './data.service';
+// import { DataService } from './data.service';
 
 
 
@@ -55,13 +56,12 @@ import { DataService } from './data.service';
     BrowserModule,
     BrowserAnimationsModule,
     AngularFontAwesomeModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireStorageModule,
-    NgxEditorModule,
+
     CommonModule,
-    NgSelectModule,
     FormsModule,
     HttpClientModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     SortablejsModule.forRoot({ animation: 200 }),
     AppRoutingModule,
     AppAsideModule,

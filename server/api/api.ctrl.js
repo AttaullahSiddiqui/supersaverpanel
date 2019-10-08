@@ -71,6 +71,7 @@ function createCategory(req, res) {
 }
 
 function addStore(req, res) {
+    console.log(req.body)
     var newStore = new Store({
         name: req.body.name,
         heading: req.body.heading,

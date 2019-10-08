@@ -6,11 +6,13 @@ const ObjectID = require('mongodb').ObjectID;
 
 let User = require('../Models/user.model');
 let Category = require('../Models/categories.model');
+let Store = require('../Models/stores.model');
 let errHandler = require('../utils/errorHandler');
 let resHandler = require('../utils/responseHandler');
 
 module.exports = {
-    fetchCategories: fetchCategories
+    fetchCategories: fetchCategories,
+    fetchStores: fetchStores
 };
 
 function fetchCategories(req, res) {
@@ -42,6 +44,24 @@ function fetchCategories(req, res) {
     //     }
     // });
 }
+function fetchStores() {
+    Store.find({}, function (err, categories) {
+        if (err) {
+            res.json(resHandler.respondError(error[0], error[1] || -1));
+        } else if (!categories) {
+            res.json(resHandler.respondError("No categories at the moment", -3));
+        }
+        else {
+            res.json(resHandler.respondSuccess(categories, "Categories fetched successfully", 2));
+        }
+    });
+}
+
+
+
+
+
+
 function editCategory(req, res) {
     console.log("jjjjjj");
     console.log(req.body);

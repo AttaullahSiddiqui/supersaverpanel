@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataService } from '../data.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { HttpClient } from '@angular/common/http';
 import { map } from "rxjs/operators";
 
 @Component({
@@ -9,18 +11,21 @@ import { map } from "rxjs/operators";
     '../../../node_modules/@ng-select/ng-select/themes/default.theme.css'],
   encapsulation: ViewEncapsulation.None
 })
+
 export class AddStoreComponent implements OnInit {
-  public showList: boolean;
-  public storeInfo = {};
-  public categories: any;
+
+  showList: boolean;
+  storeInfo = {};
+  categories: any;
   selectedImage: any = null;
-  imgSrc = "";
+  imageChangedEvent: any = '';
+  imgModel = "";
+  croppedImage: any = '';
   responseSuccess = "";
   responseError = "";
-  people$: any;
-  constructor(private _dataService: DataService) {
+  _self = this;
 
-  }
+  constructor(private _dataService: DataService, private _http: HttpClient) { }
 
   ngOnInit() {
     this._dataService.fetchAPI("/api/fetchCategories").subscribe(res => {
@@ -31,58 +36,69 @@ export class AddStoreComponent implements OnInit {
         this.responseError = res.message
       }
     })
-    this.people$ = [
-      "hgdgjdws",
-      "bbbbb",
-      "cccc",
-      "hgdgjdws",
-      "bbbbb",
-      "cccc",
-      "hgdgjdws",
-      "bbbbb",
-      "cccc"
-    ];
   }
   addStore(storeInfo) {
-    // var localArr = []
-    // storeInfo.categoryRef.map(res => localArr.push(res._id));
-    // storeInfo.categoryRef = localArr;
-    // if (storeInfo.editorChoice) {
-    //   storeInfo.editorChoice = false
-    // }
-    // if (storeInfo.topStore) {
-    //   storeInfo.topStore = false
-    // }
-    var filePath = `storeImages/${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
-    // console.log(storeInfo);
-    // console.log(filePath);
+    var self = this;
 
-    this._dataService.storeImage(filePath, this.selectedImage).subscribe(res => { console.log("Hahahah", res) })
+    var filePath = `storeImages/_${new Date().getTime()}`;
 
-    // this._dataService.postAPI("/api/addStore", this.storeInfo).subscribe(res => {
-    //   if (res.data) {
-    //     this.responseSuccess = res.message;
-    //     this.storeInfo = {};
-    //   } else {
-    //     this.responseError = res.message
-    //   }
-    // })
+    this._dataService.storeImage(filePath, this.selectedImage, function (error, data) {
+      if (error) {
+        console.log("Errorrr", error);
+        this.responseError = "Can't upload image to the Server";
+        return;
+      }
+      if (data) {
+        if (!storeInfo.editorChoice) {
+          storeInfo.editorChoice = false
+        }
+        if (!storeInfo.topStore) {
+          storeInfo.topStore = false
+        }
+        storeInfo.img = data;
+        self.saveStoreToDB(storeInfo)
+      }
+    }).subscribe()
   }
-  showPreview(event: any) {
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => this.imgSrc = e.target.result;
-      reader.readAsDataURL(event.target.files[0]);
-      this.selectedImage = event.target.files[0];
-    }
-    else {
-      this.selectedImage = null;
-    }
+
+  saveStoreToDB(storeNode) {
+    this._dataService.postAPI("/api/addStore", storeNode).subscribe(res => {
+      if (res.data) {
+        this.responseSuccess = res.message;
+        this.storeInfo = {};
+        this.imgModel = "";
+        this.croppedImage = "";
+      } else {
+        this.responseError = res.message
+      }
+    })
   }
+
   closeSuccess() {
     this.responseSuccess = ""
   }
   closeError() {
     this.responseError = ""
+  }
+
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+    this.selectedImage = event.file;
+    var reader = new FileReader();
+    reader.readAsDataURL(event.file);
+    reader.onloadend = () => {
+      this.croppedImage = reader.result;
+    }
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
   }
 }

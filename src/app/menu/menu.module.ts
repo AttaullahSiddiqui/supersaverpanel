@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxEditorModule } from 'ngx-editor';
 import { SortablejsModule } from 'ngx-sortablejs';
+
 
 import { MenuRoutes } from './menu.routing';
 
@@ -33,6 +35,7 @@ import { AllDealsComponent } from '../all-deals/all-deals.component';
     imports: [
         CommonModule,
         RouterModule.forChild(MenuRoutes),
+        ImageCropperModule,
         NgSelectModule,
         FormsModule,
         HttpClientModule,

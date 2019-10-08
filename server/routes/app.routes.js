@@ -13,6 +13,7 @@ router.post('/addCoupon', apiCtrl.addCoupon);
 
 
 router.get('/fetchCategories', fetchCtrl.fetchCategories);
+router.get('/fetchStores', fetchCtrl.fetchStores);
 
 
 router.post('/editCategory', putCtrl.editCategory);

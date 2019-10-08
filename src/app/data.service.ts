@@ -43,14 +43,13 @@ export class DataService {
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
 
-  storeImage(filePath, selectedImage) {
+  storeImage(filePath, selectedImage, cb) {
     const fileRef = this.storage.ref(filePath);
     return this.storage.upload(filePath, selectedImage).snapshotChanges().pipe(
       finalize(() => {
         fileRef.getDownloadURL().subscribe((url) => {
-          console.log("Baba", url);
-          return url;
-        })
+          cb(undefined, url);
+        }, (err) => { cb(err); })
       })
     );
   }
