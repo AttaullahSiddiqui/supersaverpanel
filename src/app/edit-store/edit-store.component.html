@@ -1,3 +1,26 @@
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Store</h4>
+                <button type="button" class="close" id="closebtn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure You want to delete this Store?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark" (click)="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <br>
 <div class="alert alert-success alert-dismissible fade show col-8" *ngIf="responseSuccess" role="alert">
     {{responseSuccess}}
@@ -14,34 +37,32 @@
 
 <div class="row">
     <div class="form-group col-5">
-        <label for="userType">
-            <h5>PLEASE SELECT STORE</h5>
-        </label>
-        <select data-placeholder="Choose" (change)="loadStoreDetails($event)" *ngIf="dataLoaded" class="form-control"
-            id="storeSelect">
-            <option value=""></option>
-            <option value="data.value._id" *ngFor="let data of dataLoaded | keyvalue">
+        <select data-placeholder="Choose" [(ngModel)]="storeArrayModel"
+            (change)="loadStoreDetails(storeArrayModel,$event)" *ngIf="dataLoaded" class="form-control">
+            <!-- <option value="" selected="selected">Please select</option> -->
+            <option [value]="data.value._id" *ngFor="let data of dataLoaded | keyvalue">
                 {{data.value.name}}
             </option>
         </select>
     </div>
     <div class="form-group col-5">
-        <button type="button" class="btn btn-danger pull-right" [disabled]="!storeInfo">Delete</button>
+        <button type="button" class="btn btn-danger pull-right" (click)="showDltModal()"
+            [disabled]="!storeInfo">Delete</button>
     </div>
 </div>
 
 
 
 <br>
-<div class="animated fadeIn" *ngIf="storeInfo">
+<div class="animated fadeIn">
     <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <strong>Create Store</strong>
+                    <strong>Please select Store</strong>
                 </div>
-                <div class="card-body">
-                    <form #editStoreForm="ngForm" novalidate (ngSubmit)='editStore(storeInfo)'>
+                <div class="card-body" *ngIf="storeInfo">
+                    <form #editStoreForm="ngForm" novalidate (ngSubmit)='saveEditStoreToDB(storeInfo)'>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="name">Store Name</label>
                             <div class="col-md-9">
@@ -50,24 +71,19 @@
                             </div>
                         </div>
 
+                        <!-- <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="name">Store URL</label>
+                            <div class="col-md-9">
+                                <input type="text" name="name" [(ngModel)]="storeInfo.url" class="form-control"
+                                    required>
+                            </div>
+                        </div> -->
+
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="heading">Heading*</label>
                             <div class="col-md-9">
-                                <select name="heading" required [(ngModel)]="storeInfo.heading" class="form-control">
-                                    <option value="Promo codes & Coupons">Promo codes & Coupons</option>
-                                    <option value="Coupons & Promo codes">Coupons & Promo codes</option>
-                                    <option value="Voucher & Discount codes">Voucher & Discount codes</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="categoryRef">Choose Categories</label>
-                            <div class="col-md-9">
-                                <ng-select [items]="categories" name="categoryRef" [multiple]="true"
-                                    [closeOnSelect]="false" [searchable]="false" bindLabel="name" bindValue="_id"
-                                    [hideSelected]="true" placeholder="Select Category"
-                                    [(ngModel)]="storeInfo.categoryRef">
-                                </ng-select>
+                                <input type="text" name="heading" [(ngModel)]="storeInfo.heading" class="form-control"
+                                    required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -88,17 +104,34 @@
                             </div>
                         </div>
                         <br>
-
-                        <div class="form-group row">
+                        <div class="text-center">
+                            <div class="form-group row">
+                                <div class="input-group col-md-6">
+                                    <img [src]="storeInfo.img" />
+                                </div>
+                            </div>
+                            <br>
+                            <!-- <div class="form-group row" *ngIf="croppedImage">
                             <div class="input-group col-md-8">
                                 <img [src]="croppedImage" />
+                            </div>
+                        </div> -->
+                            <div class="card col-md-6" *ngIf="croppedImage" style="width: 200px">
+                                <div class="form-group row">
+                                    <div class="input-group">
+                                        <img [src]="croppedImage" />
+                                    </div>
+                                </div>
+                                <div class="card-body p-0 text-center">
+                                    <button class="btn btn-danger" (click)="clearCroppedImage()">Clear</button>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="imge">Image</label>
                             <div class="input-group col-md-8">
                                 <div class="custom-file">
-                                    <input type="file" name="imge" (change)="fileChangeEvent($event)" required
+                                    <input type="file" name="imge" (change)="fileChangeEvent($event)"
                                         [(ngModel)]="imgModel" class="custom-file-input" accept="image/x-png,image/jpeg"
                                         aria-describedby="inputGroupFileAddon01">
                                     <label class="custom-file-label"
@@ -151,14 +184,14 @@
                                     required>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="metaKeywords"><b>Meta Keywords</b>(comma
                                 separated)</label>
                             <div class="col-md-9">
                                 <input type="text" name="metaKeywords" [(ngModel)]="storeInfo.metaKeywords"
                                     class="form-control" required>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="alert alert-dark" role="alert">
                             Useful Links
                         </div>
@@ -233,7 +266,7 @@
                             &nbsp;
                             &nbsp;
                             <button type="submit" class="btn btn-dark"
-                                [disabled]="!editStoreForm.form.valid || !storeInfo.categoryRef">Save</button>
+                                [disabled]="!editStoreForm.form.valid || !editStoreForm.dirty">Update Store</button>
                         </div>
                     </form>
                 </div>

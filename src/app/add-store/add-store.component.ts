@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataService } from '../data.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { HttpClient } from '@angular/common/http';
 import { map } from "rxjs/operators";
 
 @Component({
@@ -25,7 +24,7 @@ export class AddStoreComponent implements OnInit {
   responseError = "";
   _self = this;
 
-  constructor(private _dataService: DataService, private _http: HttpClient) { }
+  constructor(private _dataService: DataService) { }
 
   ngOnInit() {
     this._dataService.fetchAPI("/api/fetchCategories").subscribe(res => {

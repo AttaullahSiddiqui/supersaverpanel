@@ -12,7 +12,8 @@ let resHandler = require('../utils/responseHandler');
 
 module.exports = {
     fetchCategories: fetchCategories,
-    fetchStores: fetchStores
+    fetchStoresOnlyId: fetchStoresOnlyId,
+    fetchStoreById: fetchStoreById
 };
 
 function fetchCategories(req, res) {
@@ -44,17 +45,31 @@ function fetchCategories(req, res) {
     //     }
     // });
 }
-function fetchStores() {
-    Store.find({}, function (err, categories) {
+function fetchStoresOnlyId(req, res) {
+    Store.find({}, 'name _id', function (err, stores) {
         if (err) {
-            res.json(resHandler.respondError(error[0], error[1] || -1));
-        } else if (!categories) {
-            res.json(resHandler.respondError("No categories at the moment", -3));
+            res.json(resHandler.respondError(err[0], err[1] || -1));
+        } else if (!stores) {
+            res.json(resHandler.respondError("No Stores at the moment", -3));
         }
         else {
-            res.json(resHandler.respondSuccess(categories, "Categories fetched successfully", 2));
+            res.json(resHandler.respondSuccess(stores, "Stores fetched successfully", 2));
         }
-    });
+    })
+}
+function fetchStoreById(req, res) {
+    console.log(req.body)
+    console.log(req.query._id)
+    Store.findById(req.query._id, function (err, store) {
+        if (err) {
+            res.json(resHandler.respondError(err[0], err[1] || -1));
+        } else if (!store) {
+            res.json(resHandler.respondError("No such Store at the moment", -3));
+        }
+        else {
+            res.json(resHandler.respondSuccess(store, "Store fetched successfully", 2));
+        }
+    })
 }
 
 

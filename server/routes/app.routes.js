@@ -13,13 +13,16 @@ router.post('/addCoupon', apiCtrl.addCoupon);
 
 
 router.get('/fetchCategories', fetchCtrl.fetchCategories);
-router.get('/fetchStores', fetchCtrl.fetchStores);
+router.get('/fetchStoresOnlyId', fetchCtrl.fetchStoresOnlyId);
+router.get('/fetchStoreById', fetchCtrl.fetchStoreById);
 
 
 router.post('/editCategory', putCtrl.editCategory);
+router.post('/editStore', putCtrl.editStore);
 
 
 router.post('/deleteCategory', dltCtrl.deleteCategory);
+router.post('/deleteStore', dltCtrl.deleteStore);
 
 
 module.exports = router;

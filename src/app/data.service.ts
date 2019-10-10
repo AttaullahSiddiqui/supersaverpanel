@@ -14,9 +14,7 @@ export class DataService {
 
   result: any;
 
-  constructor(private _http: HttpClient, private storage: AngularFireStorage) {
-
-  }
+  constructor(private _http: HttpClient, private storage: AngularFireStorage) { }
 
   fetchAPI(url) {
     return this._http.get(url)
@@ -40,6 +38,10 @@ export class DataService {
       limitNo: limit
     }
     return this._http.get(url, { params: params })
+      .pipe(map(res => JSON.parse(JSON.stringify(res))));
+  }
+  fetchAPIUsingId(url, id) {
+    return this._http.get(url, { params: { _id: id } })
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
 
