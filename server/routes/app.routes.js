@@ -15,10 +15,12 @@ router.post('/addCoupon', apiCtrl.addCoupon);
 router.get('/fetchCategories', fetchCtrl.fetchCategories);
 router.get('/fetchStoresOnlyId', fetchCtrl.fetchStoresOnlyId);
 router.get('/fetchStoreById', fetchCtrl.fetchStoreById);
+router.get('/fetchCouponsById', fetchCtrl.fetchCouponsById);
 
 
 router.post('/editCategory', putCtrl.editCategory);
 router.post('/editStore', putCtrl.editStore);
+router.post('/editCoupon', putCtrl.editCoupon);
 
 
 router.post('/deleteCategory', dltCtrl.deleteCategory);

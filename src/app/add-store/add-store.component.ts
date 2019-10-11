@@ -32,19 +32,18 @@ export class AddStoreComponent implements OnInit {
         this.categories = res.data;
         this.responseError = "";
       } else {
-        this.responseError = res.message
+        this.responseError = res.message;
+        window.scrollTo(0, 0)
       }
     })
   }
   addStore(storeInfo) {
     var self = this;
-
     var filePath = `storeImages/_${new Date().getTime()}`;
-
     this._dataService.storeImage(filePath, this.selectedImage, function (error, data) {
       if (error) {
-        console.log("Errorrr", error);
         this.responseError = "Can't upload image to the Server";
+        window.scrollTo(0, 0)
         return;
       }
       if (data) {
@@ -67,8 +66,10 @@ export class AddStoreComponent implements OnInit {
         this.storeInfo = {};
         this.imgModel = "";
         this.croppedImage = "";
+        window.scrollTo(0, 0)
       } else {
         this.responseError = res.message
+        window.scrollTo(0, 0)
       }
     })
   }

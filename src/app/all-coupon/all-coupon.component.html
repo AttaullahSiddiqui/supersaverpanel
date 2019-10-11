@@ -1,15 +1,29 @@
 <br>
+<div class="alert alert-success alert-dismissible fade show col-8" *ngIf="responseSuccess" role="alert">
+    {{responseSuccess}}
+    <button type="button" class="close" (click)="closeSuccess()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="alert alert-danger alert-dismissible fade show col-8" *ngIf="responseError" role="alert">
+    {{responseError}}
+    <button type="button" class="close" (click)="closeError()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 
 <div class="row">
     <div class="form-group col-5">
         <label for="userType">
             <h5>PLEASE SELECT STORE</h5>
         </label>
-        <select data-placeholder="Choose" class="form-control form-control-lg" id="storeSelect">
-            <option value="1"> Abc </option>
-            <option value="2"> Xyz </option>
-            <option value="2"> Abc </option>
-            <option value="2"> Xyz </option>
+        <select class="form-control form-control-lg" [(ngModel)]="selectedStore"
+            (change)="loadCoupons(selectedStore,$event)">
+            <!-- <option value=""></option> -->
+            <option [value]="data.value._id" *ngFor="let data of storeArray | keyvalue">
+                {{data.value.name}}
+            </option>
         </select>
     </div>
 </div>
@@ -30,11 +44,12 @@
                     <div class="col-sm-1"></div>
 
                     <div class="col-sm-4">
-                        <form action="" method="post" class="form-inline pull-right widthWhole">
+                        <form class="form-inline pull-right widthWhole">
                             <div class="form-group widthWhole">
                                 <label class="sr-only" for="searchBar">Search</label>
-                                <input class="form-control" style="width: 87%" type="text" maxlength="30" id="searchBar"
-                                    name="searchBar" placeholder="Search.." class="form-control">
+                                <input class="form-control" [(ngModel)]="searchFiled" style="width: 87%" type="text"
+                                    maxlength="30" id="searchBar" name="searchBar" placeholder="Search.."
+                                    class="form-control">
                             </div>
                         </form>
                     </div>
@@ -62,116 +77,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
+                            <tr *ngFor="let coupon of coupons | keyvalue;index as i">
+                                <td>{{i+this.skipNo+1}}</td>
+                                <td>{{coupon.value.offerBox}}</td>
+                                <td>{{coupon.value.offerDetail}}</td>
                                 <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
+                                    <span *ngIf="coupon.value.featuredForHome"
+                                        class="badge badge-success largeBadge">Active</span>
+
+                                    <span *ngIf="!coupon.value.featuredForHome"
+                                        class="badge badge-dark largeBadge">Disabled</span>
                                 </td>
-                                <td>LinkShare</td>
+                                <td>{{selectedStoreName}}</td>
                                 <td>
-                                    <button type="button" data-toggle="modal" data-target="#deleteModal"
+                                    <button type="button" (click)="showDltModal(coupon.value)"
                                         class="btn btn-primary text-white">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" data-toggle="modal" data-target="#deleteModal"
-                                        class="btn btn-primary text-white">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" data-toggle="modal" data-target="#deleteModal"
-                                        class="btn btn-primary text-white">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" data-toggle="modal" data-target="#deleteModal"
-                                        class="btn btn-primary text-white">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" data-toggle="modal" data-target="#deleteModal"
-                                        class="btn btn-primary text-white">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" data-toggle="modal" data-target="#deleteModal"
-                                        class="btn btn-primary text-white">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Danish</td>
-                                <td>JAcking 9</td>
-                                <td>
-                                    <span class="badge badge-success largeBadge">Active</span>
-                                </td>
-                                <td>LinkShare</td>
-                                <td>
-                                    <button type="button" data-toggle="modal" data-target="#deleteModal"
-                                        class="btn btn-primary text-white">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
+                                    &nbsp; &nbsp;<button type="button" (click)="showEditModal(coupon.key,coupon.value)"
                                         class="btn btn-dark text-white">Edit</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <li class="page-item"><a class="page-link" (click)="prevFunc()">Prev</a></li>
+                        <li class="page-item"><a class="page-link" (click)="nextFunc()">Next</a></li>
                     </ul>
                 </div>
             </div>

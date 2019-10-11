@@ -7,13 +7,15 @@ const ObjectID = require('mongodb').ObjectID;
 let User = require('../Models/user.model');
 let Category = require('../Models/categories.model');
 let Store = require('../Models/stores.model');
+let Coupon = require('../Models/coupon.model');
 let errHandler = require('../utils/errorHandler');
 let resHandler = require('../utils/responseHandler');
 
 module.exports = {
     fetchCategories: fetchCategories,
     fetchStoresOnlyId: fetchStoresOnlyId,
-    fetchStoreById: fetchStoreById
+    fetchStoreById: fetchStoreById,
+    fetchCouponsById: fetchCouponsById
 };
 
 function fetchCategories(req, res) {
@@ -45,6 +47,7 @@ function fetchCategories(req, res) {
     //     }
     // });
 }
+
 function fetchStoresOnlyId(req, res) {
     Store.find({}, 'name _id', function (err, stores) {
         if (err) {
@@ -70,6 +73,24 @@ function fetchStoreById(req, res) {
             res.json(resHandler.respondSuccess(store, "Store fetched successfully", 2));
         }
     })
+}
+function fetchCouponsById(req, res) {
+    Coupon.
+        find({ storeId: req.query._id }).
+        skip(Number(req.query.skipNo)).
+        limit(Number(req.query.limitNo)).
+        exec(function (err, categories) {
+            if (err) {
+                res.json(resHandler.respondError(err[0], err[1] || -1));
+            }
+            else {
+                if (categories.length) {
+                    res.json(resHandler.respondSuccess(categories, "Stores fetched successfully", 2));
+                } else {
+                    res.json(resHandler.respondError("No coupons in this Store", -3));
+                }
+            }
+        });
 }
 
 

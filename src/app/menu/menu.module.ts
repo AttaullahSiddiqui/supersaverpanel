@@ -30,7 +30,6 @@ import { GeneralSettingComponent } from '../general-setting/general-setting.comp
 import { DealsPageComponent } from '../deals-page/deals-page.component';
 import { AllDealsComponent } from '../all-deals/all-deals.component';
 
-
 @NgModule({
     imports: [
         CommonModule,
@@ -59,7 +58,7 @@ import { AllDealsComponent } from '../all-deals/all-deals.component';
         AllBlogComponent,
         GeneralSettingComponent,
         DealsPageComponent,
-        AllDealsComponent,
+        AllDealsComponent
     ]
 })
 

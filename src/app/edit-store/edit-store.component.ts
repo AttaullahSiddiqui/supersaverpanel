@@ -34,7 +34,8 @@ export class EditStoreComponent implements OnInit {
         this.dataLoaded = res.data;
         this.responseError = "";
       } else {
-        this.responseError = res.message
+        this.responseError = res.message;
+        window.scrollTo(0, 0)
       }
     })
   }
@@ -48,7 +49,8 @@ export class EditStoreComponent implements OnInit {
         this.storeInfo = res.data;
         this.responseError = "";
       } else {
-        this.responseError = res.message
+        this.responseError = res.message;
+        window.scrollTo(0, 0)
       }
     })
   }
@@ -56,14 +58,15 @@ export class EditStoreComponent implements OnInit {
     $('#deleteModal').modal('show');
   }
   confirmDelete() {
-    console.log("Confirm delete selected")
     this._dataService.postAPI("/api/deleteStore", { _id: this.loadedStoreId }).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
         this.storeInfo = {};
-        this.dataLoaded.splice(this.loadedStoreIndex, 1)
+        this.dataLoaded.splice(this.loadedStoreIndex, 1);
+        window.scrollTo(0, 0)
       } else {
-        this.responseError = res.message
+        this.responseError = res.message;
+        window.scrollTo(0, 0)
       }
     })
     document.getElementById('closebtn').click();
@@ -75,6 +78,7 @@ export class EditStoreComponent implements OnInit {
       this._dataService.storeImage(filePath, this.selectedImage, function (error, data) {
         if (error) {
           this.responseError = "Can't upload image to the Server";
+          window.scrollTo(0, 0)
           return;
         }
         if (data) {
@@ -94,8 +98,10 @@ export class EditStoreComponent implements OnInit {
         this.dataLoaded[this.loadedStoreIndex].name = res.data.name;
         this.dataLoaded[this.loadedStoreIndex]._id = res.data._id;
         this.storeInfo = res.data;
+        window.scrollTo(0, 0)
       } else {
-        this.responseError = res.message
+        this.responseError = res.message;
+        window.scrollTo(0, 0)
       }
     })
   }

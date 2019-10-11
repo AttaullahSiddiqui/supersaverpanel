@@ -1,103 +1,122 @@
 <br>
+<div class="alert alert-success alert-dismissible fade show col-8" *ngIf="responseSuccess" role="alert">
+    {{responseSuccess}}
+    <button type="button" class="close" (click)="closeSuccess()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="alert alert-danger alert-dismissible fade show col-8" *ngIf="responseError" role="alert">
+    {{responseError}}
+    <button type="button" class="close" (click)="closeError()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <div class="animated fadeIn addUserForm">
     <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <strong>Create Store</strong>
+                    <strong>Add Coupon</strong>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post" class="form-horizontal">
+                    <form #addCouponForm="ngForm" novalidate (ngSubmit)='addCoupon(couponInfo)'>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Offer Box</label>
+                            <label class="col-md-3 col-form-label" for="offerBox">Offer Box</label>
                             <div class="col-md-9">
-                                <input type="text" id="text-input" name="text-input" class="form-control"
-                                    placeholder="...">
+                                <input type="text" [(ngModel)]="couponInfo.offerBox" required name="offerBox"
+                                    class="form-control" placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Offer Details</label>
+                            <label class="col-md-3 col-form-label" for="offerDetail">Offer Details</label>
                             <div class="col-md-9">
-                                <input type="text" id="text-input" name="text-input" class="form-control"
-                                    placeholder="...">
+                                <input type="text" [(ngModel)]="couponInfo.offerDetail" required name="offerDetail"
+                                    class="form-control" placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Tracking Link</label>
+                            <label class="col-md-3 col-form-label" for="trackingLink">Tracking Link</label>
                             <div class="col-md-9">
-                                <input type="text" id="text-input" name="text-input" class="form-control"
-                                    placeholder="...">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="date-input">Expiry Date</label>
-                            <div class="col-md-9">
-                                <input class="form-control" id="date-input" type="date" name="date-input"
-                                    placeholder="date">
+                                <input type="text" [(ngModel)]="couponInfo.trackingLink" required name="trackingLink"
+                                    class="form-control" placeholder="...">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Code</label>
+                            <label class="col-md-3 col-form-label" for="expDate">Expiry Date</label>
                             <div class="col-md-9">
-                                <input class="form-check-input" (change)="handleCodeInput()" type="radio"
-                                    name="inlineRadioOptions" id="inlineRadio1" value="true">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Active</label>
-                            <div class="col-md-9">
-                                <input class="form-check-input" (change)="handleCodeInput()" type="radio"
-                                    name="inlineRadioOptions" id="inlineRadio2" value="false">
-                            </div>
-                        </div>
-                        <div class="form-group row" *ngIf="radioInput">
-                            <label class="col-md-3 col-form-label" for="text-input">Enter Code</label>
-                            <div class="col-md-9">
-                                <input type="text" id="text-input" name="text-input" class="form-control"
-                                    placeholder="...">
+                                <input id="datepicker" class="form-control" [(ngModel)]="couponInfo.expDate" required
+                                    type="date" name="expDate" placeholder="date">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="userType">
+                            <label class="col-md-3 col-form-label">Code</label>
+                            <div class="col-md-9">
+                                <input class="form-check-input"
+                                    (change)="couponInfo.activeStatus=!couponInfo.activeStatus" type="radio"
+                                    name="activeStatus" value="true">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Active</label>
+                            <div class="col-md-9">
+                                <input class="form-check-input"
+                                    (change)="couponInfo.activeStatus=!couponInfo.activeStatus" type="radio"
+                                    name="activeStatus" value="false" checked="checked">
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="couponInfo.activeStatus">
+                            <label class="col-md-3 col-form-label" for="code">Enter Code</label>
+                            <div class="col-md-9">
+                                <input type="text" [(ngModel)]="couponInfo.code" required name="code"
+                                    class="form-control" placeholder="Enter code here..">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <br>
+                            <label class="col-md-3 col-form-label" for="assignedStore">
                                 Choose Store
                             </label>
                             <div class="col-md-9">
-                                <select class="form-control form-control-lg" data-placeholder="Choose" id="userType">
-                                    <option value="1"> Admin </option>
-                                    <option value="2"> User </option>
-                                    <option value="3"> User </option>
-                                    <option value="4"> User </option>
-                                    <option value="5"> User </option>
+                                <select class="form-control form-control-lg" [disabled]="!stores" name="assignedStore"
+                                    [(ngModel)]="couponInfo.storeId" required>
+                                    <option value=""></option>
+                                    <option [value]="item.value._id" *ngFor="let item of stores | keyvalue">
+                                        {{item.value.name}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group m-3">
-                            <label class="col-md-2 control-label">Featured for Home</label>
+                            <label class="col-md-2 control-label" for="featuredForHome">Featured for Home</label>
                             <div class="col-md-10">
                                 <label class="switch switch-success">
-                                    <input type="checkbox" class="switch-input">
+                                    <input type="checkbox" class="switch-input" name="featuredForHome"
+                                        [(ngModel)]="couponInfo.featuredForHome">
                                     <span class="switch-slider"></span>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group m-3">
-                            <label class="col-md-2 control-label">Trending</label>
+                            <label class="col-md-2 control-label" for="trending">Trending</label>
                             <div class="col-md-10">
                                 <label class="switch switch-primary">
-                                    <input type="checkbox" class="switch-input">
+                                    <input type="checkbox" class="switch-input" name="trending"
+                                        [(ngModel)]="couponInfo.trending">
                                     <span class="switch-slider"></span>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group m-3">
-                            <label class="col-md-2 control-label">New Arrival</label>
+                            <label class="col-md-2 control-label" for="newArrival">New Arrival</label>
                             <div class="col-md-10">
-                                <label class="switch switch-primary">
-                                    <input type="checkbox" class="switch-input">
+                                <label class="switch switch-success">
+                                    <input type="checkbox" class="switch-input" name="newArrival"
+                                        [(ngModel)]="couponInfo.newArrival">
                                     <span class="switch-slider"></span>
                                 </label>
                             </div>
@@ -109,7 +128,8 @@
                             &nbsp;
                             &nbsp;
                             &nbsp;
-                            <button type="button" class="btn btn-dark">Submit</button>
+                            <button type="submit" class="btn btn-dark"
+                                [disabled]="!addCouponForm.form.valid">Submit</button>
                         </div>
                     </form>
                 </div>

@@ -7,6 +7,7 @@ const ObjectID = require('mongodb').ObjectID;
 let User = require('../Models/user.model');
 let Category = require('../Models/categories.model');
 let Store = require('../Models/stores.model');
+let Coupon = require('../Models/coupon.model');
 let errHandler = require('../utils/errorHandler');
 let resHandler = require('../utils/responseHandler');
 
@@ -71,7 +72,6 @@ function createCategory(req, res) {
 }
 
 function addStore(req, res) {
-    console.log(req.body)
     var newStore = new Store({
         name: req.body.name,
         heading: req.body.heading,
@@ -104,7 +104,24 @@ function addStore(req, res) {
 }
 
 function addCoupon(req, res) {
-    res.send("Hahahha from addCoupon")
+    var newCoupon = new Coupon({
+        offerBox: req.body.offerBox,
+        offerDetail: req.body.offerDetail,
+        trackingLink: req.body.trackingLink,
+        expDate: req.body.expDate,
+        activeStatus: req.body.activeStatus,
+        code: req.body.code,
+        storeId: req.body.storeId,
+        featuredForHome: req.body.featuredForHome,
+        trending: req.body.trending,
+        newArrival: req.body.newArrival
+    });
+    newCoupon.save().then(function (result) {
+        res.json(resHandler.respondSuccess(result, "Coupon added successfully", 2));
+    }, function (err) {
+        var error = errHandler.handle(err);
+        res.json(resHandler.respondError(error[0], (error[1] || -1)));
+    })
 }
 
 

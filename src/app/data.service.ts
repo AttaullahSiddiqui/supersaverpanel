@@ -32,10 +32,11 @@ export class DataService {
     return this._http.delete(url, reqData)
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
-  fetchAPIWithLimit(url, skip, limit) {
+  fetchAPIWithLimit(url, skip, limit, id?) {
     const params = {
       skipNo: skip,
-      limitNo: limit
+      limitNo: limit,
+      _id: id
     }
     return this._http.get(url, { params: params })
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
