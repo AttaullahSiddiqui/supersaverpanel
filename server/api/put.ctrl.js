@@ -29,6 +29,18 @@ function editCategory(req, res) {
         }
     })
 }
+function editCoupon(req, res) {
+    Coupon.findByIdAndUpdate(req.body._id, req.body, { new: true }, function (err, updatedNode) {
+        if (err) {
+            res.json(resHandler.respondError(error[0], error[1] || -1));
+        } else if (!updatedNode) {
+            res.json(resHandler.respondError("Wrong format provided", -3));
+        }
+        else {
+            res.json(resHandler.respondSuccess(updatedNode, "Coupon updated successfully", 2));
+        }
+    })
+}
 function editStore(req, res) {
     Store.findByIdAndUpdate(req.body._id, req.body, { new: true }, function (err, updatedNode) {
         if (err) {
@@ -41,15 +53,15 @@ function editStore(req, res) {
         }
     })
 }
-function editCoupon(req, res) {
-    Coupon.findByIdAndUpdate(req.body._id, req.body, { new: true }, function (err, updatedNode) {
-        if (err) {
-            res.json(resHandler.respondError(err[0], err[1] || -1));
-        } else if (!updatedNode) {
-            res.json(resHandler.respondError("Wrong format provided", -3));
-        }
-        else {
-            res.json(resHandler.respondSuccess(updatedNode, "Coupon updated successfully", 2));
-        }
-    })
-}
+// function editCoupon(req, res) {
+//     Coupon.findByIdAndUpdate(req.body._id, req.body, { new: true }, function (err, updatedNode) {
+//         if (err) {
+//             res.json(resHandler.respondError(err[0], err[1] || -1));
+//         } else if (!updatedNode) {
+//             res.json(resHandler.respondError("Wrong format provided", -3));
+//         }
+//         else {
+//             res.json(resHandler.respondSuccess(updatedNode, "Coupon updated successfully", 2));
+//         }
+//     })
+// }

@@ -56,7 +56,7 @@
                             <div class="col-md-9">
                                 <input class="form-check-input"
                                     (change)="couponInfo.activeStatus=!couponInfo.activeStatus" type="radio"
-                                    name="activeStatus" value="true">
+                                    name="activeStatus" value="false">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -64,10 +64,10 @@
                             <div class="col-md-9">
                                 <input class="form-check-input"
                                     (change)="couponInfo.activeStatus=!couponInfo.activeStatus" type="radio"
-                                    name="activeStatus" value="false" checked="checked">
+                                    name="activeStatus" value="true" checked="checked">
                             </div>
                         </div>
-                        <div class="form-group row" *ngIf="couponInfo.activeStatus">
+                        <div class="form-group row" *ngIf="!couponInfo.activeStatus">
                             <label class="col-md-3 col-form-label" for="code">Enter Code</label>
                             <div class="col-md-9">
                                 <input type="text" [(ngModel)]="couponInfo.code" required name="code"

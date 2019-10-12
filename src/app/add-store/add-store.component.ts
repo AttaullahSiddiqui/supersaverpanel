@@ -30,7 +30,6 @@ export class AddStoreComponent implements OnInit {
     this._dataService.fetchAPI("/api/fetchCategories").subscribe(res => {
       if (res.data) {
         this.categories = res.data;
-        this.responseError = "";
       } else {
         this.responseError = res.message;
         window.scrollTo(0, 0)
@@ -47,12 +46,8 @@ export class AddStoreComponent implements OnInit {
         return;
       }
       if (data) {
-        if (!storeInfo.editorChoice) {
-          storeInfo.editorChoice = false
-        }
-        if (!storeInfo.topStore) {
-          storeInfo.topStore = false
-        }
+        if (!storeInfo.editorChoice) storeInfo.editorChoice = false
+        if (!storeInfo.topStore) storeInfo.topStore = false
         storeInfo.img = data;
         self.saveStoreToDB(storeInfo)
       }

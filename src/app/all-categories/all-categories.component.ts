@@ -35,6 +35,7 @@ export class AllCategoriesComponent implements OnInit {
         this.catArray = res.data;
         this.responseError = "";
       } else {
+        window.scrollTo(0, 0)
         if (this.skipNo) {
           this.skipNo -= 5;
         }
@@ -48,10 +49,8 @@ export class AllCategoriesComponent implements OnInit {
   }
 
   showDltModal(key) {
-    // this.deleteObject = categoryNode;
-    // this.editObject = { ...categoryNode };
-    var index = this.catArray.indexOf(key);
-    this.dltIndex = index;
+    // var index = this.catArray.indexOf(key);
+    this.dltIndex = key;
     $('#deleteModal').modal('show');
   }
   showEditModal(key, categoryNode) {

@@ -8,6 +8,7 @@ let User = require('../Models/user.model');
 let Category = require('../Models/categories.model');
 let Store = require('../Models/stores.model');
 let Coupon = require('../Models/coupon.model');
+let Blog = require('../Models/blog.model');
 let errHandler = require('../utils/errorHandler');
 let resHandler = require('../utils/responseHandler');
 
@@ -15,7 +16,8 @@ module.exports = {
     fetchCategories: fetchCategories,
     fetchStoresOnlyId: fetchStoresOnlyId,
     fetchStoreById: fetchStoreById,
-    fetchCouponsById: fetchCouponsById
+    fetchCouponsById: fetchCouponsById,
+    fetchBlogs: fetchBlogs
 };
 
 function fetchCategories(req, res) {
@@ -85,14 +87,31 @@ function fetchCouponsById(req, res) {
             }
             else {
                 if (categories.length) {
-                    res.json(resHandler.respondSuccess(categories, "Stores fetched successfully", 2));
+                    res.json(resHandler.respondSuccess(categories, "Coupons fetched successfully", 2));
                 } else {
                     res.json(resHandler.respondError("No coupons in this Store", -3));
                 }
             }
         });
 }
-
+function fetchBlogs(req, res) {
+    Blog.
+        find({}).
+        skip(Number(req.query.skipNo)).
+        limit(Number(req.query.limitNo)).
+        exec(function (err, blogs) {
+            if (err) {
+                res.json(resHandler.respondError(err[0], err[1] || -1));
+            }
+            else {
+                if (blogs.length) {
+                    res.json(resHandler.respondSuccess(blogs, "Blogs fetched successfully", 2));
+                } else {
+                    res.json(resHandler.respondError("Can't load more blogs", -3));
+                }
+            }
+        });
+}
 
 
 

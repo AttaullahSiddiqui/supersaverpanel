@@ -8,6 +8,8 @@ let User = require('../Models/user.model');
 let Category = require('../Models/categories.model');
 let Store = require('../Models/stores.model');
 let Coupon = require('../Models/coupon.model');
+let Deal = require('../Models/deal.model');
+let Blog = require('../Models/blog.model');
 let errHandler = require('../utils/errorHandler');
 let resHandler = require('../utils/responseHandler');
 
@@ -16,7 +18,9 @@ module.exports = {
     registerUser: registerUser,
     createCategory: createCategory,
     addStore: addStore,
-    addCoupon: addCoupon
+    addCoupon: addCoupon,
+    addDeal: addDeal,
+    addBlog: addBlog
 };
 
 function authUser(req, res) {
@@ -118,6 +122,41 @@ function addCoupon(req, res) {
     });
     newCoupon.save().then(function (result) {
         res.json(resHandler.respondSuccess(result, "Coupon added successfully", 2));
+    }, function (err) {
+        var error = errHandler.handle(err);
+        res.json(resHandler.respondError(error[0], (error[1] || -1)));
+    })
+}
+function addDeal(req, res) {
+    var newDeal = new Deal({
+        title: req.body.title,
+        shortDes: req.body.shortDes,
+        longDes: req.body.longDes,
+        metaTitle: req.body.metaTitle,
+        metaDes: req.body.metaDes
+    });
+    newDeal.save().then(function (result) {
+        res.json(resHandler.respondSuccess(result, "Deal added successfully", 2));
+    }, function (err) {
+        var error = errHandler.handle(err);
+        res.json(resHandler.respondError(error[0], (error[1] || -1)));
+    })
+}
+function addBlog(req, res) {
+    var newBlog = new Blog({
+        title: req.body.title,
+        shortDes: req.body.shortDes,
+        longDes: req.body.longDes,
+        img: req.body.img,
+        imgAlt: req.body.imgAlt,
+        metaTitle: req.body.metaTitle,
+        metaDes: req.body.metaDes,
+        metaKeywords: req.body.metaKeywords,
+        storeId: req.body.storeId,
+        featuredForHome: req.body.featuredForHome
+    });
+    newBlog.save().then(function (result) {
+        res.json(resHandler.respondSuccess(result, "Blog added successfully", 2));
     }, function (err) {
         var error = errHandler.handle(err);
         res.json(resHandler.respondError(error[0], (error[1] || -1)));

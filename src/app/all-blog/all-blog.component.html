@@ -1,1 +1,184 @@
-<p>all-blog works!</p>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Coupon</h4>
+                <button type="button" class="close" id="closebtn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure You want to delete this Coupon?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark" (click)="deleteBlog()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <span style="font-size:1.35em">Edit blog: {{editObject.name}}</span>
+                </div>
+                <button type="button" class="close" id="editbtn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <form #editCatForm="ngForm" novalidate (ngSubmit)='saveEditedBlog()'>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="company">Name</label>
+                        <input type="text" name="name" required [(ngModel)]="editObject.name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Slug</label>
+                        <input type="text" name="slug" required [(ngModel)]="editObject.slug" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Meta Title</label>
+                        <input type="text" name="MetaTitle" required [(ngModel)]="editObject.metaTitle"
+                            class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Meta Description</label>
+                        <input class="form-control" name="MetaDescription" required type="text"
+                            [(ngModel)]="editObject.metaDescription">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Meta Keywords</label>
+                        <input type="text" name="MetaKeywords" required class="form-control"
+                            [(ngModel)]="editObject.metaKeywords">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Featured for Home</label>
+                        <div class="col-md-10">
+                            <label class="switch switch-success">
+                                <input name="featuredForHome" [(ngModel)]="editObject.featuredForHome" type="checkbox"
+                                    value="true" class="switch-input">
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                        (click)="editCatForm.reset()">Close</button>
+                    <button type="submit" class="btn btn-success"
+                        [disabled]="!editCatForm.form.valid || !editCatForm.dirty">Save
+                        Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<br>
+
+
+<div class="animated fadeIn">
+    <div class="alert alert-success alert-dismissible fade show col-8" *ngIf="responseSuccess" role="alert">
+        {{responseSuccess}}
+        <button type="button" class="close" (click)="closeSuccess()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show col-8" *ngIf="responseError" role="alert">
+        {{responseError}}
+        <button type="button" class="close" (click)="closeError()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <br>
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        <h3 class="p-4">Total Categories on your Website &nbsp; <span
+                                class="badge badge-pill badge-dark text-white">10</span> </h3>
+                    </div>
+
+                    <div class="col-sm-1"></div>
+
+                    <div class="col-sm-5">
+                        <form action="" method="post" class="form-inline pull-right widthWhole">
+                            <div class="form-group widthWhole">
+                                <label class="sr-only" for="searchBar">Search</label>
+                                <input class="form-control" style="width: 87%" type="text" maxlength="30" id="searchBar"
+                                    name="searchBar" placeholder="Search.." class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-left: 45px">
+                    <button type="button" class="btn btn-primary btn-sm">Copy</button>
+                    <button type="button" class="btn btn-primary btn-sm">CSV</button>
+                    <button type="button" class="btn btn-primary btn-sm">Excel</button>
+                    <button type="button" class="btn btn-primary btn-sm">PDF</button>
+                    <button type="button" class="btn btn-primary btn-sm">Print</button>
+                </div>
+
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Sr</th>
+                                <th>Name</th>
+                                <th>Short Description</th>
+                                <th>Featured</th>
+                                <th>Image</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <tr *ngFor="let blog of catArray"> -->
+                            <tr *ngFor="let blog of blogArray | keyvalue;index as i">
+                                <td>{{i+this.skipNo+1}}</td>
+                                <td>{{blog.value.title}}</td>
+                                <td>{{blog.value.shortDes}}</td>
+                                <td>
+                                    <span *ngIf="blog.value.featuredForHome"
+                                        class="badge badge-success largeBadge">Featured</span>
+
+                                    <span *ngIf="!blog.value.featuredForHome"
+                                        class="badge badge-dark largeBadge">Disabled</span>
+                                </td>
+                                <td><img [src]="blog.value.img" width="80" height="80" /></td>
+                                <td>
+                                    <!-- <button type="button" class="btn btn-primary text-white" data-toggle="modal"
+                                        data-target="#deleteModal">Delete</button> -->
+                                    <button type="button" class="btn btn-primary text-white"
+                                        (click)="showDltModal(blog.key)">Delete</button>
+                                    &nbsp; &nbsp;<button type="button" class="btn btn-dark text-white"
+                                        (click)="showEditModal(blog.key,blog.value)">Edit</button>
+                                    <!-- &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
+                                        class="btn btn-dark text-white">Edit</button> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" (click)="prevFunc()">Prev</a></li>
+                        <li class="page-item"><a class="page-link" (click)="nextFunc()">Next</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

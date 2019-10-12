@@ -18,8 +18,7 @@
         <label for="userType">
             <h5>PLEASE SELECT STORE</h5>
         </label>
-        <select class="form-control form-control-lg" [(ngModel)]="selectedStore"
-            (change)="loadCoupons(selectedStore,$event)">
+        <select class="form-control" [(ngModel)]="selectedStore" (change)="loadCoupons(selectedStore,$event)">
             <!-- <option value=""></option> -->
             <option [value]="data.value._id" *ngFor="let data of storeArray | keyvalue">
                 {{data.value.name}}
@@ -82,15 +81,15 @@
                                 <td>{{coupon.value.offerBox}}</td>
                                 <td>{{coupon.value.offerDetail}}</td>
                                 <td>
-                                    <span *ngIf="coupon.value.featuredForHome"
+                                    <span *ngIf="coupon.value.activeStatus"
                                         class="badge badge-success largeBadge">Active</span>
 
-                                    <span *ngIf="!coupon.value.featuredForHome"
+                                    <span *ngIf="!coupon.value.activeStatus"
                                         class="badge badge-dark largeBadge">Disabled</span>
                                 </td>
                                 <td>{{selectedStoreName}}</td>
                                 <td>
-                                    <button type="button" (click)="showDltModal(coupon.value)"
+                                    <button type="button" (click)="showDltModal(coupon.key)"
                                         class="btn btn-primary text-white">Delete</button>
                                     &nbsp; &nbsp;<button type="button" (click)="showEditModal(coupon.key,coupon.value)"
                                         class="btn btn-dark text-white">Edit</button>
@@ -185,78 +184,92 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div>
-                        <span style="font-size:1.35em">Edit Coupon: Get 10% off on this</span>
+                        <span style="font-size:1.35em">Edit Coupon: {{editObject.offerBox}}</span>
                         <br>
-                        <span>Coupon Active: &nbsp; <strong>false</strong></span>
+                        <span>Coupon Active: &nbsp; <strong>{{editObject.activeStatus}}</strong></span>
                     </div>
                     <button type="button" class="close" id="editbtn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
 
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="company">Offer</label>
-                        <input type="text" class="form-control" id="company" placeholder="Offer name">
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Offer Details</label>
-                        <input type="text" class="form-control" id="company" placeholder="Offer name">
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Tracking URL</label>
-                        <input type="text" class="form-control" id="company" placeholder="Offer name">
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Expiry</label>
-                        <input class="form-control" id="date-input" type="date" name="date-input" placeholder="date">
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Choose Store</label>
-                        <div>
-                            <select id="select1" name="select1" class="form-control">
-                                <option value="0">Please select</option>
-                                <option value="1">Option #1</option>
-                                <option value="2">Option #2</option>
-                                <option value="3">Option #3</option>
-                            </select>
+                <form #editCouponForm="ngForm" novalidate (ngSubmit)='saveEditedCoupon(editObject)'>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="offerBox">Offer</label>
+                            <input type="text" class="form-control" name="offerBox" required
+                                [(ngModel)]="editObject.offerBox">
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="offerDetail">Offer Details</label>
+                            <input type="text" class="form-control" name="offerDetail" required
+                                [(ngModel)]="editObject.offerDetail">
+                        </div>
+                        <div class="form-group">
+                            <label for="trackingLink">Tracking URL</label>
+                            <input type="text" class="form-control" name="trackingLink" required
+                                [(ngModel)]="editObject.trackingLink">
+                        </div>
+                        <div class="form-group">
+                            <label for="expDate">Expiry</label>
+                            <input class="form-control" type="date" name="expDate" required
+                                [(ngModel)]="editObject.expDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="storeId">Choose Store</label>
+                            <div>
+                                <select id="select1" class="form-control" name="storeId" required
+                                    [(ngModel)]="editObject.storeId">
+                                    <!-- <option value="0">Please select</option> -->
+                                    <option [value]="item.value._id" *ngFor="let item of storeArray | keyvalue">
+                                        {{item.value.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
 
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">Code</label>
-                        <div class="col-md-9">
-                            <input class="form-check-input" checked="radioInput" (change)="handleCodeInput()"
-                                type="radio" name="inlineRadioOptions" id="inlineRadio1" value="true">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Code</label>
+                            <div class="col-md-9">
+                                <input class="form-check-input" checked="radioInput"
+                                    (change)="editObject.activeStatus=!editObject.activeStatus" type="radio"
+                                    name="activeStatus" value="false" [checked]="!editObject.activeStatus">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">Active</label>
-                        <div class="col-md-9">
-                            <input class="form-check-input" checked="!radioInput" (change)="handleCodeInput()"
-                                type="radio" name="inlineRadioOptions" id="inlineRadio2" value="false">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Active</label>
+                            <div class="col-md-9">
+                                <input class="form-check-input"
+                                    (change)="editObject.activeStatus=!editObject.activeStatus" type="radio"
+                                    name="activeStatus" value="true" [checked]="editObject.activeStatus">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row" *ngIf="radioInput">
-                        <label class="col-md-3 col-form-label" for="text-input">Enter Code</label>
-                        <div class="col-md-9">
-                            <input type="text" id="text-input" name="text-input" class="form-control" placeholder="...">
+                        <div class="form-group row" *ngIf="!editObject.activeStatus">
+                            <label class="col-md-3 col-form-label" for="code">Enter Code</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" required name="code"
+                                    [(ngModel)]="editObject.code">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group m-3">
-                        <label class="col-md-4 control-label">Featured for Home</label>
-                        <div class="col-md-6">
-                            <label class="switch switch-success">
-                                <input type="checkbox" class="switch-input">
-                                <span class="switch-slider"></span>
-                            </label>
+                        <div class="form-group m-3">
+                            <label class="col-md-4 control-label">Featured for Home</label>
+                            <div class="col-md-6">
+                                <label class="switch switch-success">
+                                    <input type="checkbox" class="switch-input" name="featuredForHome"
+                                        [(ngModel)]="editObject.featuredForHome">
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
                         </div>
+
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" (click)="saveEditedCoupon()">Save Changes</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success"
+                            [disabled]="!editCouponForm.form.valid || !editCouponForm.dirty">Save
+                            Changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

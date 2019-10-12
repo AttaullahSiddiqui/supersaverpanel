@@ -8,7 +8,7 @@ import { DataService } from '../data.service';
 })
 export class AddCouponComponent implements OnInit {
   stores = {};
-  couponInfo = {};
+  couponInfo = { activeStatus: true };
   responseSuccess = "";
   responseError = "";
 
@@ -35,13 +35,13 @@ export class AddCouponComponent implements OnInit {
     if (!couponData.trending) couponData.trending = false;
     if (!couponData.featuredForHome) couponData.featuredForHome = false;
     if (!couponData.newArrival) couponData.newArrival = false;
-    if (!couponData.activeStatus) couponData.activeStatus = false;
+    if (couponData.activeStatus) couponData.code = "";
 
     console.log(couponData);
     this._dataService.postAPI("/api/addCoupon", couponData).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
-        this.couponInfo = {};
+        this.couponInfo = { activeStatus: true };
         window.scrollTo(0, 0)
       } else {
         this.responseError = res.message
