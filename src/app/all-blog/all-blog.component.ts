@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { DataService } from '../data.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 declare var $: any;
 
 @Component({
@@ -15,6 +16,11 @@ export class AllBlogComponent implements OnInit {
   editKey = "";
   dltIndex: any;
   skipNo = 0;
+  stores = {};
+  selectedImage: any = null;
+  imageChangedEvent: any = '';
+  imgModel = "";
+  croppedImage: any = '';
   responseError = "";
   responseSuccess = "";
 
@@ -23,7 +29,15 @@ export class AllBlogComponent implements OnInit {
 
   constructor(private _dataService: DataService) { this.getBlogsFunc() }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this._dataService.fetchAPI("/api/fetchStoresOnlyId").subscribe(res => {
+      if (res.data) {
+        this.stores = res.data;
+      } else {
+        this.responseError = res.message
+      }
+    })
+  }
 
   getBlogsFunc() {
     this._dataService.fetchAPIWithLimit("/api/fetchBlogs", this.skipNo, 8).subscribe(res => {
@@ -43,7 +57,6 @@ export class AllBlogComponent implements OnInit {
     })
   }
   showDltModal(key) {
-    // var index = this.catArray.indexOf(key);
     this.dltIndex = key;
     $('#deleteModal').modal('show');
   }
@@ -54,26 +67,49 @@ export class AllBlogComponent implements OnInit {
     $('#editModal').modal('show');
   }
   deleteBlog() {
-    this._dataService.postAPI("/api/deleteCategory", { _id: this.blogArray[this.dltIndex]._id }).subscribe(res => {
+    this._dataService.postAPI("/api/deleteBlog", { _id: this.blogArray[this.dltIndex]._id }).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
-        this.blogArray.splice(this.dltIndex, 1)
+        this.blogArray.splice(this.dltIndex, 1);
+        window.scrollTo(0, 0)
       } else {
-        this.responseError = res.message
+        this.responseError = res.message;
+        window.scrollTo(0, 0)
       }
     })
     document.getElementById('closebtn').click();
   }
 
-  saveEditedBlog() {
-    this._dataService.postAPI("/api/editCategory", this.editObject).subscribe(res => {
+  saveEditedBlog(editNode) {
+    var self = this;
+    if (this.croppedImage) {
+      var filePath = `blogImages/_${new Date().getTime()}`;
+      this._dataService.storeImage(filePath, this.selectedImage, function (error, data) {
+        if (error) {
+          this.responseError = "Can't upload image to the Server";
+          window.scrollTo(0, 0)
+          return;
+        }
+        if (data) {
+          editNode.img = data;
+          self.editCallbackFunc(editNode);
+          self.clearCroppedImage()
+        }
+      }).subscribe()
+    } else {
+      self.editCallbackFunc(editNode)
+    }
+  }
+  editCallbackFunc(editData) {
+    console.log(editData)
+    this._dataService.postAPI("/api/editBlog", editData).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
         this.blogArray[this.editKey] = res.data;
-        this.editObject = ""
+        window.scrollTo(0, 0)
       } else {
-        console.log(res.message);
-        this.responseError = res.message
+        this.responseError = res.message;
+        window.scrollTo(0, 0)
       }
     })
     document.getElementById('editbtn').click();
@@ -94,6 +130,32 @@ export class AllBlogComponent implements OnInit {
       this.responseError = "No more previous data exist";
       return;
     }
+  }
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+    this.selectedImage = event.file;
+    var reader = new FileReader();
+    reader.readAsDataURL(event.file);
+    reader.onloadend = () => {
+      this.croppedImage = reader.result;
+    }
+  }
+  clearCroppedImage() {
+    this.imgModel = "";
+    this.selectedImage = "";
+    this.imageChangedEvent = "";
+    this.croppedImage = "";
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
   }
   closeSuccess() {
     this.responseSuccess = ""

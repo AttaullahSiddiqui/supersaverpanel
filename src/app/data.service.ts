@@ -46,6 +46,11 @@ export class DataService {
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
 
+  sortAPI(url, mainNode, secondNode) {
+    return this._http.post(url, mainNode, { params: secondNode })
+      .pipe(map(res => JSON.parse(JSON.stringify(res))));
+  }
+
   storeImage(filePath, selectedImage, cb) {
     const fileRef = this.storage.ref(filePath);
     return this.storage.upload(filePath, selectedImage).snapshotChanges().pipe(

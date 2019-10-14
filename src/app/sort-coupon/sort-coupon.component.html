@@ -1,34 +1,32 @@
 <br>
+<div class="alert alert-success alert-dismissible fade show col-8" *ngIf="responseSuccess" role="alert">
+    {{responseSuccess}}
+    <button type="button" class="close" (click)="closeSuccess()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="alert alert-danger alert-dismissible fade show col-8" *ngIf="responseError" role="alert">
+    {{responseError}}
+    <button type="button" class="close" (click)="closeError()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
-<div class="animated fadeIn">
-    <div class="row addUserForm">
-        <div class="col">
-            <div class="card">
-                <div class="card-header" style="font-size: 1.35em;">
-                    <strong>Please select Store</strong>
-                </div>
-                <div class="card-body col-5">
-                    <select data-placeholder="Choose" class="form-control form-control" id="storeSelect">
-                        <option value="1"> Abc </option>
-                        <option value="2"> Xyz </option>
-                        <option value="2"> Abc </option>
-                        <option value="2"> Xyz </option>
-                    </select>
-                    <br>
-                    <div class="form-group">
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        <button type="button" class="btn btn-dark">Open</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="row">
+    <div class="form-group col-5">
+        <label for="userType">
+            <h5>PLEASE SELECT STORE</h5>
+        </label>
+        <select class="form-control" [(ngModel)]="selectedStore" (change)="loadCoupons(selectedStore)">
+            <!-- <option value=""></option> -->
+            <option [value]="data.value._id" *ngFor="let data of storeArray | keyvalue">
+                {{data.value.name}}
+            </option>
+        </select>
     </div>
+</div>
 
+<div class="animated fadeIn" *ngIf="coupons">
     <div class="card">
         <table class="table table-responsive-sm table-hover table-outline mb-0">
             <thead class="thead-light">
@@ -37,13 +35,13 @@
                     <th>Coupons</th>
                 </tr>
             </thead>
-            <tbody [sortablejs]="task1" [sortablejsOptions]="options">
-                <tr style="font-size: 1.25em" *ngFor="let item of list1">
+            <tbody [sortablejs]="coupons" [sortablejsOptions]="options">
+                <tr style="font-size: 1.15em" *ngFor="let item of coupons | keyvalue">
                     <td class="text-center" width="150">
                         <i class="icon-credit-card"></i>
                     </td>
                     <td>
-                        <div>{{ item }}</div>
+                        <div>{{ item.value.offerBox }}</div>
                     </td>
                 </tr>
             </tbody>
