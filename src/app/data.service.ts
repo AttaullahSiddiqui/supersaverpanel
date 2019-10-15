@@ -46,8 +46,8 @@ export class DataService {
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
 
-  sortAPI(url, mainNode, secondNode) {
-    return this._http.post(url, mainNode, { params: secondNode })
+  sortAPI(url, updatedArray) {
+    return this._http.post(url, updatedArray)
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
 

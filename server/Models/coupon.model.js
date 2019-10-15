@@ -11,6 +11,7 @@ let couponSchema = mongoose.Schema({
     featuredForHome: { type: Boolean, required: true },
     trending: { type: Boolean, required: true },
     newArrival: { type: Boolean, required: true },
+    sortNo: { type: Number, required: true },
     CreatedAt: { type: String, default: Date.now() }
 });
 

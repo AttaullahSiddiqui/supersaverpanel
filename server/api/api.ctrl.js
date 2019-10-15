@@ -108,6 +108,24 @@ function addStore(req, res) {
 }
 
 function addCoupon(req, res) {
+    Coupon.countDocuments({ storeId: req.body.storeId }, function (err, response) {
+        if (err) {
+            var error = errHandler.handle(err);
+            res.json(resHandler.respondError(error[0], (error[1] || -1)));
+        }
+        if (!response) {
+            console.log("Blaaaaa")
+            req.body.sortNo = 1;
+            addCouponCallback(req, res)
+        }
+        if (response) {
+            console.log(response);
+            req.body.sortNo = response + 1;
+            addCouponCallback(req, res)
+        }
+    })
+}
+function addCouponCallback(req, res) {
     var newCoupon = new Coupon({
         offerBox: req.body.offerBox,
         offerDetail: req.body.offerDetail,
@@ -118,7 +136,8 @@ function addCoupon(req, res) {
         storeId: req.body.storeId,
         featuredForHome: req.body.featuredForHome,
         trending: req.body.trending,
-        newArrival: req.body.newArrival
+        newArrival: req.body.newArrival,
+        sortNo: req.body.sortNo
     });
     newCoupon.save().then(function (result) {
         res.json(resHandler.respondSuccess(result, "Coupon added successfully", 2));

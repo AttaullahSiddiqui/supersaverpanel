@@ -81,6 +81,7 @@ function fetchCouponsById(req, res) {
         find({ storeId: req.query._id }).
         skip(Number(req.query.skipNo)).
         limit(Number(req.query.limitNo)).
+        sort({ sortNo: 1 }).
         exec(function (err, categories) {
             if (err) {
                 res.json(resHandler.respondError(err[0], err[1] || -1));

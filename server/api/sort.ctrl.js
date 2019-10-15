@@ -13,35 +13,29 @@ module.exports = {
 };
 
 function sortCoupons(req, res) {
-    var returnArray = [];
-    var xyz = req.query._id;
-    req.query._id = req.body._id;
-    console.log(req.body._id);
-    console.log(req.query);
+    // console.log(req.body);
+    req.body.forEach(element => {
+        // console.log(element)
+        // console.log(element._id)
+        Coupon.findOneAndUpdate({ _id: element._id }, element, function (err, updatedNode) {
+            if (err) console.log(err)
+            else if (!updatedNode) console.log("Wrong formatttt provided", -3);
+            else console.log("Alaaaaaddd")
+        })
+    });
+    res.json(resHandler.respondSuccess({ success: true }, "Coupons updated successfully", 2));
 
-    Coupon.findByIdAndUpdate(req.body._id, req.query, { new: true }, function (err, updatedNode) {
-        if (err) {
-            res.json(resHandler.respondError(err[0], err[1] || -1));
-        } else if (!updatedNode) {
-            res.json(resHandler.respondError("Wrong formatttt provided", -3));
-        }
-        else {
-            returnArray.push(updatedNode);
-            req.body._id = xyz;
-            console.log(xyz);
-            console.log(req.body);
-            Coupon.findByIdAndUpdate(xyz, req.body, { new: true }, function (error, response) {
-                if (error) {
-                    res.json(resHandler.respondError(error[0], error[1] || -1));
-                } else if (!response) {
-                    res.json(resHandler.respondError("Wrong format provided for second value", -3));
-                }
-                else {
-                    returnArray.push(response)
-                    res.json(resHandler.respondSuccess(returnArray, "Coupon updated successfully", 2));
-                }
-            })
-            // res.json(resHandler.respondSuccess(updatedNode, "Category updated successfully", 2));
-        }
-    })
+
+    // Coupon.updateMany(req.body, function (err, updatedNode) {
+    //     if (err) {
+    //         console.log(err)
+    //         res.json(resHandler.respondError(err[0], err[1] || -1));
+    //     } else if (!updatedNode) {
+    //         res.json(resHandler.respondError("Wrong formatttt provided", -3));
+    //     }
+    //     else {
+    //         console.log("Alaaaaaddd")
+    //         res.json(resHandler.respondSuccess(updatedNode, "Coupon updated successfully", 2));
+    //     }
+    // })
 }

@@ -38,7 +38,8 @@
             <tbody [sortablejs]="coupons" [sortablejsOptions]="options">
                 <tr style="font-size: 1.15em" *ngFor="let item of coupons | keyvalue">
                     <td class="text-center" width="150">
-                        <i class="icon-credit-card"></i>
+                        <!-- <i class="icon-credit-card"></i> -->
+                        {{ item.value.sortNo }}
                     </td>
                     <td>
                         <div>{{ item.value.offerBox }}</div>

@@ -27,14 +27,32 @@ export class SortCouponComponent implements OnInit {
     })
   }
   options: SortablejsOptions = {
-    onUpdate: (event: any) => {
-      var prevNodeIndex;
-      if (event.newIndex > event.oldIndex) {
-        prevNodeIndex = event.newIndex - 1
-      } else {
-        prevNodeIndex = event.newIndex + 1
+    onUpdate: (ev: any) => {
+      var localArr = [];
+      if (ev.newIndex > ev.oldIndex) {
+        var rootSortNo = this.coupons[ev.newIndex].sortNo;
+        for (var a = ev.newIndex; a >= ev.oldIndex; a--) {
+          if (a == ev.oldIndex) {
+            this.coupons[a].sortNo = rootSortNo;
+            localArr.push(this.coupons[a])
+          } else {
+            this.coupons[a].sortNo = this.coupons[a - 1].sortNo;
+            localArr.push(this.coupons[a])
+          }
+        }
+      } else if (ev.oldIndex > ev.newIndex) {
+        var rootSortNo = this.coupons[ev.newIndex].sortNo;
+        for (var x = ev.newIndex; x <= ev.oldIndex; x++) {
+          if (x == ev.oldIndex) {
+            this.coupons[x].sortNo = rootSortNo;
+            localArr.push(this.coupons[a]);
+          } else {
+            this.coupons[x].sortNo = this.coupons[x + 1].sortNo;
+            localArr.push(this.coupons[a])
+          }
+        }
       }
-      this.sortCouponFunc(this.coupons[event.newIndex], this.coupons[prevNodeIndex])
+      this.sortCouponFunc(localArr);
     }
   };
 
@@ -43,7 +61,6 @@ export class SortCouponComponent implements OnInit {
       if (res.data) {
         this.coupons = [];
         this.coupons = res.data;
-        console.log(res.data)
         this.responseError = "";
       } else {
         this.responseSuccess = "";
@@ -53,10 +70,9 @@ export class SortCouponComponent implements OnInit {
       }
     })
   }
-  sortCouponFunc(mainNode, secondNode) {
-    console.log(mainNode);
-    console.log(secondNode);
-    this._dataService.sortAPI("/api/sortCoupons", mainNode, secondNode).subscribe(res => {
+  sortCouponFunc(updatedArr) {
+    // console.log(updatedArr);
+    this._dataService.sortAPI("/api/sortCoupons", updatedArr).subscribe(res => {
       if (res.data) {
         console.log(res.data)
         this.responseError = "";
