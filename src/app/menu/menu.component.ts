@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, AfterViewInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { navItems } from '../_nav';
 
@@ -7,7 +7,7 @@ import { navItems } from '../_nav';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements AfterViewInit {
 
   public navItems = navItems;
   public sidebarMinimized = true;
@@ -29,7 +29,14 @@ export class MenuComponent implements OnInit {
     this.changes.disconnect();
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    // var element = document.getElementsByClassName('stopOpen')[0];
+    // document.querySelector('.stopOpen').click()
+    // let element: HTMLElement = document.getElementsByClassName('stopOpen')[0] as HTMLElement;
+    // element.click();
+    for (var i = 0; i < 5; i++) {
+      (<HTMLElement>document.getElementsByClassName('stop')[i]).classList.remove('open')
+    }
   }
 
   logUserOut() {

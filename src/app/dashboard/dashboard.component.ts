@@ -8,19 +8,31 @@ import { DataService } from '../data.service';
 })
 export class DashboardComponent implements OnInit {
 
-  users: any;
+  coupons = "xxx";
+  blogs = "xxx";
+  stores = "xxx";
+  users = "xxx";
+  responseError = ""
 
-  constructor(private _dataService: DataService) {
-    // this._dataService.getUsers().subscribe(res => { this.users = res; console.log(this.users) })
-    // this._dataService.getUsers().subscribe(res => { console.log(res) })
-
-
-
-    // this._dataService.getUsers()
-    //   .subscribe(res => this.users = res);
-  }
+  constructor(private _dataService: DataService) { }
 
   ngOnInit() {
+    this._dataService.fetchAPI("/api/countCoupons").subscribe(res => {
+      if (res.data) this.coupons = res.data;
+      else this.responseError = res.message
+    })
+    this._dataService.fetchAPI("/api/countBlogs").subscribe(res => {
+      if (res.data) this.blogs = res.data;
+      else this.responseError = res.message
+    })
+    this._dataService.fetchAPI("/api/countStores").subscribe(res => {
+      if (res.data) this.stores = res.data;
+      else this.responseError = res.message
+    })
+    this._dataService.fetchAPI("/api/countUsers").subscribe(res => {
+      if (res.data) this.users = res.data;
+      else this.responseError = res.message
+    })
   }
 
   errorHandler() {

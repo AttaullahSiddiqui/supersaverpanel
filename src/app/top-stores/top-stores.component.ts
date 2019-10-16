@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { SortablejsOptions } from 'ngx-sortablejs';
 import { DataService } from '../data.service';
 
@@ -45,15 +45,4 @@ export class TopStoresComponent implements OnInit {
   closeError() {
     this.responseError = ""
   }
-
-  list1 = ["planning", "designing", "developing", "testinnng"];
-  list2 = []
-
-  cities = [
-    'Ankara',
-    'Moscow',
-    'Munich',
-    'Paris',
-    'Washington',
-  ];
 }

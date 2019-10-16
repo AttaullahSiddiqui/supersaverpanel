@@ -8,6 +8,14 @@ let sortCtrl = require('../api/sort.ctrl');
 
 router.post('/login', apiCtrl.authUser);
 router.post('/register', apiCtrl.registerUser);
+
+
+router.get('/countCoupons', sortCtrl.countCoupons);
+router.get('/countBlogs', sortCtrl.countBlogs);
+router.get('/countStores', sortCtrl.countStores);
+router.get('/countUsers', sortCtrl.countUsers);
+
+
 router.post('/createCategory', apiCtrl.createCategory);
 router.post('/addStore', apiCtrl.addStore);
 router.post('/addCoupon', apiCtrl.addCoupon);

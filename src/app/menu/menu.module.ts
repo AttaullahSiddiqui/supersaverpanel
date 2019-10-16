@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxEditorModule } from 'ngx-editor';
 import { SortablejsModule } from 'ngx-sortablejs';
+import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 
 
 import { MenuRoutes } from './menu.routing';
@@ -39,7 +40,8 @@ import { AllDealsComponent } from '../all-deals/all-deals.component';
         FormsModule,
         HttpClientModule,
         NgxEditorModule,
-        SortablejsModule
+        SortablejsModule,
+        InfiniteScrollModule
     ],
     declarations: [
         DashboardComponent,

@@ -45,13 +45,14 @@ export class SortCouponComponent implements OnInit {
         for (var x = ev.newIndex; x <= ev.oldIndex; x++) {
           if (x == ev.oldIndex) {
             this.coupons[x].sortNo = rootSortNo;
-            localArr.push(this.coupons[a]);
+            localArr.push(this.coupons[x]);
           } else {
             this.coupons[x].sortNo = this.coupons[x + 1].sortNo;
-            localArr.push(this.coupons[a])
+            localArr.push(this.coupons[x])
           }
         }
       }
+      // console.log(localArr)
       this.sortCouponFunc(localArr);
     }
   };

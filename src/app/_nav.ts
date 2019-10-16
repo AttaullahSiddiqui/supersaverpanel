@@ -33,165 +33,159 @@ export const navItems: NavData[] = [
   {
     name: 'Dashboard',
     url: '/dashboard',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
+    icon: 'icon-screen-desktop'
   },
   {
     name: 'Users',
     url: '',
-    icon: 'icon-puzzle',
+    icon: 'fa fa-user-o',
+    class: 'stop',
     children: [
       {
         name: 'Add User',
         url: '/addUser',
-        icon: 'icon-puzzle'
+        icon: 'icon-user-follow'
       },
       {
         name: 'All User',
         url: '/allUser',
-        icon: 'icon-puzzle'
+        icon: 'icon-options-vertical'
       },
       {
         name: 'Assign Role',
         url: '/assignRole',
-        icon: 'icon-puzzle'
+        icon: 'icon-mustache'
       }
     ]
   },
-  {
-    name: 'Network',
-    url: '',
-    icon: 'icon-puzzle',
-    children: [
-      {
-        name: 'Add Network',
-        url: '/addNetwork',
-        icon: 'icon-puzzle'
-      }
-    ]
-  },
+  // {
+  //   name: 'Network',
+  //   url: '',
+  //   icon: 'icon-puzzle',
+  //   children: [
+  //     {
+  //       name: 'Add Network',
+  //       url: '/addNetwork',
+  //       icon: 'icon-puzzle'
+  //     }
+  //   ]
+  // },
   {
     name: 'Categories',
     url: '',
-    icon: 'icon-puzzle',
+    icon: 'icon-directions',
+    class: 'stop',
     children: [
       {
         name: 'Add Category',
         url: '/addCategory',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-plus'
       },
       {
         name: 'All Categories',
         url: '/allCategories',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-cubes'
       }
     ]
   }, {
     name: 'Stores',
     url: '',
-    icon: 'icon-puzzle',
+    icon: 'icon-home',
+    class: 'stop',
     children: [
       {
         name: 'Add Store',
         url: '/addStore',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-plus'
       },
       {
         name: 'Edit Store',
         url: '/editStore',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-edit'
       },
       {
         name: 'Sort Top Stores',
         url: '/topStores',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-sort-alpha-asc'
       }
     ]
   },
   {
     name: 'Coupons',
     url: '',
-    icon: 'icon-puzzle',
+    icon: 'icon-present',
     children: [
       {
         name: 'Add Coupon',
         url: '/addCoupon',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-plus'
       },
       {
         name: 'All Coupon',
         url: '/allCoupon',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-ticket'
       },
       {
         name: 'Sort Coupon',
         url: '/sortCoupon',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-sort-amount-asc'
       }
     ]
   },
   {
     name: 'Deals',
     url: '',
-    icon: 'icon-puzzle',
+    icon: 'icon-badge',
+    class: 'stop',
     children: [
       {
         name: 'Deal Page',
         url: '/deals',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-newspaper-o'
       },
       {
         name: 'All Deal',
         url: '/allDeals',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-database'
       }
     ]
   },
   {
     name: 'Blog Post',
     url: '',
-    icon: 'icon-puzzle',
+    icon: 'icon-book-open',
+    class: 'stop',
     children: [
       {
         name: 'Add Blog',
         url: '/addBlog',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-pencil'
       },
       {
         name: 'All Blog',
         url: '/allBlog',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-reorder'
       }
     ]
   },
   {
-    name: 'Advertising',
+    name: 'Slider',
     url: '/users',
-    icon: 'icon-puzzle',
-    children: [
-      {
-        name: 'Slider',
-        url: '/base/cards',
-        icon: 'icon-puzzle'
-      }
-    ]
-  },
-  {
-    name: 'General Setting',
-    url: '/generalSetting',
-    icon: 'icon-puzzle'
-  },
-  {
-    name: 'Media',
-    url: '/users',
-    icon: 'icon-puzzle'
-  },
-  {
-    name: 'Image Compressor',
-    url: '/users',
-    icon: 'icon-puzzle'
+    icon: 'fa fa-film'
   }
+  // {
+  //   name: 'General Setting',
+  //   url: '/generalSetting',
+  //   icon: 'icon-puzzle'
+  // },
+  // {
+  //   name: 'Media',
+  //   url: '/users',
+  //   icon: 'icon-puzzle'
+  // },
+  // {
+  //   name: 'Image Compressor',
+  //   url: '/users',
+  //   icon: 'icon-puzzle'
+  // }
 ];
