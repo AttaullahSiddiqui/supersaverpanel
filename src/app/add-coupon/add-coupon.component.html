@@ -36,10 +36,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="trackingLink">Tracking Link</label>
+                            <br>
+                            <label class="col-md-3 col-form-label" for="assignedStore">
+                                Choose Store
+                            </label>
                             <div class="col-md-9">
-                                <input type="text" [(ngModel)]="couponInfo.trackingLink" required name="trackingLink"
-                                    class="form-control" placeholder="...">
+                                <select class="form-control form-control-lg" [disabled]="!stores" name="assignedStore"
+                                    [(ngModel)]="couponInfo.storeId" (change)="fetchTrackingLink(couponInfo.storeId)"
+                                    required>
+                                    <option value=""></option>
+                                    <option [value]="item.value._id" *ngFor="let item of stores | keyvalue">
+                                        {{item.value.name}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
 
@@ -48,6 +57,14 @@
                             <div class="col-md-9">
                                 <input id="datepicker" class="form-control" [(ngModel)]="couponInfo.expDate" required
                                     type="date" name="expDate" placeholder="date">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="trackingLink">Tracking Link</label>
+                            <div class="col-md-9">
+                                <input type="text" [(ngModel)]="couponInfo.trackingLink" required name="trackingLink"
+                                    class="form-control" placeholder="...">
                             </div>
                         </div>
 
@@ -72,22 +89,6 @@
                             <div class="col-md-9">
                                 <input type="text" [(ngModel)]="couponInfo.code" required name="code"
                                     class="form-control" placeholder="Enter code here..">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <br>
-                            <label class="col-md-3 col-form-label" for="assignedStore">
-                                Choose Store
-                            </label>
-                            <div class="col-md-9">
-                                <select class="form-control form-control-lg" [disabled]="!stores" name="assignedStore"
-                                    [(ngModel)]="couponInfo.storeId" required>
-                                    <option value=""></option>
-                                    <option [value]="item.value._id" *ngFor="let item of stores | keyvalue">
-                                        {{item.value.name}}
-                                    </option>
-                                </select>
                             </div>
                         </div>
 

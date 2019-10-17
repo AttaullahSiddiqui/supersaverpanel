@@ -9,10 +9,10 @@
 <div class="app-body">
     <main class="main d-flex align-items-center">
         <div class="container">
-            <div class="alert alert-danger alert-dismissible fade show col-8 mx-auto text-center" *ngIf="loginError"
+            <div class="alert alert-danger alert-dismissible fade show col-8 mx-auto text-center" *ngIf="responseError"
                 role="alert">
-                {{loginError}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                {{responseError}}
+                <button type="button" class="close" (click)="closeError()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

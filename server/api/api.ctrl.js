@@ -3,6 +3,7 @@ const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
 const ObjectID = require('mongodb').ObjectID;
+var jwt = require('../utils/jwt.service');
 
 let User = require('../Models/user.model');
 let Category = require('../Models/categories.model');
@@ -15,6 +16,7 @@ let resHandler = require('../utils/responseHandler');
 
 module.exports = {
     authUser: authUser,
+    verifyUserToken: verifyUserToken,
     registerUser: registerUser,
     createCategory: createCategory,
     addStore: addStore,
@@ -24,22 +26,41 @@ module.exports = {
 };
 
 function authUser(req, res) {
-    console.log("Hahahha from login");
-    console.log(req.body);
-
+    if (!req.body.userPass || !req.body.userName) {
+        return res.respondError("Username & Password is required", -4);
+    }
     User.findOne({ userName: req.body.userName }, function (err, fetchedUser) {
         if (err) {
-            res.json(resHandler.respondError(error[0], error[1] || -1));
+            res.json(resHandler.respondError(err[0], err[1] || -1));
         } else if (!fetchedUser) {
             res.json(resHandler.respondError("Wrong Username or Password", -3));
         }
         else {
             if (req.body.userPass == fetchedUser.userPass) {
-                res.json(resHandler.respondSuccess(fetchedUser, "Login successfull, Welcome", 2));
+                jwt.generateToken({ userID: fetchedUser._id }, function (jwtErr, jwtSuccess) {
+                    if (jwtErr) {
+                        res.json(resHandler.respondError("Unexpected Error", -1));
+                    }
+                    console.log(jwtSuccess);
+                    res.json(resHandler.respondSuccess(jwtSuccess, "User login successfully", 1));
+                });
+                // res.json(resHandler.respondSuccess(fetchedUser, "Login successfull, Welcome", 1));
             } else {
                 res.json(resHandler.respondError("Wrong password", -3));
             }
         }
+    })
+}
+function verifyUserToken(req, res) {
+    var token = req.body.token;
+    if (!token) {
+        res.json(resHandler.respondError("Authorization token is required", -2));
+    }
+    return jwt.verifyToken(token, function (err, data) {
+        if (err) {
+            res.json(resHandler.respondError("Invalid token", -2));
+        }
+        res.json(resHandler.respondSuccess(data, "Token is Valid", 1));
     })
 }
 

@@ -31,28 +31,28 @@ function sortCoupons(req, res) {
 function countCoupons(req, res) {
     Coupon.estimatedDocumentCount(function (err, coupon) {
         if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
-        else if (!coupon) res.json(resHandler.respondError("No coupon at the moment", -3));
+        else if (!coupon) res.json(resHandler.respondError("Coupon", -3));
         else res.json(resHandler.respondSuccess(coupon, "Coupons fetched successfully", 2));
     })
 }
 function countBlogs(req, res) {
     Blog.estimatedDocumentCount(function (err, blogs) {
         if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
-        else if (!blogs) res.json(resHandler.respondError("No Blog at the moment", -3));
+        else if (!blogs) res.json(resHandler.respondError("Blog", -3));
         else res.json(resHandler.respondSuccess(blogs, "Blogs fetched successfully", 2));
     })
 }
 function countStores(req, res) {
     Store.estimatedDocumentCount(function (err, stores) {
         if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
-        else if (!stores) res.json(resHandler.respondError("No Store at the moment", -3));
+        else if (!stores) res.json(resHandler.respondError("Store", -3));
         else res.json(resHandler.respondSuccess(stores, "Stores fetched successfully", 2));
     })
 }
 function countUsers(req, res) {
     User.estimatedDocumentCount(function (err, users) {
         if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
-        else if (!users) res.json(resHandler.respondError("No User at the moment", -3));
+        else if (!users) res.json(resHandler.respondError("User", -3));
         else res.json(resHandler.respondSuccess(users, "Users fetched successfully", 2));
     })
 }

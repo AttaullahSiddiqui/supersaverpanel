@@ -64,11 +64,10 @@
                             </div>
                         </div>
 
-
-                        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
-                            [aspectRatio]="1/1" outputType="file" [resizeToWidth]="200" [resizeToHeight]="200"
-                            format="jpeg" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
-                            (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+                        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false"
+                            [aspectRatio]="1/1" outputType="file" format="jpeg" (imageCropped)="imageCropped($event)"
+                            (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+                            (loadImageFailed)="loadImageFailed()"></image-cropper>
 
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="imgAlt">Image Alt</label>

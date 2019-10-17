@@ -37,6 +37,9 @@ export class MenuComponent implements AfterViewInit {
     for (var i = 0; i < 5; i++) {
       (<HTMLElement>document.getElementsByClassName('stop')[i]).classList.remove('open')
     }
+    (<HTMLElement>document.getElementsByClassName('navbar-toggler')[2]).classList.remove('d-lg-block');
+    // (<HTMLElement>document.getElementsByClassName('navbar-toggler')[3]).classList.add('hideIt');
+    // (<HTMLElement>document.getElementsByClassName('navbar-toggler')[4]).classList.add('hideIt');
   }
 
   logUserOut() {

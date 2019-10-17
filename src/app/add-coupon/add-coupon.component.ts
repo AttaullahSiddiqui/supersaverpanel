@@ -49,6 +49,16 @@ export class AddCouponComponent implements OnInit {
       }
     })
   }
+  fetchTrackingLink(id) {
+    this._dataService.fetchAPIUsingId("/api/fetchStoreById", id).subscribe(res => {
+      if (res.data) {
+        this.couponInfo['trackingLink'] = res.data.trackUrl;
+        this.responseError = "";
+      } else {
+        this.responseError = res.message
+      }
+    })
+  }
   closeSuccess() {
     this.responseSuccess = ""
   }

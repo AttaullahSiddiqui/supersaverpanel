@@ -19,24 +19,24 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this._dataService.fetchAPI("/api/countCoupons").subscribe(res => {
       if (res.data) this.coupons = res.data;
-      else this.responseError = res.message
+      else this.errorHandler(res.message)
     })
     this._dataService.fetchAPI("/api/countBlogs").subscribe(res => {
       if (res.data) this.blogs = res.data;
-      else this.responseError = res.message
+      else this.errorHandler(res.message)
     })
     this._dataService.fetchAPI("/api/countStores").subscribe(res => {
       if (res.data) this.stores = res.data;
-      else this.responseError = res.message
+      else this.errorHandler(res.message)
     })
     this._dataService.fetchAPI("/api/countUsers").subscribe(res => {
       if (res.data) this.users = res.data;
-      else this.responseError = res.message
+      else this.errorHandler(res.message)
     })
   }
 
-  errorHandler() {
-
+  errorHandler(err) {
+    this.responseError = "Can't load " + err + " at the moment";
   }
 
 }

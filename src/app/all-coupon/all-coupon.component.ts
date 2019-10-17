@@ -56,7 +56,7 @@ export class AllCouponComponent implements OnInit {
           this.skipNo -= 5;
         }
         if (res.status == 404) {
-          if (this.coupons) {
+          if (this.coupons.length) {
             this.responseError = "No more data in this store";
             return;
           }
@@ -126,6 +126,16 @@ export class AllCouponComponent implements OnInit {
       window.scrollTo(0, 0)
       return;
     }
+  }
+  fetchTrackingLink(id) {
+    this._dataService.fetchAPIUsingId("/api/fetchStoreById", id).subscribe(res => {
+      if (res.data) {
+        this.editObject['trackingLink'] = res.data.trackUrl;
+        this.responseError = "";
+      } else {
+        this.responseError = res.message
+      }
+    })
   }
 
   closeSuccess() {

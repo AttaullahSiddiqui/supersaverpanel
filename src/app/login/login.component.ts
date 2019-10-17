@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { DataService } from '../data.service';
+import { UtilityService } from '../utility.service';
 
 @Component({
   selector: 'app-login',
@@ -9,19 +10,25 @@ import { DataService } from '../data.service';
 })
 export class LoginComponent implements OnInit {
   userData = {};
-  loginError = ""
-  constructor(private _dataService: DataService, private router: Router) { }
+  responseError = ""
+  constructor(private _dataService: DataService, private router: Router, private _utlityService: UtilityService) { }
 
   ngOnInit() {
   }
 
   authUser(userInfo) {
+    console.log("Auth working")
     this._dataService.postAPI("/api/login", userInfo).subscribe(res => {
       if (res.data) {
+        this._utlityService.setToken(res.data);
+        console.log(res.data);
         this.router.navigateByUrl('/dashboard')
       } else {
-        this.loginError = res['message']
+        this.responseError = res['message']
       }
     })
+  }
+  closeError() {
+    this.responseError = ""
   }
 }

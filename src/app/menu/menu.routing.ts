@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { UtilityService } from '../utility.service'
 
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { AddUserComponent } from '../add-user/add-user.component';
@@ -20,7 +21,7 @@ import { GeneralSettingComponent } from '../general-setting/general-setting.comp
 
 
 export const MenuRoutes: Routes = [
-    { path: 'dashboard', component: DashboardComponent },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [UtilityService] },
     { path: 'addUser', component: AddUserComponent },
     { path: 'allUser', component: AllUserComponent },
     { path: 'assignRole', component: AssignRoleComponent },
@@ -40,7 +41,7 @@ export const MenuRoutes: Routes = [
 
     {
         path: '',
-        redirectTo: '/dashboard',
+        redirectTo: '/login',
         pathMatch: 'full',
     }
 ];

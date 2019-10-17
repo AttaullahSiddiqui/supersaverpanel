@@ -16,6 +16,7 @@ module.exports = {
     fetchCategories: fetchCategories,
     fetchStoresOnlyId: fetchStoresOnlyId,
     fetchStoreById: fetchStoreById,
+    fetchStoresWithLimit: fetchStoresWithLimit,
     fetchCouponsById: fetchCouponsById,
     fetchBlogs: fetchBlogs
 };
@@ -37,17 +38,6 @@ function fetchCategories(req, res) {
                 }
             }
         });
-
-    // Category.find({}, function (err, categories) {
-    //     if (err) {
-    //         res.json(resHandler.respondError(error[0], error[1] || -1));
-    //     } else if (!categories) {
-    //         res.json(resHandler.respondError("No categories at the moment", -3));
-    //     }
-    //     else {
-    //         res.json(resHandler.respondSuccess(categories, "Categories fetched successfully", 2));
-    //     }
-    // });
 }
 
 function fetchStoresOnlyId(req, res) {
@@ -62,17 +52,34 @@ function fetchStoresOnlyId(req, res) {
         }
     })
 }
-function fetchStoreById(req, res) {
+function fetchStoresWithLimit(req, res) {
     console.log(req.body)
-    console.log(req.query._id)
+    Store.
+        find({}, 'name _id').
+        skip(Number(req.query.skipNo)).
+        limit(Number(req.query.limitNo)).
+        exec(function (err, stores) {
+            if (err) {
+                res.json(resHandler.respondError(err[0], err[1] || -1));
+            }
+            else {
+                if (stores.length) {
+                    res.json(resHandler.respondSuccess(stores, "Stores fetched successfully", 2));
+                } else {
+                    res.json(resHandler.respondError("Unable to fetch Stores at the moment", -3));
+                }
+            }
+        });
+}
+function fetchStoreById(req, res) {
     Store.findById(req.query._id, function (err, store) {
         if (err) {
             res.json(resHandler.respondError(err[0], err[1] || -1));
-        } else if (!store) {
+        } else if (store.length) {
             res.json(resHandler.respondError("No such Store at the moment", -3));
         }
         else {
-            res.json(resHandler.respondSuccess(store, "Store fetched successfully", 2));
+            res.json(resHandler.respondSuccess(store, "", 2));
         }
     })
 }
@@ -82,13 +89,13 @@ function fetchCouponsById(req, res) {
         skip(Number(req.query.skipNo)).
         limit(Number(req.query.limitNo)).
         sort({ sortNo: 1 }).
-        exec(function (err, categories) {
+        exec(function (err, coupons) {
             if (err) {
                 res.json(resHandler.respondError(err[0], err[1] || -1));
             }
             else {
-                if (categories.length) {
-                    res.json(resHandler.respondSuccess(categories, "Coupons fetched successfully", 2));
+                if (coupons) {
+                    res.json(resHandler.respondSuccess(coupons, "Coupons fetched successfully", 2));
                 } else {
                     res.json(resHandler.respondError("No coupons in this Store", -3));
                 }

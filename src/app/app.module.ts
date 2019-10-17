@@ -56,7 +56,6 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
     BrowserModule,
     BrowserAnimationsModule,
     AngularFontAwesomeModule,
-
     CommonModule,
     FormsModule,
     HttpClientModule,
