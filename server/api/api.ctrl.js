@@ -11,6 +11,7 @@ let Store = require('../Models/stores.model');
 let Coupon = require('../Models/coupon.model');
 let Deal = require('../Models/deal.model');
 let Blog = require('../Models/blog.model');
+let Slider = require('../Models/slide.model');
 let errHandler = require('../utils/errorHandler');
 let resHandler = require('../utils/responseHandler');
 
@@ -22,7 +23,8 @@ module.exports = {
     addStore: addStore,
     addCoupon: addCoupon,
     addDeal: addDeal,
-    addBlog: addBlog
+    addBlog: addBlog,
+    addSlide: addSlide
 };
 
 function authUser(req, res) {
@@ -30,11 +32,8 @@ function authUser(req, res) {
         return res.respondError("Username & Password is required", -4);
     }
     User.findOne({ userName: req.body.userName }, function (err, fetchedUser) {
-        if (err) {
-            res.json(resHandler.respondError(err[0], err[1] || -1));
-        } else if (!fetchedUser) {
-            res.json(resHandler.respondError("Wrong Username or Password", -3));
-        }
+        if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
+        else if (!fetchedUser) res.json(resHandler.respondError("Wrong Username or Password", -3));
         else {
             if (req.body.userPass == fetchedUser.userPass) {
                 jwt.generateToken({ userID: fetchedUser._id }, function (jwtErr, jwtSuccess) {
@@ -44,22 +43,15 @@ function authUser(req, res) {
                     console.log(jwtSuccess);
                     res.json(resHandler.respondSuccess(jwtSuccess, "User login successfully", 1));
                 });
-                // res.json(resHandler.respondSuccess(fetchedUser, "Login successfull, Welcome", 1));
-            } else {
-                res.json(resHandler.respondError("Wrong password", -3));
-            }
+            } else res.json(resHandler.respondError("Wrong password", -3));
         }
     })
 }
 function verifyUserToken(req, res) {
     var token = req.body.token;
-    if (!token) {
-        res.json(resHandler.respondError("Authorization token is required", -2));
-    }
+    if (!token) res.json(resHandler.respondError("Authorization token is required", -2));
     return jwt.verifyToken(token, function (err, data) {
-        if (err) {
-            res.json(resHandler.respondError("Invalid token", -2));
-        }
+        if (err) res.json(resHandler.respondError("Invalid token", -2));
         res.json(resHandler.respondSuccess(data, "Token is Valid", 1));
     })
 }
@@ -71,7 +63,6 @@ function registerUser(req, res) {
         admin: req.body.admin
     });
     newUser.save().then(function (result) {
-        // return res.respondSuccess(result, "User account created successfully", 2);
         res.json(resHandler.respondSuccess(result, "User account created successfully", 2));
     }, function (err) {
         var error = errHandler.handle(err);
@@ -135,12 +126,10 @@ function addCoupon(req, res) {
             res.json(resHandler.respondError(error[0], (error[1] || -1)));
         }
         if (!response) {
-            console.log("Blaaaaa")
             req.body.sortNo = 1;
             addCouponCallback(req, res)
         }
         if (response) {
-            console.log(response);
             req.body.sortNo = response + 1;
             addCouponCallback(req, res)
         }
@@ -202,53 +191,41 @@ function addBlog(req, res) {
         res.json(resHandler.respondError(error[0], (error[1] || -1)));
     })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Error handling
-const sendError = (err, res) => {
-    response.status = 501;
-    response.message = typeof err == 'object' ? err.message : err;
-    res.status(501).json(response);
-};
-
-// Response handling
-let response = {
-    status: 200,
-    data: [],
-    message: null
-};
+function addSlide(req, res) {
+    Slider.
+        find({ storeId: req.body.storeId, arrIndex: req.body.arrIndex }).
+        exec(function (err, slide) {
+            if (err) {
+                res.json(resHandler.respondError(err[0], err[1] || -1));
+            }
+            else {
+                if (slide) addNewSlide(req, res)
+                else {
+                    console.log("Update chala")
+                    req.body._id = slide._id;
+                    updateSlide(req, res)
+                }
+            }
+        });
+}
+function addNewSlide(req, res) {
+    var newSlider = new Slider({
+        link: req.body.link,
+        img: req.body.img,
+        storeId: req.body.storeId,
+        arrIndex: req.body.arrIndex
+    });
+    newSlider.save().then(function (result) {
+        res.json(resHandler.respondSuccess(result, "Slide added successfully", 2));
+    }, function (err) {
+        var error = errHandler.handle(err);
+        res.json(resHandler.respondError(error[0], (error[1] || -1)));
+    })
+}
+function updateSlide(req, res, id) {
+    Slider.findByIdAndUpdate(req.body._id, req.body, { new: true }, function (err, updatedNode) {
+        if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
+        else if (!updatedNode) res.json(resHandler.respondError("Wrong format provided", -3));
+        else res.json(resHandler.respondSuccess(updatedNode, "Slider updated successfully", 2));
+    })
+}

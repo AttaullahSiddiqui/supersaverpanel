@@ -17,27 +17,27 @@ import { DealsPageComponent } from '../deals-page/deals-page.component';
 import { AllDealsComponent } from '../all-deals/all-deals.component';
 import { AddBlogComponent } from '../add-blog/add-blog.component';
 import { AllBlogComponent } from '../all-blog/all-blog.component';
-import { GeneralSettingComponent } from '../general-setting/general-setting.component';
+import { SliderComponent } from '../slider/slider.component';
 
 
 export const MenuRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent, canActivate: [UtilityService] },
-    { path: 'addUser', component: AddUserComponent },
-    { path: 'allUser', component: AllUserComponent },
-    { path: 'assignRole', component: AssignRoleComponent },
-    { path: 'addCategory', component: AddCategoryComponent },
-    { path: 'allCategories', component: AllCategoriesComponent },
-    { path: 'addStore', component: AddStoreComponent },
-    { path: 'editStore', component: EditStoreComponent },
-    { path: 'topStores', component: TopStoresComponent },
-    { path: 'addCoupon', component: AddCouponComponent },
-    { path: 'allCoupon', component: AllCouponComponent },
-    { path: 'sortCoupon', component: SortCouponComponent },
-    { path: 'deals', component: DealsPageComponent },
-    { path: 'allDeals', component: AllDealsComponent },
-    { path: 'addBlog', component: AddBlogComponent },
-    { path: 'allBlog', component: AllBlogComponent },
-    { path: 'generalSetting', component: GeneralSettingComponent },
+    { path: 'addUser', component: AddUserComponent, canActivate: [UtilityService] },
+    { path: 'allUser', component: AllUserComponent, canActivate: [UtilityService] },
+    { path: 'assignRole', component: AssignRoleComponent, canActivate: [UtilityService] },
+    { path: 'addCategory', component: AddCategoryComponent, canActivate: [UtilityService] },
+    { path: 'allCategories', component: AllCategoriesComponent, canActivate: [UtilityService] },
+    { path: 'addStore', component: AddStoreComponent, canActivate: [UtilityService] },
+    { path: 'editStore', component: EditStoreComponent, canActivate: [UtilityService] },
+    { path: 'topStores', component: TopStoresComponent, canActivate: [UtilityService] },
+    { path: 'addCoupon', component: AddCouponComponent, canActivate: [UtilityService] },
+    { path: 'allCoupon', component: AllCouponComponent, canActivate: [UtilityService] },
+    { path: 'sortCoupon', component: SortCouponComponent, canActivate: [UtilityService] },
+    { path: 'deals', component: DealsPageComponent, canActivate: [UtilityService] },
+    { path: 'allDeals', component: AllDealsComponent, canActivate: [UtilityService] },
+    { path: 'addBlog', component: AddBlogComponent, canActivate: [UtilityService] },
+    { path: 'allBlog', component: AllBlogComponent, canActivate: [UtilityService] },
+    { path: 'addSlider', component: SliderComponent, canActivate: [UtilityService] },
 
     {
         path: '',

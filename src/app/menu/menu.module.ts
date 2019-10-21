@@ -26,9 +26,9 @@ import { AllCouponComponent } from '../all-coupon/all-coupon.component';
 import { SortCouponComponent } from '../sort-coupon/sort-coupon.component';
 import { AddBlogComponent } from '../add-blog/add-blog.component';
 import { AllBlogComponent } from '../all-blog/all-blog.component';
-import { GeneralSettingComponent } from '../general-setting/general-setting.component';
 import { DealsPageComponent } from '../deals-page/deals-page.component';
 import { AllDealsComponent } from '../all-deals/all-deals.component';
+import { SliderComponent } from '../slider/slider.component';
 
 @NgModule({
     imports: [
@@ -56,9 +56,9 @@ import { AllDealsComponent } from '../all-deals/all-deals.component';
         SortCouponComponent,
         AddBlogComponent,
         AllBlogComponent,
-        GeneralSettingComponent,
         DealsPageComponent,
-        AllDealsComponent
+        AllDealsComponent,
+        SliderComponent
     ]
 })
 

@@ -22,6 +22,7 @@ router.post('/addStore', apiCtrl.addStore);
 router.post('/addCoupon', apiCtrl.addCoupon);
 router.post('/addDeal', apiCtrl.addDeal);
 router.post('/addBlog', apiCtrl.addBlog);
+router.post('/addSlide', apiCtrl.addSlide);
 
 
 router.get('/fetchCategories', fetchCtrl.fetchCategories);

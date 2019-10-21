@@ -26,26 +26,19 @@ export class UtilityService {
     this.userVar = "";
   };
 
-  public canActivate(): Observable<any> {
-    if (this.userVar) {
-      console.log("Direct chal gya")
-      return of(true);
-    }
+  public canActivate() {
+    if (this.userVar) return true
     var xyz = localStorage.getItem('Authorization');
     if (xyz) {
-      console.log("Local me mil gya");
-      this._dataService.postAPI('/api/verifyUserToken', { token: xyz }).subscribe(res => {
-        if (res.data) {
-          console.log("PAss", res.message);
-          return of(true);
-        } else {
-          console.log("Fail", res.message);
-          return of(false);
-        }
-      })
-    } else {
-      console.log("Nahe mila local me")
-      return of(false);
-    }
+      return new Promise(
+        (resolve, reject) => {
+          this._dataService.postAPI('/api/verifyUserToken', { token: xyz }).subscribe(res => {
+            if (res.data) {
+              this.userVar = xyz;
+              resolve(true);
+            } else reject(false);
+          })
+        })
+    } else return false
   }
 }

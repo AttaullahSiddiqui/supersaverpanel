@@ -170,7 +170,7 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Slider',
-    url: '/users',
+    url: '/addSlider',
     icon: 'fa fa-film'
   }
   // {
