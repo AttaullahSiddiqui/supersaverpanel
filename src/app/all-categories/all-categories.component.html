@@ -82,36 +82,38 @@
     </div>
 </div>
 
-
 <br>
 
+<div class="alert alert-success alert-dismissible fade show col-8" *ngIf="responseSuccess" role="alert">
+    {{responseSuccess}}
+    <button type="button" class="close" (click)="closeSuccess()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="alert alert-danger alert-dismissible fade show col-8" *ngIf="responseError" role="alert">
+    {{responseError}}
+    <button type="button" class="close" (click)="closeError()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
-<div class="animated fadeIn">
-    <div class="alert alert-success alert-dismissible fade show col-8" *ngIf="responseSuccess" role="alert">
-        {{responseSuccess}}
-        <button type="button" class="close" (click)="closeSuccess()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+<div class="d-flex justify-content-center vertical-center" *ngIf="!dataLoaded">
+    <div class="spinner-grow text-info spnbg" role="status">
+        <span class="sr-only">Loading...</span>
     </div>
-    <div class="alert alert-danger alert-dismissible fade show col-8" *ngIf="responseError" role="alert">
-        {{responseError}}
-        <button type="button" class="close" (click)="closeError()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+</div>
+
+<div class="animated fadeIn" *ngIf="dataLoaded">
     <div class="row">
         <div class="col">
             <div class="card">
                 <br>
                 <div class="row">
-
                     <div class="col-sm-6">
                         <h3 class="p-4">Total Categories on your Website &nbsp; <span
                                 class="badge badge-pill badge-dark text-white">{{catArray.length}}</span> </h3>
                     </div>
-
                     <div class="col-sm-1"></div>
-
                     <div class="col-sm-5">
                         <form action="" method="post" class="form-inline pull-right widthWhole">
                             <div class="form-group widthWhole">
@@ -131,7 +133,6 @@
                     <button type="button" class="btn btn-primary btn-sm">Print</button>
                 </div>
 
-
                 <div class="card-body">
                     <table class="table">
                         <thead>
@@ -145,7 +146,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr *ngFor="let category of catArray"> -->
                             <tr *ngFor="let category of catArray | keyvalue;index as i">
                                 <td>{{i+this.skipNo+1}}</td>
                                 <td>{{category.value.name}}</td>
@@ -159,14 +159,10 @@
                                 </td>
                                 <td>true</td>
                                 <td>
-                                    <!-- <button type="button" class="btn btn-primary text-white" data-toggle="modal"
-                                        data-target="#deleteModal">Delete</button> -->
                                     <button type="button" class="btn btn-primary text-white"
                                         (click)="showDltModal(category.key)">Delete</button>
                                     &nbsp; &nbsp;<button type="button" class="btn btn-dark text-white"
                                         (click)="showEditModal(category.key,category.value)">Edit</button>
-                                    <!-- &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button> -->
                                 </td>
                             </tr>
                         </tbody>

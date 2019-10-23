@@ -14,6 +14,7 @@ export class AllCategoriesComponent implements OnInit {
   responseError = "";
   responseSuccess = "";
   catArray = [];
+  dataLoaded = false;
   deleteObject = "";
   editObject = "";
   editKey = "";
@@ -24,32 +25,25 @@ export class AllCategoriesComponent implements OnInit {
   @ViewChild('deleteModal', { static: false }) public deleteModal: ModalDirective;
 
 
-  constructor(private _dataService: DataService) {
-    this.getCategoriesFunc();
-  }
+  constructor(private _dataService: DataService) { this.getCategoriesFunc() }
+
   getCategoriesFunc() {
     this._dataService.fetchAPIWithLimit("/api/fetchCategories", this.skipNo, 5).subscribe(res => {
       if (res.data) {
-        console.log(res.data)
+        this.dataLoaded = true;
         this.catArray = [];
         this.catArray = res.data;
         this.responseError = "";
       } else {
-        window.scrollTo(0, 0)
-        if (this.skipNo) {
-          this.skipNo -= 5;
-        }
+        if (this.skipNo) this.skipNo -= 5
         this.responseSuccess = ""
-        this.responseError = res.message
+        this.errorHandler(res.message)
       }
     })
   }
-
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   showDltModal(key) {
-    // var index = this.catArray.indexOf(key);
     this.dltIndex = key;
     $('#deleteModal').modal('show');
   }
@@ -60,15 +54,12 @@ export class AllCategoriesComponent implements OnInit {
     $('#editModal').modal('show');
   }
 
-
   deleteCoupon() {
     this._dataService.postAPI("/api/deleteCategory", { _id: this.catArray[this.dltIndex]._id }).subscribe(res => {
       if (res.data) {
-        this.responseSuccess = res.message;
+        this.successHandler(res.message);
         this.catArray.splice(this.dltIndex, 1)
-      } else {
-        this.responseError = res.message
-      }
+      } else this.errorHandler(res.message)
     })
     document.getElementById('closebtn').click();
   }
@@ -76,25 +67,16 @@ export class AllCategoriesComponent implements OnInit {
   saveEditedCoupon() {
     this._dataService.postAPI("/api/editCategory", this.editObject).subscribe(res => {
       if (res.data) {
-        this.responseSuccess = res.message;
+        this.successHandler(res.message);
         this.catArray[this.editKey] = res.data;
         this.editObject = ""
-      } else {
-        console.log(res.message);
-        this.responseError = res.message
-      }
+      } else this.errorHandler(res.message)
     })
     document.getElementById('editbtn').click();
   }
-  closeSuccess() {
-    this.responseSuccess = ""
-  }
-  closeError() {
-    this.responseError = ""
-  }
   nextFunc() {
     if (!this.catArray) {
-      this.responseError = "Can't load more categories at the moment";
+      this.errorHandler("Can't load more categories at the moment");
       return;
     }
     this.skipNo += 5;
@@ -105,8 +87,18 @@ export class AllCategoriesComponent implements OnInit {
       this.skipNo -= 5;
       this.getCategoriesFunc()
     } else {
-      this.responseError = "No more previous data exist";
+      this.errorHandler("No more previous data exist");
       return;
     }
   }
+  errorHandler(msg) {
+    this.responseError = msg;
+    window.scrollTo(0, 0)
+  }
+  successHandler(msg) {
+    this.successHandler = msg;
+    window.scrollTo(0, 0)
+  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

@@ -1,0 +1,9 @@
+.vertical-center {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+  }
+  .spnbg{
+    width: 3rem !important; 
+    height: 3rem !important;
+  }

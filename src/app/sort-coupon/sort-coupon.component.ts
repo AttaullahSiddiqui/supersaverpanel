@@ -8,7 +8,7 @@ import { DataService } from '../data.service';
   styleUrls: ['./sort-coupon.component.scss']
 })
 export class SortCouponComponent implements OnInit {
-  storeArray = {};
+  storeArray: {} = null;
   selectedStore = "";
   coupons = null;
   responseSuccess = "";
@@ -21,9 +21,7 @@ export class SortCouponComponent implements OnInit {
       if (res.data) {
         this.storeArray = res.data;
         this.responseError = "";
-      } else {
-        this.responseError = res.message
-      }
+      } else this.errorHandler(res.message)
     })
   }
   options: SortablejsOptions = {
@@ -52,11 +50,9 @@ export class SortCouponComponent implements OnInit {
           }
         }
       }
-      // console.log(localArr)
       this.sortCouponFunc(localArr);
     }
   };
-
   loadCoupons(storeId) {
     this._dataService.fetchAPIUsingId("/api/fetchCouponsById", storeId).subscribe(res => {
       if (res.data) {
@@ -65,30 +61,24 @@ export class SortCouponComponent implements OnInit {
         this.responseError = "";
       } else {
         this.responseSuccess = "";
-        window.scrollTo(0, 0)
         this.coupons = []
-        this.responseError = res.message;
+        this.errorHandler(res.message)
       }
     })
   }
   sortCouponFunc(updatedArr) {
-    // console.log(updatedArr);
     this._dataService.sortAPI("/api/sortCoupons", updatedArr).subscribe(res => {
-      if (res.data) {
-        console.log(res.data)
-        this.responseError = "";
-      } else {
+      if (res.data) { this.responseError = ""; }
+      else {
         this.responseSuccess = "";
-        window.scrollTo(0, 0)
-        this.responseError = res.message;
+        this.errorHandler(res.message)
       }
     })
   }
-
-  closeSuccess() {
-    this.responseSuccess = ""
+  errorHandler(msg) {
+    this.responseError = msg;
+    window.scrollTo(0, 0)
   }
-  closeError() {
-    this.responseError = ""
-  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

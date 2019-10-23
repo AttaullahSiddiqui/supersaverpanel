@@ -14,10 +14,11 @@ export class AllCouponComponent implements OnInit {
   @ViewChild('editModal', { static: false }) public editModal: ModalDirective;
   @ViewChild('deleteModal', { static: false }) public deleteModal: ModalDirective;
 
-  storeArray = {};
+  storeArray: {} = null;
   selectedStoreName = "";
   selectedStore = "";
   coupons = [];
+  dataLoaded = false;
   editObject = {};
   editKey = "";
   dltIndex: any;
@@ -32,9 +33,7 @@ export class AllCouponComponent implements OnInit {
       if (res.data) {
         this.storeArray = res.data;
         this.responseError = "";
-      } else {
-        this.responseError = res.message
-      }
+      } else this.errorHandler(res.message)
     })
   }
   loadCoupons(storeId, event) {
@@ -46,36 +45,28 @@ export class AllCouponComponent implements OnInit {
     this._dataService.fetchAPIWithLimit("/api/fetchCouponsById", this.skipNo, 5, id).subscribe(res => {
       if (res.data) {
         this.coupons = [];
+        this.dataLoaded = true;
         this.coupons = res.data;
-        console.log(res.data)
         this.responseError = "";
       } else {
         this.responseSuccess = "";
-        window.scrollTo(0, 0)
-        if (this.skipNo) {
-          this.skipNo -= 5;
-        }
+        if (this.skipNo) this.skipNo -= 5;
         if (res.status == 404) {
           if (this.coupons.length) {
-            this.responseError = "No more data in this store";
+            this.errorHandler("No more data in this store");
             return;
           }
         } this.coupons = []
-        this.responseError = res.message;
+        this.errorHandler(res.message)
       }
     })
   }
-
   deleteCoupon() {
     this._dataService.postAPI("/api/deleteCoupon", { _id: this.coupons[this.dltIndex]._id }).subscribe(res => {
       if (res.data) {
-        this.responseSuccess = res.message;
-        this.coupons.splice(this.dltIndex, 1);
-        window.scrollTo(0, 0)
-      } else {
-        this.responseError = res.message;
-        window.scrollTo(0, 0)
-      }
+        this.successHandler(res.message);
+        this.coupons.splice(this.dltIndex, 1)
+      } else this.errorHandler(res.message)
     })
     document.getElementById('closebtn').click();
   }
@@ -84,16 +75,10 @@ export class AllCouponComponent implements OnInit {
     if (editNode.activeStatus) editNode.code = "";
     this._dataService.postAPI("/api/editCoupon", editNode).subscribe(res => {
       if (res.data) {
-        this.responseSuccess = res.message;
-        window.scrollTo(0, 0)
+        this.successHandler(res.message);
         this.coupons[this.editKey] = res.data;
-        console.log(this.editKey)
-        console.log(res.data)
         this.editObject = {};
-      } else {
-        this.responseError = res.message;
-        window.scrollTo(0, 0)
-      }
+      } else this.errorHandler(res.message)
     })
     document.getElementById('editbtn').click();
   }
@@ -111,7 +96,7 @@ export class AllCouponComponent implements OnInit {
   }
   nextFunc() {
     if (!this.coupons) {
-      this.responseError = "Can't load more coupons at the moment";
+      this.errorHandler("Can't load more coupons at the moment");
       return;
     }
     this.skipNo += 5;
@@ -122,8 +107,7 @@ export class AllCouponComponent implements OnInit {
       this.skipNo -= 5;
       this.loadCouponFunc(this.selectedStore)
     } else {
-      this.responseError = "No more previous data exist";
-      window.scrollTo(0, 0)
+      this.errorHandler("No more previous data exist");
       return;
     }
   }
@@ -132,16 +116,17 @@ export class AllCouponComponent implements OnInit {
       if (res.data) {
         this.editObject['trackingLink'] = res.data.trackUrl;
         this.responseError = "";
-      } else {
-        this.responseError = res.message
-      }
+      } else this.errorHandler(res.message)
     })
   }
-
-  closeSuccess() {
-    this.responseSuccess = ""
+  errorHandler(msg) {
+    this.responseError = msg;
+    window.scrollTo(0, 0)
   }
-  closeError() {
-    this.responseError = ""
+  successHandler(msg) {
+    this.responseSuccess = msg;
+    window.scrollTo(0, 0)
   }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

@@ -19,17 +19,14 @@ export class AddCouponComponent implements OnInit {
       if (res.data) {
         this.stores = res.data;
         this.responseError = "";
-      } else {
-        this.responseError = res.message
-      }
+      } else this.errorHandler(res.message)
     })
   }
   addCoupon(couponData) {
     couponData.expDate = new Date(couponData.expDate).getTime();
     var today = Date.now();
     if (today > couponData.expDate) {
-      this.responseError = "Wrong Date Selected";
-      window.scrollTo(0, 0)
+      this.errorHandler("Wrong Date Selected")
       return;
     }
     if (!couponData.trending) couponData.trending = false;
@@ -37,16 +34,12 @@ export class AddCouponComponent implements OnInit {
     if (!couponData.newArrival) couponData.newArrival = false;
     if (couponData.activeStatus) couponData.code = "";
 
-    console.log(couponData);
     this._dataService.postAPI("/api/addCoupon", couponData).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
         this.couponInfo = { activeStatus: true };
         window.scrollTo(0, 0)
-      } else {
-        this.responseError = res.message
-        window.scrollTo(0, 0)
-      }
+      } else this.errorHandler(res.message)
     })
   }
   fetchTrackingLink(id) {
@@ -54,15 +47,13 @@ export class AddCouponComponent implements OnInit {
       if (res.data) {
         this.couponInfo['trackingLink'] = res.data.trackUrl;
         this.responseError = "";
-      } else {
-        this.responseError = res.message
-      }
+      } else this.errorHandler(res.message)
     })
   }
-  closeSuccess() {
-    this.responseSuccess = ""
+  errorHandler(msg) {
+    this.responseError = msg;
+    window.scrollTo(0, 0)
   }
-  closeError() {
-    this.responseError = ""
-  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

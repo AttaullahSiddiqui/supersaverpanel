@@ -23,9 +23,7 @@ export class AddBlogComponent implements OnInit {
     this._dataService.fetchAPI("/api/fetchStoresOnlyId").subscribe(res => {
       if (res.data) {
         this.stores = res.data;
-      } else {
-        this.responseError = res.message
-      }
+      } else this.errorHandler(res.message)
     })
   }
   uploadImageFirst(blogNode) {
@@ -33,8 +31,7 @@ export class AddBlogComponent implements OnInit {
     var filePath = `blogImages/_${new Date().getTime()}`;
     this._dataService.storeImage(filePath, this.selectedImage, function (error, data) {
       if (error) {
-        this.responseError = "Can't upload image to the Server";
-        window.scrollTo(0, 0)
+        this.errorHandler("Can't upload image to the Server");
         return;
       }
       if (data) {
@@ -45,7 +42,6 @@ export class AddBlogComponent implements OnInit {
     }).subscribe()
   }
   saveBlogToDB(blogData) {
-    console.log(blogData)
     this._dataService.postAPI("/api/addBlog", blogData).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
@@ -53,16 +49,12 @@ export class AddBlogComponent implements OnInit {
         this.imgModel = "";
         this.croppedImage = "";
         window.scrollTo(0, 0)
-      } else {
-        this.responseError = res.message
-        window.scrollTo(0, 0)
-      }
+      } else this.errorHandler(res.message)
     })
   }
 
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-  }
+  fileChangeEvent(event: any): void { this.imageChangedEvent = event }
+
   imageCropped(event: ImageCroppedEvent) {
     this.selectedImage = event.file;
     var reader = new FileReader();
@@ -71,19 +63,10 @@ export class AddBlogComponent implements OnInit {
       this.croppedImage = reader.result;
     }
   }
-  imageLoaded() {
-    // show cropper
+  errorHandler(msg) {
+    this.responseError = msg;
+    window.scrollTo(0, 0)
   }
-  cropperReady() {
-    // cropper ready
-  }
-  loadImageFailed() {
-    // show message
-  }
-  closeSuccess() {
-    this.responseSuccess = ""
-  }
-  closeError() {
-    this.responseError = ""
-  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

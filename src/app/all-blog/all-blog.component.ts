@@ -15,6 +15,7 @@ export class AllBlogComponent implements OnInit {
   editObject = "";
   editKey = "";
   dltIndex: any;
+  isLoading = false;
   skipNo = 0;
   stores = {};
   selectedImage: any = null;
@@ -33,26 +34,21 @@ export class AllBlogComponent implements OnInit {
     this._dataService.fetchAPI("/api/fetchStoresOnlyId").subscribe(res => {
       if (res.data) {
         this.stores = res.data;
-      } else {
-        this.responseError = res.message
-      }
+      } else this.errorHandler(res.message)
     })
   }
-
   getBlogsFunc() {
+    this.isLoading = true;
     this._dataService.fetchAPIWithLimit("/api/fetchBlogs", this.skipNo, 8).subscribe(res => {
       if (res.data) {
-        console.log(res.data)
         this.blogArray = [];
         this.blogArray = res.data;
         this.responseError = "";
+        this.isLoading = false;
       } else {
-        window.scrollTo(0, 0)
-        if (this.skipNo) {
-          this.skipNo -= 5;
-        }
+        if (this.skipNo) this.skipNo -= 5;
         this.responseSuccess = ""
-        this.responseError = res.message
+        this.errorHandler(res.message)
       }
     })
   }
@@ -67,27 +63,26 @@ export class AllBlogComponent implements OnInit {
     $('#editModal').modal('show');
   }
   deleteBlog() {
+    if (this.isLoading) return;
+    this.isLoading = true;
     this._dataService.postAPI("/api/deleteBlog", { _id: this.blogArray[this.dltIndex]._id }).subscribe(res => {
       if (res.data) {
-        this.responseSuccess = res.message;
-        this.blogArray.splice(this.dltIndex, 1);
-        window.scrollTo(0, 0)
-      } else {
-        this.responseError = res.message;
-        window.scrollTo(0, 0)
-      }
+        this.successHandler(res.message);
+        this.blogArray.splice(this.dltIndex, 1)
+      } else this.errorHandler(res.message)
     })
     document.getElementById('closebtn').click();
   }
 
   saveEditedBlog(editNode) {
+    if (this.isLoading) return;
+    this.isLoading = true;
     var self = this;
     if (this.croppedImage) {
       var filePath = `blogImages/_${new Date().getTime()}`;
       this._dataService.storeImage(filePath, this.selectedImage, function (error, data) {
         if (error) {
-          this.responseError = "Can't upload image to the Server";
-          window.scrollTo(0, 0)
+          this.errorHandler("Can't upload image to the Server");
           return;
         }
         if (data) {
@@ -101,39 +96,35 @@ export class AllBlogComponent implements OnInit {
     }
   }
   editCallbackFunc(editData) {
-    console.log(editData)
     this._dataService.postAPI("/api/editBlog", editData).subscribe(res => {
       if (res.data) {
-        this.responseSuccess = res.message;
-        this.blogArray[this.editKey] = res.data;
-        window.scrollTo(0, 0)
-      } else {
-        this.responseError = res.message;
-        window.scrollTo(0, 0)
-      }
+        this.successHandler(res.message)
+        this.blogArray[this.editKey] = res.data
+      } else this.errorHandler(res.message)
     })
     document.getElementById('editbtn').click();
   }
   nextFunc() {
+    if (this.isLoading) return;
     if (!this.blogArray) {
-      this.responseError = "Can't load more Blogs at the moment";
+      this.errorHandler("Can't load more Blogs at the moment");
       return;
     }
     this.skipNo += 5;
     this.getBlogsFunc()
   }
   prevFunc() {
+    if (this.isLoading) return;
     if (this.skipNo >= 5) {
       this.skipNo -= 5;
       this.getBlogsFunc()
     } else {
-      this.responseError = "No more previous data exist";
+      this.errorHandler("No more previous data exist");
       return;
     }
   }
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-  }
+  fileChangeEvent(event: any): void { this.imageChangedEvent = event }
+
   imageCropped(event: ImageCroppedEvent) {
     this.selectedImage = event.file;
     var reader = new FileReader();
@@ -148,19 +139,16 @@ export class AllBlogComponent implements OnInit {
     this.imageChangedEvent = "";
     this.croppedImage = "";
   }
-  imageLoaded() {
-    // show cropper
+  errorHandler(msg) {
+    this.responseError = msg;
+    window.scrollTo(0, 0);
+    this.isLoading = false;
   }
-  cropperReady() {
-    // cropper ready
+  successHandler(msg) {
+    this.responseSuccess = msg;
+    window.scrollTo(0, 0);
+    this.isLoading = false;
   }
-  loadImageFailed() {
-    // show message
-  }
-  closeSuccess() {
-    this.responseSuccess = ""
-  }
-  closeError() {
-    this.responseError = ""
-  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

@@ -55,7 +55,6 @@
                             </app-ngx-editor>
                         </div>
                     </div>
-
                     <div class="text-center">
                         <div class="form-group row">
                             <div class="input-group col-md-6">
@@ -63,11 +62,6 @@
                             </div>
                         </div>
                         <br>
-                        <!-- <div class="form-group row" *ngIf="croppedImage">
-                        <div class="input-group col-md-8">
-                            <img [src]="croppedImage" />
-                        </div>
-                    </div> -->
                         <div class="card col-md-6" *ngIf="croppedImage" style="width: 200px">
                             <div class="form-group row">
                                 <div class="input-group">
@@ -180,14 +174,11 @@
             <div class="card">
                 <br>
                 <div class="row">
-
                     <div class="col-sm-6">
                         <h3 class="p-4">Total Categories on your Website &nbsp; <span
                                 class="badge badge-pill badge-dark text-white">10</span> </h3>
                     </div>
-
                     <div class="col-sm-1"></div>
-
                     <div class="col-sm-5">
                         <form action="" method="post" class="form-inline pull-right widthWhole">
                             <div class="form-group widthWhole">
@@ -198,7 +189,6 @@
                         </form>
                     </div>
                 </div>
-
                 <div class="row" style="margin-left: 45px">
                     <button type="button" class="btn btn-primary btn-sm">Copy</button>
                     <button type="button" class="btn btn-primary btn-sm">CSV</button>
@@ -206,8 +196,6 @@
                     <button type="button" class="btn btn-primary btn-sm">PDF</button>
                     <button type="button" class="btn btn-primary btn-sm">Print</button>
                 </div>
-
-
                 <div class="card-body">
                     <table class="table">
                         <thead>
@@ -221,7 +209,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr *ngFor="let blog of catArray"> -->
                             <tr *ngFor="let blog of blogArray | keyvalue;index as i">
                                 <td>{{i+this.skipNo+1}}</td>
                                 <td>{{blog.value.title}}</td>
@@ -235,14 +222,10 @@
                                 </td>
                                 <td><img [src]="blog.value.img" width="55" height="55" /></td>
                                 <td>
-                                    <!-- <button type="button" class="btn btn-primary text-white" data-toggle="modal"
-                                        data-target="#deleteModal">Delete</button> -->
                                     <button type="button" class="btn btn-dark text-white"
                                         (click)="showDltModal(blog.key)">Delete</button>
                                     &nbsp; &nbsp;<button type="button" class="btn btn-primary text-white"
                                         (click)="showEditModal(blog.key,blog.value)">Edit</button>
-                                    <!-- &nbsp; &nbsp;<button type="button" data-toggle="modal" data-target="#editModal"
-                                        class="btn btn-dark text-white">Edit</button> -->
                                 </td>
                             </tr>
                         </tbody>

@@ -8,7 +8,7 @@ let sortCtrl = require('../api/sort.ctrl');
 
 router.post('/login', apiCtrl.authUser);
 router.post('/verifyUserToken', apiCtrl.verifyUserToken);
-router.post('/register', apiCtrl.registerUser);
+// router.post('/register', apiCtrl.registerUser);
 
 
 router.get('/countCoupons', sortCtrl.countCoupons);
@@ -25,6 +25,7 @@ router.post('/addBlog', apiCtrl.addBlog);
 router.post('/addSlide', apiCtrl.addSlide);
 
 
+router.get('/fetchUsers', fetchCtrl.fetchUsers);
 router.get('/fetchCategories', fetchCtrl.fetchCategories);
 router.get('/fetchBlogs', fetchCtrl.fetchBlogs);
 router.get('/fetchStoresOnlyId', fetchCtrl.fetchStoresOnlyId);

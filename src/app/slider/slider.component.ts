@@ -61,7 +61,6 @@ export class SliderComponent implements OnInit {
     }
   }
   uploadImageFirst(sliderNode, indName) {
-    console.log(sliderNode)
     var self = this;
     var filePath = `sliderImages/_${new Date().getTime()}`;
     this._dataService.storeImage(filePath, this.selectedImage, function (err, data) {

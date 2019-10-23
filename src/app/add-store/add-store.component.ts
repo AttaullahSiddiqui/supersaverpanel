@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataService } from '../data.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-add-store',
@@ -30,10 +29,7 @@ export class AddStoreComponent implements OnInit {
     this._dataService.fetchAPI("/api/fetchCategories").subscribe(res => {
       if (res.data) {
         this.categories = res.data;
-      } else {
-        this.responseError = res.message;
-        window.scrollTo(0, 0)
-      }
+      } else this.errorHandler(res.message)
     })
   }
   addStore(storeInfo) {
@@ -41,8 +37,7 @@ export class AddStoreComponent implements OnInit {
     var filePath = `storeImages/_${new Date().getTime()}`;
     this._dataService.storeImage(filePath, this.selectedImage, function (error, data) {
       if (error) {
-        this.responseError = "Can't upload image to the Server";
-        window.scrollTo(0, 0)
+        this.errorHandler("Can't upload image to the Server")
         return;
       }
       if (data) {
@@ -62,23 +57,11 @@ export class AddStoreComponent implements OnInit {
         this.imgModel = "";
         this.croppedImage = "";
         window.scrollTo(0, 0)
-      } else {
-        this.responseError = res.message
-        window.scrollTo(0, 0)
-      }
+      } else this.errorHandler(res.message)
     })
   }
+  fileChangeEvent(event: any): void { this.imageChangedEvent = event }
 
-  closeSuccess() {
-    this.responseSuccess = ""
-  }
-  closeError() {
-    this.responseError = ""
-  }
-
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-  }
   imageCropped(event: ImageCroppedEvent) {
     this.selectedImage = event.file;
     var reader = new FileReader();
@@ -87,13 +70,10 @@ export class AddStoreComponent implements OnInit {
       this.croppedImage = reader.result;
     }
   }
-  imageLoaded() {
-    // show cropper
+  errorHandler(msg) {
+    this.responseError = msg;
+    window.scrollTo(0, 0)
   }
-  cropperReady() {
-    // cropper ready
-  }
-  loadImageFailed() {
-    // show message
-  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

@@ -18,7 +18,8 @@ module.exports = {
     fetchStoreById: fetchStoreById,
     fetchStoresWithLimit: fetchStoresWithLimit,
     fetchCouponsById: fetchCouponsById,
-    fetchBlogs: fetchBlogs
+    fetchBlogs: fetchBlogs,
+    fetchUsers: fetchUsers
 };
 
 function fetchCategories(req, res) {
@@ -120,31 +121,34 @@ function fetchBlogs(req, res) {
             }
         });
 }
-
-
-
-
-
-function editCategory(req, res) {
-    console.log("jjjjjj");
-    console.log(req.body);
-    res.send("hahhahha")
-}
-
-function registerUser(req, res) {
-    var newUser = new User({
-        userName: req.body.userName,
-        userPass: req.body.userPass,
-        admin: req.body.admin
-    });
-    newUser.save().then(function (result) {
-        // return res.respondSuccess(result, "User account created successfully", 2);
-        res.json(resHandler.respondSuccess(result, "User account created successfully", 2));
-    }, function (err) {
-        var error = errHandler.handle(err);
-        res.json(resHandler.respondError(error[0], (error[1] || -1)));
+function fetchUsers(req, res) {
+    User.find({}, function (err, users) {
+        if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
+        else if (!users) res.json(resHandler.respondError("Unable to fetch Users at the moment", -3));
+        else res.json(resHandler.respondSuccess(users, "Users fetched successfully", 2));
     })
 }
-function callback() {
 
-}
+
+
+
+// function editCategory(req, res) {
+//     console.log("jjjjjj");
+//     console.log(req.body);
+//     res.send("hahhahha")
+// }
+
+// function registerUser(req, res) {
+//     var newUser = new User({
+//         userName: req.body.userName,
+//         userPass: req.body.userPass,
+//         admin: req.body.admin
+//     });
+//     newUser.save().then(function (result) {
+//         // return res.respondSuccess(result, "User account created successfully", 2);
+//         res.json(resHandler.respondSuccess(result, "User account created successfully", 2));
+//     }, function (err) {
+//         var error = errHandler.handle(err);
+//         res.json(resHandler.respondError(error[0], (error[1] || -1)));
+//     })
+// }

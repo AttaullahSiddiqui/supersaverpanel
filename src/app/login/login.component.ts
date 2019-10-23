@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
     this._dataService.postAPI("/api/login", userInfo).subscribe(res => {
       if (res.data) {
         this._utlityService.setToken(res.data);
-        console.log(res.data);
         this.router.navigateByUrl('/dashboard')
       } else {
         this.responseError = res['message']

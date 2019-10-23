@@ -193,18 +193,15 @@ function addBlog(req, res) {
 }
 function addSlide(req, res) {
     Slider.
-        find({ storeId: req.body.storeId, arrIndex: req.body.arrIndex }).
+        find({ $and: [{ storeId: req.body.storeId }, { arrIndex: req.body.arrIndex }] }).
         exec(function (err, slide) {
-            if (err) {
-                res.json(resHandler.respondError(err[0], err[1] || -1));
-            }
+            if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
             else {
-                if (slide) addNewSlide(req, res)
-                else {
-                    console.log("Update chala")
-                    req.body._id = slide._id;
+                if (slide.length) {
+                    req.body._id = slide[0]._id;
                     updateSlide(req, res)
                 }
+                else addNewSlide(req, res)
             }
         });
 }
@@ -222,10 +219,10 @@ function addNewSlide(req, res) {
         res.json(resHandler.respondError(error[0], (error[1] || -1)));
     })
 }
-function updateSlide(req, res, id) {
+function updateSlide(req, res) {
     Slider.findByIdAndUpdate(req.body._id, req.body, { new: true }, function (err, updatedNode) {
         if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
-        else if (!updatedNode) res.json(resHandler.respondError("Wrong format provided", -3));
+        else if (!updatedNode) res.json(resHandler.respondError("Unknown error occured", -3));
         else res.json(resHandler.respondSuccess(updatedNode, "Slider updated successfully", 2));
     })
 }

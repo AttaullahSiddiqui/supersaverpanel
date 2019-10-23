@@ -36,6 +36,13 @@ export const navItems: NavData[] = [
     icon: 'icon-screen-desktop'
   },
   {
+    divider: true
+  },
+  {
+    title: true,
+    name: 'Configuration',
+  },
+  {
     name: 'Users',
     url: '',
     icon: 'fa fa-user-o',
@@ -54,22 +61,18 @@ export const navItems: NavData[] = [
       {
         name: 'Assign Role',
         url: '/assignRole',
-        icon: 'icon-mustache'
+        icon: 'icon-mustache',
+        attributes: { disabled: true }
       }
     ]
   },
-  // {
-  //   name: 'Network',
-  //   url: '',
-  //   icon: 'icon-puzzle',
-  //   children: [
-  //     {
-  //       name: 'Add Network',
-  //       url: '/addNetwork',
-  //       icon: 'icon-puzzle'
-  //     }
-  //   ]
-  // },
+  {
+    divider: true
+  },
+  {
+    title: true,
+    name: 'Data Entry',
+  },
   {
     name: 'Categories',
     url: '',
@@ -112,6 +115,7 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Coupons',
+    class: 'stop',
     url: '',
     icon: 'icon-present',
     children: [
@@ -146,9 +150,17 @@ export const navItems: NavData[] = [
       {
         name: 'All Deal',
         url: '/allDeals',
-        icon: 'fa fa-database'
+        icon: 'fa fa-database',
+        attributes: { disabled: true }
       }
     ]
+  },
+  {
+    divider: true
+  },
+  {
+    title: true,
+    name: 'Extras',
   },
   {
     name: 'Blog Post',
@@ -173,19 +185,4 @@ export const navItems: NavData[] = [
     url: '/addSlider',
     icon: 'fa fa-film'
   }
-  // {
-  //   name: 'General Setting',
-  //   url: '/generalSetting',
-  //   icon: 'icon-puzzle'
-  // },
-  // {
-  //   name: 'Media',
-  //   url: '/users',
-  //   icon: 'icon-puzzle'
-  // },
-  // {
-  //   name: 'Image Compressor',
-  //   url: '/users',
-  //   icon: 'icon-puzzle'
-  // }
 ];

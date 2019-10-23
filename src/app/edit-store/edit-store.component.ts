@@ -12,7 +12,7 @@ declare var $: any;
   exportAs: 'bs-modal'
 })
 export class EditStoreComponent implements OnInit {
-  dataLoaded: any = {};
+  dataLoaded = null;
   storeInfo: any = null;
   imgModel = "";
   croppedImage: any = "";
@@ -30,13 +30,9 @@ export class EditStoreComponent implements OnInit {
   ngOnInit() {
     this._dataService.fetchAPI("/api/fetchStoresOnlyId").subscribe(res => {
       if (res.data) {
-        console.log(res.data)
         this.dataLoaded = res.data;
         this.responseError = "";
-      } else {
-        this.responseError = res.message;
-        window.scrollTo(0, 0)
-      }
+      } else this.errorHandler(res.message);
     })
   }
 
@@ -45,13 +41,9 @@ export class EditStoreComponent implements OnInit {
     this.loadedStoreId = storeId;
     this._dataService.fetchAPIUsingId("/api/fetchStoreById", storeId).subscribe(res => {
       if (res.data) {
-        console.log(res.data)
         this.storeInfo = res.data;
         this.responseError = "";
-      } else {
-        this.responseError = res.message;
-        window.scrollTo(0, 0)
-      }
+      } else this.errorHandler(res.message);
     })
   }
   showDltModal(storeId) {
@@ -64,10 +56,7 @@ export class EditStoreComponent implements OnInit {
         this.storeInfo = {};
         this.dataLoaded.splice(this.loadedStoreIndex, 1);
         window.scrollTo(0, 0)
-      } else {
-        this.responseError = res.message;
-        window.scrollTo(0, 0)
-      }
+      } else this.errorHandler(res.message);
     })
     document.getElementById('closebtn').click();
   }
@@ -77,8 +66,7 @@ export class EditStoreComponent implements OnInit {
       var filePath = `storeImages/_${new Date().getTime()}`;
       this._dataService.storeImage(filePath, this.selectedImage, function (error, data) {
         if (error) {
-          this.responseError = "Can't upload image to the Server";
-          window.scrollTo(0, 0)
+          this.errorHandler("Can't upload image to the Server");
           return;
         }
         if (data) {
@@ -99,16 +87,12 @@ export class EditStoreComponent implements OnInit {
         this.dataLoaded[this.loadedStoreIndex]._id = res.data._id;
         this.storeInfo = res.data;
         window.scrollTo(0, 0)
-      } else {
-        this.responseError = res.message;
-        window.scrollTo(0, 0)
-      }
+      } else this.errorHandler(res.message)
     })
   }
 
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-  }
+  fileChangeEvent(event: any): void { this.imageChangedEvent = event; }
+
   imageCropped(event: ImageCroppedEvent) {
     this.selectedImage = event.file;
     var reader = new FileReader();
@@ -123,19 +107,10 @@ export class EditStoreComponent implements OnInit {
     this.imageChangedEvent = "";
     this.croppedImage = "";
   }
-  imageLoaded() {
-    // show cropper
+  errorHandler(msg) {
+    this.responseError = msg;
+    window.scrollTo(0, 0)
   }
-  cropperReady() {
-    // cropper ready
-  }
-  loadImageFailed() {
-    // show message
-  }
-  closeSuccess() {
-    this.responseSuccess = ""
-  }
-  closeError() {
-    this.responseError = ""
-  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

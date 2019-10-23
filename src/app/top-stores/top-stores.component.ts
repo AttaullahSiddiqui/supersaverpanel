@@ -8,45 +8,36 @@ import { DataService } from '../data.service';
   styleUrls: ['./top-stores.component.scss']
 })
 export class TopStoresComponent implements OnInit {
-  storeArr = [];
+  storeArr: [] = null;
   skipNo = 0;
+  isLoading = false;
   responseError = "";
   responseSuccess = "";
 
   constructor(private _dataService: DataService) {
     this.getCategoriesFunc()
   }
-
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
   getCategoriesFunc() {
+    this.isLoading = true;
     this._dataService.fetchAPIWithLimit("/api/fetchStoresWithLimit", this.skipNo, 10).subscribe(res => {
       if (res.data) {
         this.storeArr = res.data;
         this.responseError = "";
+        this.isLoading = false;
       } else {
         window.scrollTo(0, 0)
         if (this.skipNo) this.skipNo -= 5;
-        this.responseError = res.message
+        this.responseError = res.message;
+        this.isLoading = false;
       }
     })
   }
   nextFunc() {
-    if (!this.skipNo) {
-      this.skipNo += 5;
-    }
+    if (this.isLoading) return;
+    if (!this.skipNo) this.skipNo += 5;
     this.getCategoriesFunc()
   }
-  // options: SortablejsOptions = {
-  //   onUpdate: (event: any) => {
-  //     console.log(event);
-  //   }
-  // };
-  closeSuccess() {
-    this.responseSuccess = ""
-  }
-  closeError() {
-    this.responseError = ""
-  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

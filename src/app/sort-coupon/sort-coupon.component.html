@@ -12,7 +12,13 @@
     </button>
 </div>
 
-<div class="row">
+<div class="d-flex justify-content-center vertical-center" *ngIf="!storeArray">
+    <div class="spinner-grow text-info spnbg" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<div class="row" *ngIf="storeArray">
     <div class="form-group col-5">
         <label for="userType">
             <h5>PLEASE SELECT STORE</h5>
