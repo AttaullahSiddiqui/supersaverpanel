@@ -9,6 +9,7 @@ import { DataService } from '../data.service';
 export class AddCouponComponent implements OnInit {
   stores = {};
   couponInfo = { activeStatus: true };
+  isBusy = false;
   responseSuccess = "";
   responseError = "";
 
@@ -23,6 +24,8 @@ export class AddCouponComponent implements OnInit {
     })
   }
   addCoupon(couponData) {
+    if (this.isBusy) return;
+    this.isBusy = true;
     couponData.expDate = new Date(couponData.expDate).getTime();
     var today = Date.now();
     if (today > couponData.expDate) {
@@ -37,8 +40,10 @@ export class AddCouponComponent implements OnInit {
     this._dataService.postAPI("/api/addCoupon", couponData).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
+        this.responseError = "";
         this.couponInfo = { activeStatus: true };
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
+        this.isBusy = false
       } else this.errorHandler(res.message)
     })
   }
@@ -51,8 +56,10 @@ export class AddCouponComponent implements OnInit {
     })
   }
   errorHandler(msg) {
+    this.responseSuccess = "";
     this.responseError = msg;
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+    this.isBusy = false;
   }
   closeSuccess() { this.responseSuccess = "" }
   closeError() { this.responseError = "" }

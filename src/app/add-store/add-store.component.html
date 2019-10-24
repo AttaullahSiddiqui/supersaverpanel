@@ -27,7 +27,6 @@
                                     required placeholder="...">
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="heading">Heading*</label>
                             <div class="col-md-9">
@@ -46,61 +45,28 @@
                                     [hideSelected]="true" placeholder="Select Category"
                                     [(ngModel)]="storeInfo.categoryRef">
                                 </ng-select>
-                                <!-- <select class="selectpicker" multiple name="categoryRef"
-                                    [(ngModel)]="storeInfo.categoryRef" required class="form-control">
-                                    <option value="1">Promo codes & Coupons</option>
-                                    <option value="2">Coupons & Promo codes</option>
-                                    <option value="3">Voucher & Discount codes</option>
-                                </select> -->
-                                <!-- <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        &nbsp;&nbsp;&nbsp; <button class="btn btn-outline-secondary" type="button">
-                                            <i class="fa fa-close"></i>
-                                            Button</button>
-                                        &nbsp;&nbsp;&nbsp; <button class="btn btn-outline-secondary" type="button">
-                                            <i class="fa fa-close"></i>
-                                            Button</button>
-                                        &nbsp;&nbsp;&nbsp; <button class="btn btn-outline-secondary" type="button">
-                                            <i class="fa fa-close"></i>
-                                            Button</button>
-                                    </div>
-                                    <input (click)="showList=!showList" type="text" class="form-control"
-                                        name="categoryRef" [(ngModel)]="storeInfo.categoryRef" required>
-                                </div>
-
-                                <ul class="list-group" [hidden]="!showList">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Morbi leo risus</li>
-                                    <li class="list-group-item">Porta ac consectetur ac</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                </ul> -->
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="shortDes">Short Description</label>
                             <div class="col-md-9">
                                 <app-ngx-editor [placeholder]="'Enter text here...'" required name="shortDes"
-                                    [(ngModel)]="storeInfo.shortDes" minHeight="160px" [spellcheck]="true">
+                                    [(ngModel)]="storeInfo.shortDes" minHeight="160px">
                                 </app-ngx-editor>
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="longDes">Long Description</label>
                             <div class="col-md-9">
                                 <app-ngx-editor [placeholder]="'Enter text here...'" required name="longDes"
-                                    [(ngModel)]="storeInfo.longDes" minHeight="160px" [spellcheck]="true">
+                                    [(ngModel)]="storeInfo.longDes" minHeight="160px">
                                 </app-ngx-editor>
                             </div>
                         </div>
                         <br>
-
-                        <!-- <app-ngx-editor [spellcheck]="true" [(ngModel)]="htmlContent"></app-ngx-editor> -->
-
                         <div class="form-group row">
                             <div class="input-group col-md-8">
-                                <img [src]="croppedImage" />
+                                <img [src]="croppedImage" class="marginAuto" />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -115,13 +81,9 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
                             [aspectRatio]="1/1" outputType="file" [resizeToWidth]="200" [resizeToHeight]="200"
-                            format="jpeg" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
-                            (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
-
+                            format="jpeg" (imageCropped)="imageCropped($event)"></image-cropper>
 
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="imgAlt">Image Alt</label>
@@ -137,8 +99,6 @@
                                     class="form-control" required placeholder="...">
                             </div>
                         </div>
-
-
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="trackUrl">Tracking URL</label>
                             <div class="col-md-9">
@@ -174,21 +134,21 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="fb">Facebook</label>
                             <div class="col-md-9">
-                                <input type="text" name="fb" [(ngModel)]="storeInfo.fb" class="form-control" required
+                                <input type="text" name="fb" [(ngModel)]="storeInfo.fb" class="form-control"
                                     placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="pin">Pinterest</label>
                             <div class="col-md-9">
-                                <input type="text" name="pin" [(ngModel)]="storeInfo.pin" class="form-control" required
+                                <input type="text" name="pin" [(ngModel)]="storeInfo.pin" class="form-control"
                                     placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="wik">Wikipedia</label>
                             <div class="col-md-9">
-                                <input type="text" name="wik" [(ngModel)]="storeInfo.wik" class="form-control" required
+                                <input type="text" name="wik" [(ngModel)]="storeInfo.wik" class="form-control"
                                     placeholder="...">
                             </div>
                         </div>
@@ -196,27 +156,27 @@
                             <label class="col-md-3 col-form-label" for="twit">Twitter</label>
                             <div class="col-md-9">
                                 <input type="text" name="twit" [(ngModel)]="storeInfo.twit" class="form-control"
-                                    required placeholder="...">
+                                    placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="gplus">Google Plus</label>
                             <div class="col-md-9">
                                 <input type="text" name="gplus" [(ngModel)]="storeInfo.gplus" class="form-control"
-                                    required placeholder="...">
+                                    placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="android">Android App Link</label>
                             <div class="col-md-9">
                                 <input type="text" name="android" [(ngModel)]="storeInfo.android" class="form-control"
-                                    required placeholder="...">
+                                    placeholder="...">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="ios">IOS App Link</label>
                             <div class="col-md-9">
-                                <input type="text" name="ios" [(ngModel)]="storeInfo.ios" class="form-control" required
+                                <input type="text" name="ios" [(ngModel)]="storeInfo.ios" class="form-control"
                                     placeholder="...">
                             </div>
                         </div>
@@ -246,7 +206,10 @@
                             &nbsp;
                             &nbsp;
                             <button type="submit" class="btn btn-dark"
-                                [disabled]="!addStoreForm.form.valid || !storeInfo.categoryRef">Save</button>
+                                [disabled]="!addStoreForm.form.valid || !storeInfo.categoryRef">
+                                <span *ngIf="isBusy" class="spinner-border spinner-border-sm" role="status"
+                                    aria-hidden="true"></span>
+                                &nbsp; Save</button>
                         </div>
                     </form>
                 </div>

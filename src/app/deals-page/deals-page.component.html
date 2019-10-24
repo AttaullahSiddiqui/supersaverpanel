@@ -63,8 +63,10 @@
                             &nbsp;
                             &nbsp;
                             &nbsp;
-                            <button type="submit" class="btn btn-dark"
-                                [disabled]="!addDealForm.form.valid">Submit</button>
+                            <button type="submit" class="btn btn-dark" [disabled]="!addDealForm.form.valid">
+                                <span *ngIf="isBusy" class="spinner-border spinner-border-sm" role="status"
+                                    aria-hidden="true"></span>
+                                &nbsp; Submit</button>
                         </div>
                     </form>
                 </div>

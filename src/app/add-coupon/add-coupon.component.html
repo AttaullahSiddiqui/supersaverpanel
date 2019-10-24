@@ -44,7 +44,6 @@
                                 <select class="form-control form-control-lg" [disabled]="!stores" name="assignedStore"
                                     [(ngModel)]="couponInfo.storeId" (change)="fetchTrackingLink(couponInfo.storeId)"
                                     required>
-                                    <option value=""></option>
                                     <option [value]="item.value._id" *ngFor="let item of stores | keyvalue">
                                         {{item.value.name}}
                                     </option>
@@ -126,8 +125,10 @@
                             &nbsp;
                             &nbsp;
                             &nbsp;
-                            <button type="submit" class="btn btn-dark"
-                                [disabled]="!addCouponForm.form.valid">Submit</button>
+                            <button type="submit" class="btn btn-dark" [disabled]="!addCouponForm.form.valid">
+                                <span *ngIf="isBusy" class="spinner-border spinner-border-sm" role="status"
+                                    aria-hidden="true"></span>
+                                &nbsp; Submit</button>
                         </div>
                     </form>
                 </div>

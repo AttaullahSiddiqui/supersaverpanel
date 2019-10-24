@@ -14,6 +14,7 @@ export class AllBlogComponent implements OnInit {
   deleteObject = "";
   editObject = "";
   editKey = "";
+  blogsCount;
   dltIndex: any;
   isLoading = false;
   skipNo = 0;
@@ -35,6 +36,9 @@ export class AllBlogComponent implements OnInit {
       if (res.data) {
         this.stores = res.data;
       } else this.errorHandler(res.message)
+    })
+    this._dataService.fetchAPI("/api/countBlogs").subscribe(res => {
+      if (res.data) this.blogsCount = res.data
     })
   }
   getBlogsFunc() {

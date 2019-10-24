@@ -79,7 +79,6 @@
                     <div class="col-md-9">
                         <select class="form-control form-control-lg" [disabled]="!stores" name="assignedStore"
                             [(ngModel)]="firstSlide.storeId" required>
-                            <!-- <option value=""></option> -->
                             <option [value]="item.value._id" *ngFor="let item of stores | keyvalue">
                                 {{item.value.name}}
                             </option>
@@ -90,8 +89,10 @@
                     &nbsp;
                     &nbsp;
                     &nbsp;
-                    <button type="submit" class="btn btn-lg btn-dark" [disabled]="!addSlider1.form.valid">Add
-                        Slide</button>
+                    <button type="submit" class="btn btn-lg btn-dark" [disabled]="!addSlider1.form.valid">
+                        <span *ngIf="trickyArr[1]" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+                        &nbsp; Add Slide</button>
                 </div>
             </form>
         </div>
@@ -149,8 +150,10 @@
                     &nbsp;
                     &nbsp;
                     &nbsp;
-                    <button type="submit" class="btn btn-lg btn-dark" [disabled]="!addSlider2.form.valid">Add
-                        Slide</button>
+                    <button type="submit" class="btn btn-lg btn-dark" [disabled]="!addSlider2.form.valid">
+                        <span *ngIf="trickyArr[2]" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+                        &nbsp; Add Slide</button>
                 </div>
             </form>
         </div>
@@ -207,8 +210,10 @@
                     &nbsp;
                     &nbsp;
                     &nbsp;
-                    <button type="submit" class="btn btn-lg btn-dark" [disabled]="!addSlider3.form.valid">Add
-                        Slide</button>
+                    <button type="submit" class="btn btn-lg btn-dark" [disabled]="!addSlider3.form.valid">
+                        <span *ngIf="trickyArr[3]" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+                        &nbsp; Add Slide</button>
                 </div>
             </form>
         </div>
@@ -265,8 +270,10 @@
                     &nbsp;
                     &nbsp;
                     &nbsp;
-                    <button type="submit" class="btn btn-lg btn-dark" [disabled]="!addSlider4.form.valid">Add
-                        Slide</button>
+                    <button type="submit" class="btn btn-lg btn-dark" [disabled]="!addSlider4.form.valid">
+                        <span *ngIf="trickyArr[4]" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+                        &nbsp; Add Slide</button>
                 </div>
             </form>
         </div>
@@ -323,8 +330,10 @@
                     &nbsp;
                     &nbsp;
                     &nbsp;
-                    <button type="submit" class="btn btn-lg btn-dark" [disabled]="!addSlider5.form.valid">Add
-                        Slide</button>
+                    <button type="submit" class="btn btn-lg btn-dark" [disabled]="!addSlider5.form.valid">
+                        <span *ngIf="trickyArr[5]" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+                        &nbsp; Add Slide</button>
                 </div>
             </form>
         </div>

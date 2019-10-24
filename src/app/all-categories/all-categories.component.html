@@ -74,7 +74,10 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal"
                         (click)="editCatForm.reset()">Close</button>
                     <button type="submit" class="btn btn-success"
-                        [disabled]="!editCatForm.form.valid || !editCatForm.dirty">Save
+                        [disabled]="!editCatForm.form.valid || !editCatForm.dirty">
+                        <span *ngIf="isBusy" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+                        &nbsp;Save
                         Changes</button>
                 </div>
             </form>

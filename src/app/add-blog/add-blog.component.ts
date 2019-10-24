@@ -10,6 +10,7 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 export class AddBlogComponent implements OnInit {
   stores = {};
   blogInfo = {};
+  isBusy = false;
   selectedImage: any = null;
   imageChangedEvent: any = '';
   imgModel = "";
@@ -27,6 +28,8 @@ export class AddBlogComponent implements OnInit {
     })
   }
   uploadImageFirst(blogNode) {
+    if (this.isBusy) return;
+    this.isBusy = true;
     var self = this;
     var filePath = `blogImages/_${new Date().getTime()}`;
     this._dataService.storeImage(filePath, this.selectedImage, function (error, data) {
@@ -48,6 +51,7 @@ export class AddBlogComponent implements OnInit {
         this.blogInfo = {};
         this.imgModel = "";
         this.croppedImage = "";
+        this.isBusy = false;
         window.scrollTo(0, 0)
       } else this.errorHandler(res.message)
     })
@@ -65,7 +69,8 @@ export class AddBlogComponent implements OnInit {
   }
   errorHandler(msg) {
     this.responseError = msg;
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+    this.isBusy = false;
   }
   closeSuccess() { this.responseSuccess = "" }
   closeError() { this.responseError = "" }

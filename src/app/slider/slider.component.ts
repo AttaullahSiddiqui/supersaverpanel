@@ -15,6 +15,7 @@ export class SliderComponent implements OnInit {
   thirdSlide = {};
   fourthSlide = {};
   fifthSlide = {};
+  trickyArr = ["", false, false, false, false, false];
   selectedImage: any = null;
   imageChangedEvent: any = '';
   imgModel = "";
@@ -61,11 +62,14 @@ export class SliderComponent implements OnInit {
     }
   }
   uploadImageFirst(sliderNode, indName) {
+    if (this.trickyArr[indName]) return;
+    this.trickyArr[indName] = true;
     var self = this;
     var filePath = `sliderImages/_${new Date().getTime()}`;
     this._dataService.storeImage(filePath, this.selectedImage, function (err, data) {
       if (err) {
         this.responseError = "Can't upload image to the Server";
+        this.trickyArr[indName] = false;
         window.scrollTo(0, 0)
         return;
       }
@@ -80,6 +84,7 @@ export class SliderComponent implements OnInit {
     this._dataService.postAPI("/api/addSlide", dataNode).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
+        this.trickyArr[dataNode.arrIndex] = false;
         this.firstSlide = {};
         this.secondSlide = {};
         this.thirdSlide = {};
@@ -90,15 +95,12 @@ export class SliderComponent implements OnInit {
         this.imageChangedEvent = '';
         window.scrollTo(0, 0)
       } else {
-        this.responseError = res.message
+        this.responseError = res.message;
+        this.trickyArr[dataNode.arrIndex] = false;
         window.scrollTo(0, 0)
       }
     })
   }
-  closeSuccess() {
-    this.responseSuccess = ""
-  }
-  closeError() {
-    this.responseError = ""
-  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

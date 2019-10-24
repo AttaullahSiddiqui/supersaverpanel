@@ -55,6 +55,7 @@ export class EditStoreComponent implements OnInit {
         this.responseSuccess = res.message;
         this.storeInfo = {};
         this.dataLoaded.splice(this.loadedStoreIndex, 1);
+        this.storeInfo = null;
         window.scrollTo(0, 0)
       } else this.errorHandler(res.message);
     })

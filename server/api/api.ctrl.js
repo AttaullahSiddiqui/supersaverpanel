@@ -1,8 +1,3 @@
-const express = require('express');
-const router = express.Router();
-const MongoClient = require('mongodb').MongoClient;
-const mongoose = require('mongoose');
-const ObjectID = require('mongodb').ObjectID;
 var jwt = require('../utils/jwt.service');
 
 let User = require('../Models/user.model');
@@ -28,9 +23,7 @@ module.exports = {
 };
 
 function authUser(req, res) {
-    if (!req.body.userPass || !req.body.userName) {
-        return res.respondError("Username & Password is required", -4);
-    }
+    if (!req.body.userPass || !req.body.userName) return res.respondError("Username & Password is required", -4);
     User.findOne({ userName: req.body.userName }, function (err, fetchedUser) {
         if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
         else if (!fetchedUser) res.json(resHandler.respondError("Wrong Username or Password", -3));
@@ -40,7 +33,6 @@ function authUser(req, res) {
                     if (jwtErr) {
                         res.json(resHandler.respondError("Unexpected Error", -1));
                     }
-                    console.log(jwtSuccess);
                     res.json(resHandler.respondSuccess(jwtSuccess, "User login successfully", 1));
                 });
             } else res.json(resHandler.respondError("Wrong password", -3));
@@ -90,6 +82,7 @@ function createCategory(req, res) {
 function addStore(req, res) {
     var newStore = new Store({
         name: req.body.name,
+        storeURL: req.body.storeURL,
         heading: req.body.heading,
         categoryRef: req.body.categoryRef,
         shortDes: req.body.shortDes,

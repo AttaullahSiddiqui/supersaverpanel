@@ -34,6 +34,7 @@ router.get('/fetchStoresWithLimit', fetchCtrl.fetchStoresWithLimit);
 router.get('/fetchCouponsById', fetchCtrl.fetchCouponsById);
 
 
+router.post('/editUser', putCtrl.editUser);
 router.post('/editCategory', putCtrl.editCategory);
 router.post('/editStore', putCtrl.editStore);
 router.post('/editCoupon', putCtrl.editCoupon);

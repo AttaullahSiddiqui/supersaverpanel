@@ -15,6 +15,7 @@ export class AllCategoriesComponent implements OnInit {
   responseSuccess = "";
   catArray = [];
   dataLoaded = false;
+  isBusy = false;
   deleteObject = "";
   editObject = "";
   editKey = "";
@@ -28,16 +29,20 @@ export class AllCategoriesComponent implements OnInit {
   constructor(private _dataService: DataService) { this.getCategoriesFunc() }
 
   getCategoriesFunc() {
+    if (this.isBusy) return;
+    this.isBusy = true;
     this._dataService.fetchAPIWithLimit("/api/fetchCategories", this.skipNo, 5).subscribe(res => {
       if (res.data) {
         this.dataLoaded = true;
         this.catArray = [];
         this.catArray = res.data;
         this.responseError = "";
+        this.isBusy = false;
       } else {
         if (this.skipNo) this.skipNo -= 5
         this.responseSuccess = ""
-        this.errorHandler(res.message)
+        this.errorHandler(res.message);
+        this.dataLoaded = true;
       }
     })
   }
@@ -53,7 +58,6 @@ export class AllCategoriesComponent implements OnInit {
     this.editKey = key;
     $('#editModal').modal('show');
   }
-
   deleteCoupon() {
     this._dataService.postAPI("/api/deleteCategory", { _id: this.catArray[this.dltIndex]._id }).subscribe(res => {
       if (res.data) {
@@ -63,18 +67,20 @@ export class AllCategoriesComponent implements OnInit {
     })
     document.getElementById('closebtn').click();
   }
-
   saveEditedCoupon() {
+    if (this.isBusy) return;
+    this.isBusy = true;
     this._dataService.postAPI("/api/editCategory", this.editObject).subscribe(res => {
       if (res.data) {
         this.successHandler(res.message);
         this.catArray[this.editKey] = res.data;
-        this.editObject = ""
+        this.editObject = "";
       } else this.errorHandler(res.message)
     })
     document.getElementById('editbtn').click();
   }
   nextFunc() {
+    if (this.isBusy) return;
     if (!this.catArray) {
       this.errorHandler("Can't load more categories at the moment");
       return;
@@ -83,6 +89,7 @@ export class AllCategoriesComponent implements OnInit {
     this.getCategoriesFunc()
   }
   prevFunc() {
+    if (this.isBusy) return;
     if (this.skipNo >= 5) {
       this.skipNo -= 5;
       this.getCategoriesFunc()
@@ -93,11 +100,13 @@ export class AllCategoriesComponent implements OnInit {
   }
   errorHandler(msg) {
     this.responseError = msg;
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+    this.isBusy = false;
   }
   successHandler(msg) {
-    this.successHandler = msg;
-    window.scrollTo(0, 0)
+    this.responseSuccess = msg;
+    window.scrollTo(0, 0);
+    this.isBusy = false;
   }
   closeSuccess() { this.responseSuccess = "" }
   closeError() { this.responseError = "" }

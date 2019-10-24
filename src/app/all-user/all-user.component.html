@@ -11,7 +11,7 @@
                 </button>
 
             </div>
-            <form #editUserForm="ngForm" novalidate (ngSubmit)='saveEditedUser(editObject)'>
+            <form #editUserForm="ngForm" novalidate (ngSubmit)='saveEditedUser()'>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="company">Name</label>
@@ -23,47 +23,19 @@
                         <input type="text" name="userPass" required [(ngModel)]="editObject.userPass"
                             class="form-control">
                     </div>
-                    <div class="form-group">
-                        <label for="company">Meta Title</label>
-                        <input type="text" name="MetaTitle" required [(ngModel)]="editObject.metaTitle"
-                            class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Meta Description</label>
-                        <input class="form-control" name="MetaDescription" required type="text"
-                            [(ngModel)]="editObject.metaDescription">
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Meta Keywords</label>
-                        <input type="text" name="MetaKeywords" required class="form-control"
-                            [(ngModel)]="editObject.metaKeywords">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Featured for Home</label>
-                        <div class="col-md-10">
-                            <label class="switch switch-success">
-                                <input name="featuredForHome" [(ngModel)]="editObject.featuredForHome" type="checkbox"
-                                    value="true" class="switch-input">
-                                <span class="switch-slider"></span>
-                            </label>
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"
-                        (click)="editCatForm.reset()">Close</button>
+                        (click)="editUserForm.reset()">Close</button>
                     <button type="submit" class="btn btn-success"
-                        [disabled]="!editCatForm.form.valid || !editCatForm.dirty">Save
+                        [disabled]="!editUserForm.form.valid || !editUserForm.dirty">Save
                         Changes</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-
 
 <br>
 <div class="alert alert-success alert-dismissible fade show col-8" *ngIf="responseSuccess" role="alert">

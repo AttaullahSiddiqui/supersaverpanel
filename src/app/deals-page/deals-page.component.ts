@@ -8,32 +8,30 @@ import { DataService } from '../data.service';
 })
 export class DealsPageComponent implements OnInit {
   dealInfo = {};
+  isBusy = false;
   responseSuccess = "";
   responseError = "";
 
   constructor(private _dataService: DataService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   addDeal(dealNode) {
-    console.log(dealNode);
+    if (this.isBusy) return;
+    this.isBusy = true;
     this._dataService.postAPI("/api/addDeal", dealNode).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
         this.dealInfo = {};
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
+        this.isBusy = false
       } else {
-        this.responseError = res.message
+        this.responseError = res.message;
+        this.isBusy = false;
         window.scrollTo(0, 0)
       }
     })
   }
-
-  closeSuccess() {
-    this.responseSuccess = ""
-  }
-  closeError() {
-    this.responseError = ""
-  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

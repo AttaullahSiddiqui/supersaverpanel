@@ -1,14 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const MongoClient = require('mongodb').MongoClient;
-const mongoose = require('mongoose');
-const ObjectID = require('mongodb').ObjectID;
-
 let Coupon = require('../Models/coupon.model');
 let Blog = require('../Models/blog.model');
 let Store = require('../Models/stores.model');
 let User = require('../Models/user.model');
-let errHandler = require('../utils/errorHandler');
 let resHandler = require('../utils/responseHandler');
 
 module.exports = {
@@ -21,7 +14,7 @@ module.exports = {
 
 function sortCoupons(req, res) {
     req.body.forEach(element => {
-        Coupon.findOneAndUpdate({ _id: element._id }, element, function (err, updatedNode) {
+        Coupon.findOneAndUpdate({ _id: element._id }, element, function (err, data) {
             if (err) console.log(err)
             else console.log("Alaaaaaddd")
         })

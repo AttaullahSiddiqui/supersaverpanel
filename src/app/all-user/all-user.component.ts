@@ -26,7 +26,6 @@ export class AllUserComponent implements OnInit {
     this._dataService.fetchAPI("/api/fetchUsers").subscribe(res => {
       if (res.data) {
         this.dataLoaded = true;
-        console.log(res.data)
         this.userArray = res.data;
         this.responseError = "";
       } else {
@@ -40,12 +39,22 @@ export class AllUserComponent implements OnInit {
     this.editKey = key;
     $('#editModal').modal('show');
   }
+  saveEditedUser() {
+    this._dataService.postAPI("/api/editUser", this.editObject).subscribe(res => {
+      if (res.data) {
+        this.successHandler(res.message);
+        this.userArray[this.editKey] = res.data;
+        this.editObject = ""
+      } else this.errorHandler(res.message)
+    })
+    document.getElementById('editbtn').click();
+  }
   errorHandler(msg) {
     this.responseError = msg;
     window.scrollTo(0, 0)
   }
   successHandler(msg) {
-    this.successHandler = msg;
+    this.responseSuccess = msg;
     window.scrollTo(0, 0)
   }
   closeSuccess() { this.responseSuccess = "" }

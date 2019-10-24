@@ -12,7 +12,6 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-
     <div class="row">
         <div class="col-8">
             <div class="card">
@@ -78,13 +77,14 @@
                                 </label>
                             </div>
                         </div>
-
                         <div class="form-group">
                             &nbsp;
                             &nbsp;
                             &nbsp;
-                            <button type="submit" [disabled]="!addCatForm.form.valid"
-                                class="btn btn-dark">Submit</button>
+                            <button type="submit" [disabled]="!addCatForm.form.valid" class="btn btn-dark">
+                                <span *ngIf="isBusy" class="spinner-border spinner-border-sm" role="status"
+                                    aria-hidden="true"></span>
+                                &nbsp; Submit</button>
                         </div>
                     </form>
                 </div>

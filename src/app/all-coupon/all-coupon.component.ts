@@ -18,6 +18,8 @@ export class AllCouponComponent implements OnInit {
   selectedStoreName = "";
   selectedStore = "";
   coupons = [];
+  couponCount;
+  isBusy = false;
   dataLoaded = false;
   editObject = {};
   editKey = "";
@@ -34,6 +36,10 @@ export class AllCouponComponent implements OnInit {
         this.storeArray = res.data;
         this.responseError = "";
       } else this.errorHandler(res.message)
+    })
+    this._dataService.fetchAPI("/api/countCoupons").subscribe(res => {
+      if (res.data) this.couponCount = res.data;
+      else return;
     })
   }
   loadCoupons(storeId, event) {
@@ -70,14 +76,15 @@ export class AllCouponComponent implements OnInit {
     })
     document.getElementById('closebtn').click();
   }
-
   saveEditedCoupon(editNode) {
+    if (this.isBusy) return;
+    this.isBusy = true;
     if (editNode.activeStatus) editNode.code = "";
     this._dataService.postAPI("/api/editCoupon", editNode).subscribe(res => {
       if (res.data) {
         this.successHandler(res.message);
         this.coupons[this.editKey] = res.data;
-        this.editObject = {};
+        this.editObject = {}
       } else this.errorHandler(res.message)
     })
     document.getElementById('editbtn').click();
@@ -121,11 +128,13 @@ export class AllCouponComponent implements OnInit {
   }
   errorHandler(msg) {
     this.responseError = msg;
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+    this.isBusy = false
   }
   successHandler(msg) {
     this.responseSuccess = msg;
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+    this.isBusy = false
   }
   closeSuccess() { this.responseSuccess = "" }
   closeError() { this.responseError = "" }

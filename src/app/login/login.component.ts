@@ -14,10 +14,14 @@ export class LoginComponent implements OnInit {
   constructor(private _dataService: DataService, private router: Router, private _utlityService: UtilityService) { }
 
   ngOnInit() {
+    var checkAuth = this._utlityService.getToken();
+    if (checkAuth) {
+      this._dataService.postAPI('/api/verifyUserToken', { token: checkAuth }).subscribe(res => {
+        if (res.data) this.router.navigateByUrl('/dashboard')
+      })
+    }
   }
-
   authUser(userInfo) {
-    console.log("Auth working")
     this._dataService.postAPI("/api/login", userInfo).subscribe(res => {
       if (res.data) {
         this._utlityService.setToken(res.data);

@@ -3,15 +3,11 @@ import { finalize } from "rxjs/operators";
 import { HttpClient } from '@angular/common/http';
 import { map } from "rxjs/operators";
 import { AngularFireStorage } from '@angular/fire/storage';
-
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-
-  result: any;
   constructor(private _http: HttpClient, private storage: AngularFireStorage) { }
-
   fetchAPI(url) {
     return this._http.get(url)
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
@@ -41,12 +37,10 @@ export class DataService {
     return this._http.get(url, { params: { _id: id } })
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
-
   sortAPI(url, updatedArray) {
     return this._http.post(url, updatedArray)
       .pipe(map(res => JSON.parse(JSON.stringify(res))));
   }
-
   storeImage(filePath, selectedImage, cb) {
     const fileRef = this.storage.ref(filePath);
     return this.storage.upload(filePath, selectedImage).snapshotChanges().pipe(
@@ -57,7 +51,6 @@ export class DataService {
       })
     );
   }
-
   // addUser() {
   //   var userData = {
   //     userName: "danish",

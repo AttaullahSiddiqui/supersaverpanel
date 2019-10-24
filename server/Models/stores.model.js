@@ -2,6 +2,7 @@ let mongoose = require('mongoose');
 
 let storeSchema = mongoose.Schema({
     name: { type: String, required: true },
+    storeURL: { type: String, required: true },
     heading: { type: String, required: true },
     categoryRef: { type: Array, required: true },
     shortDes: { type: String, required: true },
@@ -13,13 +14,13 @@ let storeSchema = mongoose.Schema({
     metaTitle: { type: String, required: true },
     metaDes: { type: String, required: true },
     metaKeywords: { type: String, required: true },
-    fb: { type: String, required: true },
-    pin: { type: String, required: true },
-    wik: { type: String, required: true },
-    twit: { type: String, required: true },
-    gplus: { type: String, required: true },
-    android: { type: String, required: true },
-    ios: { type: String, required: true },
+    fb: { type: String },
+    pin: { type: String },
+    wik: { type: String },
+    twit: { type: String },
+    gplus: { type: String },
+    android: { type: String },
+    ios: { type: String },
     topStore: { type: Boolean, required: true },
     editorChoice: { type: Boolean, required: true },
     CreatedAt: { type: String, default: Date.now() }

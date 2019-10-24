@@ -18,13 +18,11 @@
         </div>
     </div>
 </div>
-
 <div class="d-flex justify-content-center vertical-center" *ngIf="!dataLoaded">
     <div class="spinner-grow text-info spnbg" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
-
 <br>
 <div class="alert alert-success alert-dismissible fade show col-8" *ngIf="responseSuccess" role="alert">
     {{responseSuccess}}
@@ -38,7 +36,6 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-
 <div *ngIf="dataLoaded">
     <div class="row">
         <div class="form-group col-5">
@@ -54,9 +51,6 @@
                 [disabled]="!storeInfo">Delete</button>
         </div>
     </div>
-
-
-
     <br>
     <div class="animated fadeIn">
         <div class="row">
@@ -74,7 +68,13 @@
                                         required>
                                 </div>
                             </div>
-
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="storeURL">Store URL</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="storeURL" [(ngModel)]="storeInfo.storeURL"
+                                        class="form-control" required>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="heading">Heading*</label>
                                 <div class="col-md-9">
@@ -90,7 +90,6 @@
                                     </app-ngx-editor>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="longDes">Long Description</label>
                                 <div class="col-md-9">
@@ -130,13 +129,10 @@
                                     </div>
                                 </div>
                             </div>
-
-
                             <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
                                 [aspectRatio]="1/1" outputType="file" [resizeToWidth]="200" [resizeToHeight]="200"
                                 format="jpeg" (imageCropped)="imageCropped($event)">
                             </image-cropper>
-
 
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="imgAlt">Image Alt</label>
@@ -152,8 +148,6 @@
                                         class="form-control" required>
                                 </div>
                             </div>
-
-
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="trackUrl">Tracking URL</label>
                                 <div class="col-md-9">
@@ -181,50 +175,44 @@
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="fb">Facebook</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="fb" [(ngModel)]="storeInfo.fb" class="form-control"
-                                        required>
+                                    <input type="text" name="fb" [(ngModel)]="storeInfo.fb" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="pin">Pinterest</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="pin" [(ngModel)]="storeInfo.pin" class="form-control"
-                                        required>
+                                    <input type="text" name="pin" [(ngModel)]="storeInfo.pin" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="wik">Wikipedia</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="wik" [(ngModel)]="storeInfo.wik" class="form-control"
-                                        required>
+                                    <input type="text" name="wik" [(ngModel)]="storeInfo.wik" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="twit">Twitter</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="twit" [(ngModel)]="storeInfo.twit" class="form-control"
-                                        required>
+                                    <input type="text" name="twit" [(ngModel)]="storeInfo.twit" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="gplus">Google Plus</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="gplus" [(ngModel)]="storeInfo.gplus" class="form-control"
-                                        required>
+                                    <input type="text" name="gplus" [(ngModel)]="storeInfo.gplus" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="android">Android App Link</label>
                                 <div class="col-md-9">
                                     <input type="text" name="android" [(ngModel)]="storeInfo.android"
-                                        class="form-control" required>
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label" for="ios">IOS App Link</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="ios" [(ngModel)]="storeInfo.ios" class="form-control"
-                                        required>
+                                    <input type="text" name="ios" [(ngModel)]="storeInfo.ios" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group m-3">

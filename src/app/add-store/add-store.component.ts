@@ -15,6 +15,7 @@ export class AddStoreComponent implements OnInit {
   showList: boolean;
   storeInfo = {};
   categories: any;
+  isBusy = false;
   selectedImage: any = null;
   imageChangedEvent: any = '';
   imgModel = "";
@@ -33,6 +34,8 @@ export class AddStoreComponent implements OnInit {
     })
   }
   addStore(storeInfo) {
+    if (this.isBusy) return;
+    this.isBusy = true;
     var self = this;
     var filePath = `storeImages/_${new Date().getTime()}`;
     this._dataService.storeImage(filePath, this.selectedImage, function (error, data) {
@@ -44,6 +47,7 @@ export class AddStoreComponent implements OnInit {
         if (!storeInfo.editorChoice) storeInfo.editorChoice = false
         if (!storeInfo.topStore) storeInfo.topStore = false
         storeInfo.img = data;
+        storeInfo.storeURL = storeInfo.name.replace(/ /g, '-');
         self.saveStoreToDB(storeInfo)
       }
     }).subscribe()
@@ -56,7 +60,8 @@ export class AddStoreComponent implements OnInit {
         this.storeInfo = {};
         this.imgModel = "";
         this.croppedImage = "";
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
+        this.isBusy = false;
       } else this.errorHandler(res.message)
     })
   }
@@ -72,7 +77,8 @@ export class AddStoreComponent implements OnInit {
   }
   errorHandler(msg) {
     this.responseError = msg;
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+    this.isBusy = false;
   }
   closeSuccess() { this.responseSuccess = "" }
   closeError() { this.responseError = "" }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-
 @Component({
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
@@ -8,30 +7,28 @@ import { DataService } from '../data.service';
 })
 export class AddCategoryComponent implements OnInit {
   catData = {};
+  isBusy = false;
   responseError = "";
   responseSuccess = "";
-
   constructor(private _dataService: DataService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
   createCategory(catInfo) {
-    if (!catInfo.catFeatured) {
-      catInfo.catFeatured = false
-    }
+    if (this.isBusy) return;
+    if (!catInfo.catFeatured) catInfo.catFeatured = false
+    this.isBusy = true;
     this._dataService.postAPI("/api/createCategory", catInfo).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
+        this.isBusy = false;
         this.catData = {};
       } else {
-        this.responseError = res.message
+        this.responseError = res.message;
+        this.isBusy = false;
       }
     })
   }
-  closeSuccess() {
-    this.responseSuccess = ""
-  }
-  closeError() {
-    this.responseError = ""
-  }
+  closeSuccess() { this.responseSuccess = "" }
+  closeError() { this.responseError = "" }
 }

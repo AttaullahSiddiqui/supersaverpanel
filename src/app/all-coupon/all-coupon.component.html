@@ -12,14 +12,12 @@
     </button>
 </div>
 
-
 <div class="row" *ngIf="storeArray">
     <div class="form-group col-5">
         <label for="userType">
             <h5>PLEASE SELECT STORE</h5>
         </label>
         <select class="form-control" [(ngModel)]="selectedStore" (change)="loadCoupons(selectedStore,$event)">
-            <!-- <option value=""></option> -->
             <option [value]="data.value._id" *ngFor="let data of storeArray | keyvalue">
                 {{data.value.name}}
             </option>
@@ -41,7 +39,7 @@
                 <div class="row">
                     <div class="col-sm-6" style="margin-left: 25px;">
                         <h2>Total Coupons on your Website &nbsp; <span
-                                class="badge badge-pill badge-danger text-white">18</span> </h2>
+                                class="badge badge-pill badge-danger text-white">{{couponCount}}</span> </h2>
                     </div>
                     <div class="col-sm-1"></div>
                     <div class="col-sm-4">
@@ -75,6 +73,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr *ngIf="!coupons.length">
+                                <br>
+                                <p class="display-6">
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    &nbsp;
+                                    No coupon in this Store</p>
+                            </tr>
                             <tr *ngFor="let coupon of coupons | keyvalue;index as i">
                                 <td>{{i+this.skipNo+1}}</td>
                                 <td>{{coupon.value.offerBox}}</td>
@@ -159,7 +166,6 @@
                             <div>
                                 <select id="select1" class="form-control" name="storeId" required
                                     [(ngModel)]="editObject.storeId" (change)="fetchTrackingLink(editObject.storeId)">
-                                    <!-- <option value="0">Please select</option> -->
                                     <option [value]="item.value._id" *ngFor="let item of storeArray | keyvalue">
                                         {{item.value.name}}
                                     </option>
@@ -217,8 +223,10 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success"
-                            [disabled]="!editCouponForm.form.valid || !editCouponForm.dirty">Save
-                            Changes</button>
+                            [disabled]="!editCouponForm.form.valid || !editCouponForm.dirty">
+                            <span *ngIf="isBusy" class="spinner-border spinner-border-sm" role="status"
+                                aria-hidden="true"></span>
+                            &nbsp; Save Changes</button>
                     </div>
                 </form>
             </div>
