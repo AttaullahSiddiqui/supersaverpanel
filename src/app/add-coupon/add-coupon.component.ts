@@ -7,8 +7,8 @@ import { DataService } from '../data.service';
   styleUrls: ['./add-coupon.component.scss']
 })
 export class AddCouponComponent implements OnInit {
-  stores = {};
-  couponInfo = { activeStatus: true };
+  stores: any = {};
+  couponInfo: any = { activeStatus: true };
   isBusy = false;
   responseSuccess = "";
   responseError = "";

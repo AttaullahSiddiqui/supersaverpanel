@@ -9,11 +9,12 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 })
 export class AddBlogComponent implements OnInit {
   stores = {};
-  blogInfo = {};
+  blogInfo: any = {};
   isBusy = false;
   selectedImage: any = null;
   imageChangedEvent: any = '';
   imgModel = "";
+  htmlContent: any;
   croppedImage: any = '';
   responseSuccess = "";
   responseError = "";

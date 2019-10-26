@@ -28,6 +28,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^8.0.2",
+    "@angular/cli": "^8.3.14",
     "@angular/common": "^8.0.2",
     "@angular/compiler": "^8.0.2",
     "@angular/core": "^8.0.2",
@@ -54,7 +55,6 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase": "^7.1.0",
-    "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
@@ -83,7 +83,6 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.800.3",
-    "@angular/cli": "^8.0.3",
     "@angular/compiler-cli": "^8.0.2",
     "@angular/language-service": "^8.0.2",
     "@types/jasmine": "^3.3.13",
@@ -106,5 +105,9 @@
   "engines": {
     "node": ">= 12",
     "npm": ">= 6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/npm/npm.git"
   }
 }

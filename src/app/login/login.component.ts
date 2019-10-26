@@ -9,7 +9,7 @@ import { UtilityService } from '../utility.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  userData = {};
+  userData: any = {};
   responseError = ""
   constructor(private _dataService: DataService, private router: Router, private _utlityService: UtilityService) { }
 

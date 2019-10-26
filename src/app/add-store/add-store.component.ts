@@ -13,12 +13,13 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 export class AddStoreComponent implements OnInit {
 
   showList: boolean;
-  storeInfo = {};
+  storeInfo: any = {};
   categories: any;
   isBusy = false;
   selectedImage: any = null;
   imageChangedEvent: any = '';
   imgModel = "";
+  htmlContent: any;
   croppedImage: any = '';
   responseSuccess = "";
   responseError = "";

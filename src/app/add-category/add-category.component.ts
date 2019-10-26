@@ -6,7 +6,7 @@ import { DataService } from '../data.service';
   styleUrls: ['./add-category.component.scss']
 })
 export class AddCategoryComponent implements OnInit {
-  catData = {};
+  catData: any = {};
   isBusy = false;
   responseError = "";
   responseSuccess = "";

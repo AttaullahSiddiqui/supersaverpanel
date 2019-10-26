@@ -10,7 +10,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: './menu/menu.module#MenuModule'
+        loadChildren: 'app/menu/menu.module#MenuModule'
       }]
   },
   {

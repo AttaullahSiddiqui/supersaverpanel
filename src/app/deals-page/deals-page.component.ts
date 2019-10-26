@@ -7,7 +7,7 @@ import { DataService } from '../data.service';
   styleUrls: ['./deals-page.component.scss']
 })
 export class DealsPageComponent implements OnInit {
-  dealInfo = {};
+  dealInfo: any = {};
   isBusy = false;
   responseSuccess = "";
   responseError = "";

@@ -12,7 +12,7 @@ declare var $: any;
 export class AllUserComponent implements OnInit {
   dataLoaded = false;
   userArray = [];
-  editObject = "";
+  editObject: any = "";
   editKey = "";
   responseError = "";
   responseSuccess = "";

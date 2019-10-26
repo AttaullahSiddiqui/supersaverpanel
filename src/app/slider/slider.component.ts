@@ -10,15 +10,20 @@ declare var $: any;
 })
 export class SliderComponent implements OnInit {
   stores = {};
-  firstSlide = {};
-  secondSlide = {};
-  thirdSlide = {};
-  fourthSlide = {};
-  fifthSlide = {};
+  firstSlide: any = {};
+  secondSlide: any = {};
+  thirdSlide: any = {};
+  fourthSlide: any = {};
+  fifthSlide: any = {};
   trickyArr = ["", false, false, false, false, false];
   selectedImage: any = null;
   imageChangedEvent: any = '';
   imgModel = "";
+  imgModel2 = "";
+  imgModel3 = "";
+  imgModel4 = "";
+  imgModel5 = "";
+  htmlContent: any;
   croppedImage: any = '';
   responseSuccess = "";
   responseError = "";

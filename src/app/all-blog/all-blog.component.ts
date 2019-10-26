@@ -12,7 +12,7 @@ declare var $: any;
 export class AllBlogComponent implements OnInit {
   blogArray = [];
   deleteObject = "";
-  editObject = "";
+  editObject: any = "";
   editKey = "";
   blogsCount;
   dltIndex: any;
@@ -23,6 +23,7 @@ export class AllBlogComponent implements OnInit {
   imageChangedEvent: any = '';
   imgModel = "";
   croppedImage: any = '';
+  htmlContent: any;
   responseError = "";
   responseSuccess = "";
 

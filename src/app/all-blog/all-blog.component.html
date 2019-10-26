@@ -88,9 +88,8 @@
 
 
                     <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false"
-                        [aspectRatio]="1/1" outputType="file" format="jpeg" (imageCropped)="imageCropped($event)"
-                        (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
-                        (loadImageFailed)="loadImageFailed()"></image-cropper>
+                        [aspectRatio]="1/1" outputType="file" format="jpeg" (imageCropped)="imageCropped($event)">
+                    </image-cropper>
 
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="imgAlt">Image Alt</label>
@@ -142,7 +141,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"
-                        (click)="editBlogForms.reset()">Close</button>
+                        (click)="editBlogForm.reset()">Close</button>
                     <button type="submit" class="btn btn-success"
                         [disabled]="!editBlogForm.form.valid || !editBlogForm.dirty">Save
                         Changes</button>

@@ -60,5 +60,4 @@ export class DataService {
   //   return this._http.post("/api/register", userData)
   //     .pipe(map(res => console.log(res)));
   // }
-
 }

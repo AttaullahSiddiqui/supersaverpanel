@@ -17,7 +17,7 @@ export class AllCategoriesComponent implements OnInit {
   dataLoaded = false;
   isBusy = false;
   deleteObject = "";
-  editObject = "";
+  editObject: any = "";
   editKey = "";
   dltIndex: any;
   skipNo = 0;
