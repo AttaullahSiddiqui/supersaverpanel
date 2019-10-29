@@ -196,39 +196,41 @@
                     <button type="button" class="btn btn-primary btn-sm">Print</button>
                 </div>
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Sr</th>
-                                <th>Name</th>
-                                <th>Short Description</th>
-                                <th>Featured</th>
-                                <th>Image</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let blog of blogArray | keyvalue;index as i">
-                                <td>{{i+this.skipNo+1}}</td>
-                                <td>{{blog.value.title}}</td>
-                                <td>{{blog.value.shortDes}}</td>
-                                <td>
-                                    <span *ngIf="blog.value.featuredForHome"
-                                        class="badge badge-success largeBadge">Featured</span>
+                    <div class="table-responsive-sm">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sr</th>
+                                    <th>Name</th>
+                                    <th>Short Description</th>
+                                    <th>Featured</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let blog of blogArray | keyvalue;index as i">
+                                    <td>{{i+this.skipNo+1}}</td>
+                                    <td>{{blog.value.title}}</td>
+                                    <td>{{blog.value.shortDes}}</td>
+                                    <td>
+                                        <span *ngIf="blog.value.featuredForHome"
+                                            class="badge badge-success largeBadge">Featured</span>
 
-                                    <span *ngIf="!blog.value.featuredForHome"
-                                        class="badge badge-dark largeBadge">Disabled</span>
-                                </td>
-                                <td><img [src]="blog.value.img" width="55" height="55" /></td>
-                                <td>
-                                    <button type="button" class="btn btn-dark text-white"
-                                        (click)="showDltModal(blog.key)">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" class="btn btn-primary text-white"
-                                        (click)="showEditModal(blog.key,blog.value)">Edit</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        <span *ngIf="!blog.value.featuredForHome"
+                                            class="badge badge-dark largeBadge">Disabled</span>
+                                    </td>
+                                    <td><img [src]="blog.value.img" width="55" height="55" /></td>
+                                    <td>
+                                        <button type="button" class="btn btn-dark text-white"
+                                            (click)="showDltModal(blog.key)">Delete</button>
+                                        &nbsp; &nbsp;<button type="button" class="btn btn-primary text-white"
+                                            (click)="showEditModal(blog.key,blog.value)">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" (click)="prevFunc()">Prev</a></li>
                         <li class="page-item"><a class="page-link" (click)="nextFunc()">Next</a></li>

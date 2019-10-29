@@ -137,39 +137,41 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Sr</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Feature</th>
-                                <th>Slider</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let category of catArray | keyvalue;index as i">
-                                <td>{{i+this.skipNo+1}}</td>
-                                <td>{{category.value.name}}</td>
-                                <td>{{category.value.slug}}</td>
-                                <td>
-                                    <span *ngIf="category.value.featuredForHome"
-                                        class="badge badge-success largeBadge">Featured</span>
+                    <div class="table-responsive-sm">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sr</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
+                                    <th>Feature</th>
+                                    <th>Slider</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let category of catArray | keyvalue;index as i">
+                                    <td>{{i+this.skipNo+1}}</td>
+                                    <td>{{category.value.name}}</td>
+                                    <td>{{category.value.slug}}</td>
+                                    <td>
+                                        <span *ngIf="category.value.featuredForHome"
+                                            class="badge badge-success largeBadge">Featured</span>
 
-                                    <span *ngIf="!category.value.featuredForHome"
-                                        class="badge badge-dark largeBadge">Disabled</span>
-                                </td>
-                                <td>true</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary text-white"
-                                        (click)="showDltModal(category.key)">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" class="btn btn-dark text-white"
-                                        (click)="showEditModal(category.key,category.value)">Edit</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        <span *ngIf="!category.value.featuredForHome"
+                                            class="badge badge-dark largeBadge">Disabled</span>
+                                    </td>
+                                    <td>true</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary text-white"
+                                            (click)="showDltModal(category.key)">Delete</button>
+                                        &nbsp; &nbsp;<button type="button" class="btn btn-dark text-white"
+                                            (click)="showEditModal(category.key,category.value)">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" (click)="prevFunc()">Prev</a></li>
                         <li class="page-item"><a class="page-link" (click)="nextFunc()">Next</a></li>

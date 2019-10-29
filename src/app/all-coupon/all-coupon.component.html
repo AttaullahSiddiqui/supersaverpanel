@@ -61,48 +61,51 @@
                     <button type="button" class="btn btn-primary btn-sm">Print</button>
                 </div>
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Sr</th>
-                                <th>Offer</th>
-                                <th>Offer Details</th>
-                                <th>Feature</th>
-                                <th>Store</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngIf="!coupons.length">
-                                <br>
-                                <p class="display-6">
-                                    &nbsp;
-                                    &nbsp;
-                                    &nbsp;
-                                    &nbsp;
-                                    No coupon in this Store</p>
-                            </tr>
-                            <tr *ngFor="let coupon of coupons | keyvalue;index as i">
-                                <td>{{i+this.skipNo+1}}</td>
-                                <td>{{coupon.value.offerBox}}</td>
-                                <td>{{coupon.value.offerDetail}}</td>
-                                <td>
-                                    <span *ngIf="coupon.value.activeStatus"
-                                        class="badge badge-success largeBadge">Active</span>
+                    <div class="table-responsive-sm">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sr</th>
+                                    <th>Offer</th>
+                                    <th>Offer Details</th>
+                                    <th>Feature</th>
+                                    <th>Store</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="!coupons.length">
+                                    <br>
+                                    <p class="display-6">
+                                        &nbsp;
+                                        &nbsp;
+                                        &nbsp;
+                                        &nbsp;
+                                        No coupon in this Store</p>
+                                </tr>
+                                <tr *ngFor="let coupon of coupons | keyvalue;index as i">
+                                    <td>{{i+this.skipNo+1}}</td>
+                                    <td>{{coupon.value.offerBox}}</td>
+                                    <td>{{coupon.value.offerDetail}}</td>
+                                    <td>
+                                        <span *ngIf="coupon.value.activeStatus"
+                                            class="badge badge-success largeBadge">Active</span>
 
-                                    <span *ngIf="!coupon.value.activeStatus"
-                                        class="badge badge-dark largeBadge">Disabled</span>
-                                </td>
-                                <td>{{selectedStoreName}}</td>
-                                <td>
-                                    <button type="button" (click)="showDltModal(coupon.key)"
-                                        class="btn btn-primary text-white">Delete</button>
-                                    &nbsp; &nbsp;<button type="button" (click)="showEditModal(coupon.key,coupon.value)"
-                                        class="btn btn-dark text-white">Edit</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        <span *ngIf="!coupon.value.activeStatus"
+                                            class="badge badge-dark largeBadge">Disabled</span>
+                                    </td>
+                                    <td>{{selectedStoreName}}</td>
+                                    <td>
+                                        <button type="button" (click)="showDltModal(coupon.key)"
+                                            class="btn btn-primary text-white">Delete</button>
+                                        &nbsp; &nbsp;<button type="button"
+                                            (click)="showEditModal(coupon.key,coupon.value)"
+                                            class="btn btn-dark text-white">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" (click)="prevFunc()">Prev</a></li>
                         <li class="page-item"><a class="page-link" (click)="nextFunc()">Next</a></li>

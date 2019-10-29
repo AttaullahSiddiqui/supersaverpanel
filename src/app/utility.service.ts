@@ -34,10 +34,7 @@ export class UtilityService {
           if (res.data) {
             this.userVar = xyz;
             resolve(true);
-          } else {
-            console.log("Match  nh hua")
-            resolve(false);
-          }
+          } else resolve(false);
         })
       })
   }
