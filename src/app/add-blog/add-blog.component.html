@@ -61,8 +61,8 @@
                                 </div>
                             </div>
                         </div>
-                        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false"
-                            [aspectRatio]="1/1" outputType="file" format="jpeg" (imageCropped)="imageCropped($event)">
+                        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                            [aspectRatio]="2/1" outputType="file" format="jpeg" (imageCropped)="imageCropped($event)">
                         </image-cropper>
 
                         <div class="form-group row">

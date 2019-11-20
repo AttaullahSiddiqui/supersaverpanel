@@ -186,12 +186,12 @@ function addBlog(req, res) {
 }
 function addSlide(req, res) {
     Slider.
-        find({ $and: [{ storeId: req.body.storeId }, { arrIndex: req.body.arrIndex }] }).
+        findOne({ arrIndex: req.body.arrIndex }).
         exec(function (err, slide) {
             if (err) res.json(resHandler.respondError(err[0], err[1] || -1));
             else {
-                if (slide.length) {
-                    req.body._id = slide[0]._id;
+                if (slide) {
+                    req.body._id = slide._id;
                     updateSlide(req, res)
                 }
                 else addNewSlide(req, res)

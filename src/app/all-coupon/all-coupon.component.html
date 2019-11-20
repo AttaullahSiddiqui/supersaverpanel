@@ -13,7 +13,7 @@
 </div>
 
 <div class="row" *ngIf="storeArray">
-    <div class="form-group col-5">
+    <div class="form-group">
         <label for="userType">
             <h5>PLEASE SELECT STORE</h5>
         </label>
@@ -37,12 +37,12 @@
             <div class="card">
                 <br>
                 <div class="row">
-                    <div class="col-sm-6" style="margin-left: 25px;">
-                        <h2>Total Coupons on your Website &nbsp; <span
+                    <div class="col-sm-6">
+                        <h2 class="p-4">Total Coupons on your Website <span
                                 class="badge badge-pill badge-danger text-white">{{couponCount}}</span> </h2>
                     </div>
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-4">
+                    <!-- <div class="col-sm-1"></div> -->
+                    <div class="col-sm-6">
                         <form class="form-inline pull-right widthWhole">
                             <div class="form-group widthWhole">
                                 <label class="sr-only" for="searchBar">Search</label>

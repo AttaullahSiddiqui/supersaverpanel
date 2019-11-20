@@ -89,6 +89,7 @@ export class SliderComponent implements OnInit {
     this._dataService.postAPI("/api/addSlide", dataNode).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
+        this.closeError();
         this.trickyArr[dataNode.arrIndex] = false;
         this.firstSlide = {};
         this.secondSlide = {};
@@ -96,11 +97,16 @@ export class SliderComponent implements OnInit {
         this.fourthSlide = {};
         this.fifthSlide = {};
         this.imgModel = "";
+        this.imgModel2 = "";
+        this.imgModel3 = "";
+        this.imgModel4 = "";
+        this.imgModel5 = "";
         this.croppedImage = "";
         this.imageChangedEvent = '';
         window.scrollTo(0, 0)
       } else {
         this.responseError = res.message;
+        this.closeSuccess();
         this.trickyArr[dataNode.arrIndex] = false;
         window.scrollTo(0, 0)
       }
