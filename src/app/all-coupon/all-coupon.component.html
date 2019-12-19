@@ -67,7 +67,7 @@
                                 <tr>
                                     <th>Sr</th>
                                     <th>Offer</th>
-                                    <th>Offer Details</th>
+                                    <th>Exp Date</th>
                                     <th>Feature</th>
                                     <th>Store</th>
                                     <th>Action</th>
@@ -86,7 +86,7 @@
                                 <tr *ngFor="let coupon of coupons | keyvalue;index as i">
                                     <td>{{i+this.skipNo+1}}</td>
                                     <td>{{coupon.value.offerBox}}</td>
-                                    <td>{{coupon.value.offerDetail}}</td>
+                                    <td>{{coupon.value.expDate | date}}</td>
                                     <td>
                                         <span *ngIf="coupon.value.activeStatus"
                                             class="badge badge-success largeBadge">Active</span>

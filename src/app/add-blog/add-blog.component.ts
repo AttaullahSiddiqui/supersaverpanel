@@ -46,6 +46,7 @@ export class AddBlogComponent implements OnInit {
     }).subscribe()
   }
   saveBlogToDB(blogData) {
+    blogData.views = 0;
     this._dataService.postAPI("/api/addBlog", blogData).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
