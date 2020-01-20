@@ -10,6 +10,7 @@ export class AddCouponComponent implements OnInit {
   stores: any = {};
   couponInfo: any = { activeStatus: true };
   isBusy = false;
+  tempVar = "";
   responseSuccess = "";
   responseError = "";
 
@@ -36,12 +37,13 @@ export class AddCouponComponent implements OnInit {
     if (!couponData.featuredForHome) couponData.featuredForHome = false;
     if (!couponData.newArrival) couponData.newArrival = false;
     if (couponData.activeStatus) couponData.code = "";
+    this.tempVar = couponData.activeStatus;
 
     this._dataService.postAPI("/api/addCoupon", couponData).subscribe(res => {
       if (res.data) {
         this.responseSuccess = res.message;
         this.responseError = "";
-        this.couponInfo = { activeStatus: true };
+        this.couponInfo = { activeStatus: this.tempVar };
         window.scrollTo(0, 0);
         this.isBusy = false
       } else this.errorHandler(res.message)

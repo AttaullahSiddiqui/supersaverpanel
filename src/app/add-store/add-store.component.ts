@@ -61,6 +61,8 @@ export class AddStoreComponent implements OnInit {
         this.storeInfo = {};
         this.imgModel = "";
         this.croppedImage = "";
+        this.selectedImage = "";
+        this.imageChangedEvent = "";
         window.scrollTo(0, 0);
         this.isBusy = false;
       } else this.errorHandler(res.message)

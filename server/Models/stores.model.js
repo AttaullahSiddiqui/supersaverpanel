@@ -13,7 +13,7 @@ let storeSchema = mongoose.Schema({
     trackUrl: { type: String, required: true },
     metaTitle: { type: String, required: true },
     metaDes: { type: String, required: true },
-    metaKeywords: { type: String, required: true },
+    metaKeywords: { type: String },
     fb: { type: String },
     pin: { type: String },
     wik: { type: String },

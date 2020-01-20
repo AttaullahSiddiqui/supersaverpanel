@@ -53,6 +53,8 @@ export class AddBlogComponent implements OnInit {
         this.blogInfo = {};
         this.imgModel = "";
         this.croppedImage = "";
+        this.selectedImage = "";
+        this.imageChangedEvent = "";
         this.isBusy = false;
         window.scrollTo(0, 0)
       } else this.errorHandler(res.message)
